@@ -478,10 +478,152 @@
         stroke-width: 0.35;
         stroke-opacity: 0.45;
       }
+      .fly {
+        position: absolute;
+        left: 0;
+        top: 0;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        will-change: transform;
+        opacity: 0.92;
+      }
+      .f0 {
+        animation-name: fly1;
+      }
+      .f1 {
+        animation-name: fly2;
+      }
+      .f2 {
+        animation-name: fly3;
+      }
+      .bw1 {
+        fill: var(--b);
+      }
+      .bw2 {
+        fill: color-mix(in srgb, var(--b) 68%, white);
+      }
+      .wg {
+        animation: flap var(--fs, 0.45s) ease-in-out infinite alternate;
+        transform-origin: 0 0;
+      }
+      .blob {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(50px);
+        opacity: 0.55;
+        animation: drift 14s ease-in-out infinite alternate;
+      }
+      @keyframes drift {
+        from {
+          transform: translate(0, 0) scale(1);
+        }
+        to {
+          transform: translate(36px, -44px) scale(1.18);
+        }
+      }
+      @keyframes fly1 {
+        0% {
+          transform: translate(-18vw, 72vh) rotate(35deg);
+        }
+        25% {
+          transform: translate(22vw, 42vh) rotate(-10deg);
+        }
+        50% {
+          transform: translate(52vw, 58vh) rotate(18deg);
+        }
+        75% {
+          transform: translate(82vw, 22vh) rotate(-14deg);
+        }
+        100% {
+          transform: translate(118vw, 34vh) rotate(25deg);
+        }
+      }
+      @keyframes fly2 {
+        0% {
+          transform: translate(115vw, 20vh) rotate(-30deg);
+        }
+        30% {
+          transform: translate(75vw, 48vh) rotate(12deg);
+        }
+        55% {
+          transform: translate(40vw, 30vh) rotate(-16deg);
+        }
+        80% {
+          transform: translate(12vw, 64vh) rotate(14deg);
+        }
+        100% {
+          transform: translate(-18vw, 50vh) rotate(-24deg);
+        }
+      }
+      @keyframes fly3 {
+        0% {
+          transform: translate(10vw, 112vh) rotate(8deg);
+        }
+        30% {
+          transform: translate(34vw, 70vh) rotate(-12deg);
+        }
+        60% {
+          transform: translate(64vw, 40vh) rotate(14deg);
+        }
+        100% {
+          transform: translate(90vw, -14vh) rotate(-6deg);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .fly,
+        .blob {
+          animation: none;
+        }
+        .fly {
+          transform: translate(calc(var(--n, 20) * 1vw), 30vh);
+        }
+      }
+      .stp {
+        display: inline-grid;
+        place-items: center;
+        flex: none;
+        height: 1.6rem;
+        width: 1.6rem;
+        border-radius: 9999px;
+        background: #5e1631;
+        color: #fff;
+        font:
+          700 0.8rem "DM Sans",
+          sans-serif;
+        margin-right: 0.5rem;
+        vertical-align: middle;
+      }
+      li > .stp {
+        margin-right: 0;
+      }
+      .sp {
+        position: absolute;
+        pointer-events: none;
+        z-index: 5;
+        animation: spup 1s ease-out forwards;
+      }
+      @keyframes spup {
+        from {
+          opacity: 1;
+          transform: translateY(0) scale(0.6);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(-44px) scale(1.25);
+        }
+      }
+      #bouquet {
+        transition: max-width 0.35s ease;
+      }
+      @media (max-width: 1023px) {
+        #bouquet.exp {
+          max-width: min(90vw, 62vh);
+        }
+      }
     </style>
   </head>
   <body class="font-sans min-h-screen">
-    <header class="px-5 pt-8 pb-4 text-center">
+    <header class="px-5 pt-8 pb-3 text-center">
       <div class="flex items-center justify-center gap-3">
         <svg
           width="46"
@@ -496,26 +638,55 @@
           Aisha Handmade Flowers
         </h1>
       </div>
-      <p class="mt-2 text-rose-800/70 max-w-xl mx-auto">
+      <div
+        class="mx-auto mt-3 h-px w-28 bg-gradient-to-r from-transparent via-amber-400 to-transparent"
+      ></div>
+      <p class="mt-3 text-rose-800/75 max-w-xl mx-auto">
         Design your own bouquet. Every flower is folded by hand from satin
-        ribbon. Pick the size, colors and wrapping, and watch it come together.
+        ribbon.
+      </p>
+      <p class="mt-2 text-xs uppercase tracking-[.18em] text-rose-800/55">
+        Handmade · Made to order · Your colors
       </p>
     </header>
+    <nav aria-label="Progress" class="max-w-6xl mx-auto px-4 pb-4">
+      <ol id="steps" class="grid grid-cols-4 gap-2 text-center text-xs"></ol>
+      <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-rose-100">
+        <div
+          id="bar"
+          class="h-full w-0 rounded-full bg-gradient-to-r from-rose-500 to-amber-400 transition-all duration-500"
+        ></div>
+      </div>
+    </nav>
 
     <main
-      class="max-w-6xl mx-auto px-4 pb-16 grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-6 items-start"
+      class="max-w-6xl mx-auto px-4 pb-16 flex flex-col lg:grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-6 lg:items-start"
     >
       <!-- LIVE PREVIEW -->
       <section class="contents lg:block lg:sticky lg:top-4">
         <div
-          class="order-1 rounded-[2rem] bg-gradient-to-b from-rose-100 to-rose-200 p-4 md:p-6"
+          id="prevCard"
+          class="order-1 relative sticky top-0 z-20 lg:static overflow-hidden rounded-[2rem] bg-gradient-to-b from-rose-100 to-rose-200 p-3 md:p-6 shadow-md lg:shadow-none"
         >
           <div
+            id="priceChip"
+            class="absolute left-4 top-4 z-10 rounded-full bg-white/90 px-3 py-1 text-sm font-bold text-rose-600 shadow"
+          >
+            ₱199
+          </div>
+          <div
             id="bouquet"
-            class="aspect-square w-full max-w-[520px] mx-auto"
+            class="aspect-square w-full mx-auto max-w-[32vh] lg:max-w-[520px] cursor-zoom-in lg:cursor-default"
           ></div>
-          <p id="previewNote" class="text-center text-sm text-rose-800/70 mt-1">
-            Preview is a sketch. Your real bouquet is made to order.
+          <p
+            id="previewNote"
+            class="text-center text-xs lg:text-sm text-rose-800/70 mt-1"
+          >
+            <span class="lg:hidden"
+              >Tap the preview to enlarge. It is a sketch.</span
+            ><span class="hidden lg:inline"
+              >Preview is a sketch. Your real bouquet is made to order.</span
+            >
           </p>
         </div>
         <div class="order-3 lg:mt-4 rounded-2xl bg-white p-5 shadow-sm">
@@ -558,7 +729,7 @@
       <section class="order-2 space-y-5">
         <div class="rounded-2xl bg-white p-5 shadow-sm">
           <h2 class="font-display text-xl font-bold text-rose-800">
-            How many flowers?
+            <span class="stp">1</span>How many flowers?
           </h2>
           <div
             id="counts"
@@ -584,12 +755,17 @@
 
         <div class="rounded-2xl bg-white p-5 shadow-sm">
           <h2 class="font-display text-xl font-bold text-rose-800">
-            Pick up to 2 colors
+            <span class="stp">2</span>Pick up to 2 colors
           </h2>
           <p class="text-sm text-rose-800/70">
             Choose 1 for a single-color bouquet, or 2 for a mix. Cream / Milky
             White works only as a mix, so pair it with another color.
           </p>
+          <div
+            id="combos"
+            class="mt-3 flex flex-wrap gap-2"
+            aria-label="Popular combinations"
+          ></div>
           <div
             id="colors"
             class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2"
@@ -598,7 +774,7 @@
 
         <div class="rounded-2xl bg-white p-5 shadow-sm">
           <h2 class="font-display text-xl font-bold text-rose-800">
-            Wrapping, ribbon and extras
+            <span class="stp">3</span>Wrapping, ribbon and extras
           </h2>
           <div id="wraps" class="mt-3 grid grid-cols-3 gap-2"></div>
           <h3 class="mt-4 text-sm font-bold text-rose-800">
@@ -636,7 +812,7 @@
 
         <div class="rounded-2xl bg-white p-5 shadow-sm">
           <h2 class="font-display text-xl font-bold text-rose-800">
-            Your details
+            <span class="stp">4</span>Your details
           </h2>
           <div class="mt-3 grid sm:grid-cols-2 gap-3">
             <div>
@@ -760,6 +936,41 @@
       aria-labelledby="gateTitle"
     >
       <div
+        class="blob"
+        style="
+          width: 300px;
+          height: 300px;
+          background: #ffc9d9;
+          left: -90px;
+          top: -70px;
+        "
+        aria-hidden="true"
+      ></div>
+      <div
+        class="blob"
+        style="
+          width: 260px;
+          height: 260px;
+          background: #d9c8ff;
+          right: -80px;
+          top: 35%;
+          animation-delay: -5s;
+        "
+        aria-hidden="true"
+      ></div>
+      <div
+        class="blob"
+        style="
+          width: 240px;
+          height: 240px;
+          background: #ffe6a8;
+          left: 10%;
+          bottom: -90px;
+          animation-delay: -9s;
+        "
+        aria-hidden="true"
+      ></div>
+      <div
         id="petals"
         class="absolute inset-0 pointer-events-none"
         aria-hidden="true"
@@ -767,62 +978,58 @@
       <div
         class="relative z-10 flex h-full items-center justify-center overflow-auto p-5"
       >
-        <div class="w-full max-w-sm text-center">
-          <div class="relative inline-block">
-            <svg
-              class="logo"
-              width="84"
-              height="84"
-              viewBox="-56 -56 112 112"
-              aria-hidden="true"
-              style="--c: #d6457b"
-            >
-              <use href="#rose" />
-            </svg>
-            <span
-              class="spark absolute -top-1 -right-3 text-xl"
-              aria-hidden="true"
-              >✨</span
-            ><span
-              class="spark absolute bottom-1 -left-4 text-lg"
-              style="animation-delay: -0.8s"
-              aria-hidden="true"
-              >✨</span
-            >
-          </div>
-          <h2
-            id="gateTitle"
-            class="mt-2 font-display text-3xl font-bold text-rose-800"
+        <div
+          class="w-full max-w-sm rounded-3xl border border-white/80 bg-white/70 p-6 text-center shadow-xl backdrop-blur-xl"
+        >
+          <svg
+            class="logo mx-auto"
+            width="58"
+            height="58"
+            viewBox="-56 -56 112 112"
+            aria-hidden="true"
+            style="--c: #d6457b"
+          >
+            <use href="#rose" />
+          </svg>
+          <p
+            class="mt-3 text-xs font-bold uppercase tracking-[.2em] text-rose-500"
           >
             Aisha Handmade Flowers
-          </h2>
-          <p class="mt-3 text-xl font-bold text-rose-800">
-            Please open this page in your browser
           </p>
-          <div
-            class="mt-4 rounded-2xl bg-white/85 p-4 text-sm shadow-lg backdrop-blur"
+          <h2
+            id="gateTitle"
+            class="mt-2 font-display text-3xl font-bold leading-tight text-rose-800"
           >
-            <p>
-              Tap
-              <b class="pulse-dots inline-block text-lg leading-none">⋮</b> or
-              <b>•••</b> in Messenger, then select <b>Open in browser</b> (<b
-                >Open in Safari</b
+            Please open this page in your browser
+          </h2>
+          <ol class="mt-5 space-y-3 text-left text-sm">
+            <li class="flex items-start gap-3">
+              <span
+                class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-rose-100 text-xs font-bold text-rose-800"
+                >1</span
+              ><span>Tap <b>⋮</b> or <b>•••</b> in Messenger.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-rose-100 text-xs font-bold text-rose-800"
+                >2</span
+              ><span
+                >Choose <b>Open in browser</b>. On iPhone, choose
+                <b>Open in Safari</b>.</span
               >
-              on iPhone).
-            </p>
-            <p class="mt-2 text-rose-800/70">
-              Messenger's built-in browser cannot save your order image, so the
-              website only works in your browser.
-            </p>
-          </div>
+            </li>
+          </ol>
+          <p class="mt-4 text-xs text-rose-800/60">
+            Messenger's built-in browser cannot save your order image.
+          </p>
           <a
             id="gateOpen"
-            class="glow mt-5 hidden w-full rounded-2xl bg-gradient-to-r from-fuchsia-600 via-rose-500 to-amber-400 py-4 text-lg font-bold text-white shadow-lg"
+            class="mt-5 hidden w-full rounded-full bg-rose-800 py-3.5 text-center font-semibold text-white"
             >Open in browser</a
           >
           <button
             id="gateCopy"
-            class="mt-3 w-full rounded-2xl border border-rose-200 bg-white/90 py-3 font-medium"
+            class="mt-3 w-full rounded-full border border-rose-800/20 py-3 text-sm font-medium text-rose-800"
           >
             Copy page link
           </button>
@@ -837,18 +1044,16 @@
       aria-labelledby="doneTitle"
     >
       <div
-        class="w-full max-w-md max-h-[94vh] overflow-auto rounded-2xl bg-white text-[#3a1424] p-5 shadow-xl"
+        class="w-full max-w-md max-h-[94vh] overflow-auto rounded-3xl bg-white text-[#3a1424] p-5 shadow-xl"
       >
         <h2
           id="doneTitle"
           class="font-display text-2xl font-bold text-rose-800"
         >
-          Your order image is ready
+          Your bouquet is ready to send
         </h2>
-        <p class="text-sm text-rose-800/70 mt-1">
-          1. Save the image. 2. Open Messenger. 3. Send the image and paste your
-          order text. If Save does not work on your phone, press and hold the
-          image.
+        <p class="mt-1 text-sm text-rose-800/70">
+          Three quick steps and your order is with us.
         </p>
         <p
           id="inAppNote"
@@ -856,55 +1061,68 @@
         >
           You opened this inside Messenger, which blocks saving and sharing
           files. <b>Press and hold the image below and choose Save image</b>, or
-          take a screenshot of it. To use the Save and Share buttons, open this
-          page in Chrome or Safari.
+          take a screenshot of it.
         </p>
         <img
           id="doneImg"
           alt="Your order"
-          class="hidden mt-3 w-full max-h-[60vh] object-contain rounded-lg bg-rose-50"
+          class="hidden mt-3 w-full max-h-[46vh] object-contain rounded-xl bg-rose-50"
           style="
             -webkit-touch-callout: default;
             -webkit-user-select: auto;
             user-select: auto;
           "
         />
-        <div class="mt-3 flex gap-2">
-          <button
-            id="saveImg"
-            class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
-          >
-            Save image
-          </button>
-          <button
-            id="shareImg"
-            class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
-          >
-            Share
-          </button>
-          <button
-            id="closeDone"
-            class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
-          >
-            Close
-          </button>
-        </div>
-        <a
-          id="openM"
-          target="_blank"
-          rel="noopener"
-          class="mt-2 block w-full whitespace-nowrap rounded-xl bg-[#0a7cff] hover:bg-[#0868d6] text-white font-bold py-3.5 text-center"
-          >Open Messenger</a
-        >
+        <ol class="mt-4 space-y-3">
+          <li id="stepSave" class="flex items-center gap-3">
+            <span class="stp">1</span>
+            <div class="flex flex-1 gap-2">
+              <button
+                id="saveImg"
+                class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
+              >
+                Save image
+              </button>
+              <button
+                id="shareImg"
+                class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
+              >
+                Share
+              </button>
+            </div>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="stp">2</span
+            ><a
+              id="openM"
+              target="_blank"
+              rel="noopener"
+              class="block flex-1 whitespace-nowrap rounded-xl bg-[#0a7cff] hover:bg-[#0868d6] py-3.5 text-center font-bold text-white"
+              >Open Messenger</a
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="stp">3</span>
+            <p class="pt-0.5 text-sm">
+              Send the image, then paste your order text. It is already copied.
+            </p>
+          </li>
+        </ol>
         <details class="mt-3">
           <summary class="cursor-pointer text-sm text-rose-600">
-            Show order text (already copied)
+            Show order text
           </summary>
           <pre
             id="doneText"
             class="mt-2 max-h-32 overflow-auto whitespace-pre-wrap rounded-lg bg-rose-50 p-3 text-xs font-sans"
           ></pre>
         </details>
+        <button
+          id="closeDone"
+          class="mt-4 w-full rounded-full border border-rose-200 py-2.5 text-sm font-medium"
+        >
+          Close
+        </button>
       </div>
     </div>
 
@@ -972,7 +1190,7 @@
         const l = document.createElement("label");
         l.className =
           "opt flex items-center gap-2 cursor-pointer rounded-xl border border-rose-200 px-3 py-2.5";
-        l.innerHTML = `<input type="checkbox" class="sr-only" value="${i}"><span class="h-6 w-6 rounded-full shrink-0 border border-black/10" style="background:${hex}"></span><span class="text-sm font-medium leading-tight">${name}</span>`;
+        l.innerHTML = `<input type="checkbox" class="sr-only" value="${i}"><span class="h-8 w-8 rounded-full shrink-0 border border-black/10 shadow-inner" style="background:${hex}"></span><span class="text-sm font-medium leading-tight">${name}</span>`;
         l.querySelector("input").onchange = (e) => {
           if (e.target.checked) st.colors.push(i);
           else st.colors = st.colors.filter((x) => x !== i);
@@ -1342,13 +1560,17 @@
         $("summary").innerHTML = rows
           .map(
             ([k, v]) =>
-              `<div class="flex justify-between gap-4 py-1.5"><dt class="text-rose-800/70">${k}</dt><dd class="font-medium text-right">${String(v).replace(/</g, "&lt;")}</dd></div>`,
+              `<div class="flex justify-between gap-4 py-1.5"><dt class="text-rose-800/70">${k}</dt><dd class="font-medium text-right">${k === "Colors" ? st.colors.map((i) => `<span class="inline-block h-3 w-3 rounded-full border border-black/10 mr-1 align-middle" style="background:${COLORS[i][1]}"></span>`).join("") : ""}${String(v).replace(/</g, "&lt;")}</dd></div>`,
           )
           .join("");
         $("total").textContent = st.count.price
           ? peso(st.count.price)
           : "Quote";
+        $("priceChip").textContent = st.count.price
+          ? peso(st.count.price)
+          : "Custom quote";
         drawBouquet();
+        updateProgress();
       }
       function orderText() {
         const d = data();
@@ -1542,6 +1764,102 @@
           } catch (_) {}
         }
       }
+      // ---------- progress, popular combos, sparkles, tap-to-enlarge ----------
+      st.t1 = false;
+      st.t3 = false;
+      const STEP_NAMES = ["Size", "Colors", "Style", "Details"];
+      function updateProgress() {
+        const d = data(),
+          cOK =
+            st.colors.length >= 1 &&
+            !(
+              st.colors.length === 1 &&
+              COLORS[st.colors[0]][0].startsWith("Cream")
+            );
+        const dOK = !!d.name && !!d.date && (st.ful !== "Delivery" || !!d.loc);
+        const done = [st.t1, cOK, st.t3, dOK];
+        $("steps").innerHTML = done
+          .map(
+            (ok, i) =>
+              `<li class="${ok ? "text-rose-800 font-semibold" : "text-rose-800/55"}"><span class="mx-auto mb-1 grid h-7 w-7 place-items-center rounded-full font-bold ${ok ? "bg-rose-800 text-white" : "bg-rose-100"}">${ok ? "✓" : i + 1}</span>${STEP_NAMES[i]}</li>`,
+          )
+          .join("");
+        $("bar").style.width = done.filter(Boolean).length * 25 + "%";
+      }
+      function sparkle() {
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const host = $("prevCard");
+        for (let i = 0; i < 7; i++) {
+          const sp = document.createElement("span");
+          sp.className = "sp";
+          sp.textContent = "✨";
+          sp.style.left = 15 + Math.random() * 70 + "%";
+          sp.style.top = 20 + Math.random() * 55 + "%";
+          sp.style.fontSize = 12 + Math.random() * 12 + "px";
+          sp.style.animationDelay = i * 60 + "ms";
+          host.appendChild(sp);
+          setTimeout(() => sp.remove(), 1300);
+        }
+      }
+      function setColors(idxs) {
+        st.colors = idxs.slice(0, 2);
+        document
+          .querySelectorAll("#colors input")
+          .forEach((inp) => (inp.checked = st.colors.includes(+inp.value)));
+        render();
+        sparkle();
+      }
+      [
+        ["Pink & Cream", ["Light Pink", "Cream / Milky White"]],
+        ["Lavender Dream", ["Lavender Purple", "Deep Violet"]],
+        ["Royal Duo", ["Royal Blue", "Youlan Blue"]],
+        ["Sunshine", ["Sunflower Yellow", "Sunny Yellow"]],
+        ["Wine & Champagne", ["Wine Red", "Champagne"]],
+        ["Fresh Green", ["Moss Green", "Matcha Green"]],
+        ["Surprise me", null],
+      ].forEach(([name, names]) => {
+        const idx =
+          names && names.map((n) => COLORS.findIndex((c) => c[0] === n));
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className =
+          "rounded-full border border-rose-200 bg-white px-3 py-1.5 text-sm font-medium hover:bg-rose-50";
+        b.innerHTML =
+          (idx
+            ? idx
+                .map(
+                  (i) =>
+                    `<span class="inline-block h-3 w-3 rounded-full border border-black/10 mr-0.5 align-middle" style="background:${COLORS[i][1]}"></span>`,
+                )
+                .join("") + " "
+            : "✨ ") + name;
+        b.onclick = () => {
+          if (idx) return setColors(idx);
+          const a = Math.floor(Math.random() * COLORS.length);
+          let c;
+          do {
+            c = Math.floor(Math.random() * COLORS.length);
+          } while (c === a);
+          setColors([a, c]);
+        };
+        $("combos").appendChild(b);
+      });
+      document.addEventListener("change", (e) => {
+        const t = e.target,
+          n = t.name;
+        if (n === "count") st.t1 = true;
+        if (["wrap", "ribbon", "filler"].includes(n) || t.id === "butterfly")
+          st.t3 = true;
+        if (
+          (t.closest &&
+            t.closest("#colors,#counts,#wraps,#ribbons,#fillers")) ||
+          t.id === "butterfly"
+        )
+          sparkle();
+        updateProgress();
+      });
+      $("bouquet").onclick = () => $("bouquet").classList.toggle("exp");
+
       const messengerUrl = (t) =>
         "https://m.me/" +
         encodeURIComponent(FB_PAGE) +
@@ -1597,6 +1915,10 @@
         );
         $("inAppNote").classList.toggle("hidden", !inApp);
         $("saveImg").classList.toggle("hidden", inApp);
+        $("stepSave").classList.toggle(
+          "hidden",
+          inApp && $("shareImg").classList.contains("hidden"),
+        );
         $("done").classList.remove("hidden");
       };
       $("saveImg").onclick = downloadImage;
@@ -1613,18 +1935,25 @@
         g.classList.remove("hidden");
         document.body.style.overflow = "hidden";
         document.querySelector("main").setAttribute("inert", "");
+        const half =
+          '<g class="wg"><path class="bw1" d="M0 0C-8-22-30-28-28-8C-27 2-10 4 0 0Z"/><path class="bw2" d="M0 2C-6 8-22 12-16 24C-10 30-2 14 0 2Z"/><circle cx="-17" cy="-11" r="2.6" fill="#fff" opacity=".85"/><circle cx="-12" cy="15" r="1.8" fill="#fff" opacity=".7"/><path d="M0 0L-21-15" stroke="#fff" stroke-opacity=".45" fill="none"/></g>';
+        const bfly =
+          half +
+          '<g transform="scale(-1 1)">' +
+          half +
+          '</g><rect x="-1.2" y="-8" width="2.4" height="18" rx="1.2" fill="#3a1424"/><path d="M0-8Q-5-16-9-17M0-8Q5-16 9-17" stroke="#3a1424" fill="none" stroke-width=".9"/>';
         const cols = [
           "#d6457b",
-          "#f9bcd2",
           "#b79be0",
           "#f4b400",
-          "#ffffff",
           "#7d1230",
+          "#f08cb4",
+          "#7f9cf5",
         ];
-        $("petals").innerHTML = [...Array(16)]
+        $("petals").innerHTML = [...Array(9)]
           .map(
             (_, i) =>
-              `<svg class="pf" width="${24 + ((i * 13) % 34)}" height="${24 + ((i * 13) % 34)}" viewBox="-56 -56 112 112" style="--c:${cols[i % cols.length]};left:${(i * 37) % 96}%;animation-duration:${9 + ((i * 5) % 8)}s;animation-delay:${-(i * 1.7) % 12}s"><use href="#rose"/></svg>`,
+              `<div class="fly f${i % 3}" style="animation-duration:${17 + ((i * 5) % 11)}s;animation-delay:${-(i * 3.1) % 20}s;--b:${cols[i % cols.length]}"><svg class="bob" width="${36 + ((i * 11) % 30)}" height="${36 + ((i * 11) % 30)}" viewBox="-30 -30 60 60" style="--fs:${0.34 + (i % 3) * 0.08}s;animation-delay:${-i * 0.5}s">${bfly}</svg></div>`,
           )
           .join("");
         if (/Android/i.test(ua)) {
@@ -1639,7 +1968,9 @@
             ";end";
           $("gateOpen").classList.remove("hidden");
           $("gateOpen").classList.add("block");
-        }
+        } else
+          $("gateCopy").className =
+            "mt-5 w-full rounded-full bg-rose-800 py-3.5 font-semibold text-white";
         $("gateCopy").onclick = async (e) => {
           await copyText(location.href);
           e.target.textContent = "Link copied. Paste it in Chrome or Safari.";
