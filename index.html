@@ -624,12 +624,23 @@
         fill: var(--fl);
         opacity: 0.35;
       }
+      .secret,
+      .secret:hover,
+      .secret:focus,
+      .secret:focus-visible,
+      .secret:active,
+      .secret svg,
+      .secret svg:focus,
+      .secret svg:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+        -webkit-tap-highlight-color: transparent;
+      }
       .secret {
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         user-select: none;
         touch-action: manipulation;
-        -webkit-tap-highlight-color: transparent;
         cursor: default;
       }
       .secret .ring circle {
@@ -673,7 +684,7 @@
         <button
           id="secretBtn"
           type="button"
-          class="secret relative grid h-[54px] w-[54px] place-items-center rounded-full"
+          class="secret relative grid h-[54px] w-[54px] place-items-center rounded-full outline-none focus:outline-none focus-visible:outline-none focus:ring-0"
           aria-label="Aisha Handmade Flowers logo"
         >
           <svg
@@ -686,7 +697,7 @@
             <use href="#rose" />
           </svg>
           <svg
-            class="ring-0 pointer-events-none absolute inset-0"
+            class="ring pointer-events-none absolute inset-0"
             viewBox="0 0 54 54"
             aria-hidden="true"
           >
