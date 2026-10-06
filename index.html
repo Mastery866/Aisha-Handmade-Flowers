@@ -624,20 +624,87 @@
         fill: var(--fl);
         opacity: 0.35;
       }
+      .secret {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        cursor: default;
+      }
+      .secret .ring circle {
+        transition: stroke-dashoffset 0.15s;
+      }
+      .secret.holding .ring circle {
+        stroke-dashoffset: 0;
+        transition: stroke-dashoffset 2.2s linear;
+      }
+      .opt {
+        position: relative;
+      }
+      .oosb {
+        display: none;
+        position: absolute;
+        top: -9px;
+        right: 8px;
+        background: #5e1631;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        padding: 2px 9px;
+        border-radius: 9999px;
+        box-shadow: 0 2px 6px rgba(94, 22, 49, 0.3);
+      }
+      .opt.is-oos {
+        opacity: 0.6;
+        filter: grayscale(0.9);
+        cursor: not-allowed;
+        background: #f6f1f3;
+      }
+      .opt.is-oos .oosb {
+        display: block;
+      }
     </style>
   </head>
   <body class="font-sans min-h-screen">
     <header class="px-5 pt-8 pb-3 text-center">
       <div class="flex items-center justify-center gap-3">
-        <svg
-          width="46"
-          height="46"
-          viewBox="-56 -56 112 112"
-          aria-hidden="true"
-          style="--c: #d6457b"
+        <button
+          id="secretBtn"
+          type="button"
+          class="secret relative grid h-[54px] w-[54px] place-items-center rounded-full"
+          aria-label="Aisha Handmade Flowers logo"
         >
-          <use href="#rose" />
-        </svg>
+          <svg
+            width="46"
+            height="46"
+            viewBox="-56 -56 112 112"
+            aria-hidden="true"
+            style="--c: #d6457b"
+          >
+            <use href="#rose" />
+          </svg>
+          <svg
+            class="ring-0 pointer-events-none absolute inset-0"
+            viewBox="0 0 54 54"
+            aria-hidden="true"
+          >
+            <circle
+              cx="27"
+              cy="27"
+              r="25"
+              fill="none"
+              stroke="#d6457b"
+              stroke-width="3"
+              stroke-linecap="round"
+              pathLength="100"
+              stroke-dasharray="100"
+              stroke-dashoffset="100"
+              transform="rotate(-90 27 27)"
+            />
+          </svg>
+        </button>
         <h1 class="font-display text-3xl md:text-5xl font-bold text-rose-800">
           Aisha Handmade Flowers
         </h1>
@@ -1541,7 +1608,10 @@
         document
           .querySelectorAll("#colors input")
           .forEach(
-            (inp) => (inp.disabled = st.colors.length >= 2 && !inp.checked),
+            (inp) =>
+              (inp.disabled =
+                (st.colors.length >= 2 && !inp.checked) ||
+                OOS.colors.has(COLORS[+inp.value][0])),
           );
         const d = data();
         $("bfNote").textContent = $("butterfly").checked
@@ -1818,19 +1888,6 @@
         render();
         sparkle();
       }
-      $("surprise").onclick = () => {
-        const cream = COLORS.findIndex((c) => c[0].startsWith("Cream")),
-          pool = COLORS.map((c, i) => i).filter((i) => i !== cream);
-        const a = pool[Math.floor(Math.random() * pool.length)],
-          two = Math.random() < 0.6;
-        let b;
-        if (two) {
-          do {
-            b = Math.floor(Math.random() * COLORS.length);
-          } while (b === a);
-        }
-        setColors(two ? [a, b] : [a]);
-      };
       document.addEventListener("change", (e) => {
         const t = e.target,
           n = t.name;
@@ -1892,6 +1949,480 @@
               ? "Single color is perfect. You can also add one more color to mix."
               : "Mixed: your two colors alternate in the bouquet.";
       }
+      // ---------- shop stock and price settings (owner panel) ----------
+      const OOS = { colors: new Set(), wraps: new Set(), dots: new Set() };
+      const DEFAULT_PRICES = Object.fromEntries(
+        COUNTS.filter((c) => c.price).map((c) => [c.id, c.price]),
+      );
+      const clone = (o) => JSON.parse(JSON.stringify(o));
+      const arr = (a) =>
+        Array.isArray(a) ? a.filter((x) => typeof x === "string") : [];
+      function normalize(j) {
+        j = j || {};
+        const o = j.out || {},
+          pr = { ...DEFAULT_PRICES };
+        Object.entries(j.prices || {}).forEach(([k, v]) => {
+          if (k in DEFAULT_PRICES && +v > 0) pr[k] = Math.round(+v);
+        });
+        return {
+          prices: pr,
+          out: {
+            colors: arr(o.colors),
+            wraps: arr(o.wraps),
+            dots: arr(o.dots),
+          },
+        };
+      }
+      let settings = normalize(),
+        saved = clone(settings);
+      function fixRadio(sel, key, list, set) {
+        if (set.has(list[st[key]][0])) {
+          const ok = list.findIndex((x) => !set.has(x[0]));
+          if (ok >= 0) {
+            st[key] = ok;
+            document.querySelectorAll(sel + " input")[ok].checked = true;
+          }
+        }
+      }
+      function applyAll() {
+        COUNTS.forEach((c) => {
+          if (c.price && settings.prices[c.id]) c.price = settings.prices[c.id];
+        });
+        document.querySelectorAll("#counts label").forEach((l, i) => {
+          const c = COUNTS[i];
+          l.children[2].textContent = c.price ? peso(c.price) : "Custom";
+        });
+        OOS.colors = new Set(settings.out.colors);
+        OOS.wraps = new Set(settings.out.wraps);
+        OOS.dots = new Set(settings.out.dots);
+        const mark = (sel, names, set) =>
+          document.querySelectorAll(sel + " label").forEach((l, i) => {
+            const out = set.has(names[i]);
+            l.classList.toggle("is-oos", out);
+            if (!l.querySelector(".oosb"))
+              l.insertAdjacentHTML(
+                "beforeend",
+                '<span class="oosb">Out of stock</span>',
+              );
+            const inp = l.querySelector("input");
+            if (out) inp.checked = false;
+            inp.disabled = out;
+          });
+        mark(
+          "#colors",
+          COLORS.map((c) => c[0]),
+          OOS.colors,
+        );
+        mark(
+          "#wraps",
+          WRAPS.map((w) => w[0]),
+          OOS.wraps,
+        );
+        mark(
+          "#fillers",
+          FILLERS.map((f) => f[0]),
+          OOS.dots,
+        );
+        st.colors = st.colors.filter((i) => !OOS.colors.has(COLORS[i][0]));
+        fixRadio("#wraps", "wrap", WRAPS, OOS.wraps);
+        fixRadio("#fillers", "filler", FILLERS, OOS.dots);
+        render();
+      }
+      async function loadSettings() {
+        try {
+          const r = await fetch("settings.json?t=" + Date.now(), {
+            cache: "no-store",
+          });
+          if (r.ok) {
+            settings = normalize(await r.json());
+            saved = clone(settings);
+          }
+        } catch (_) {
+          /* no file yet or offline: everything stays in stock at normal prices */
+        }
+        applyAll();
+      }
+      $("surprise").onclick = () => {
+        const ok = (i) => !OOS.colors.has(COLORS[i][0]),
+          cream = COLORS.findIndex((c) => c[0].startsWith("Cream"));
+        const all = COLORS.map((c, i) => i).filter(ok),
+          pool = all.filter((i) => i !== cream);
+        if (!pool.length) return;
+        const a = pool[Math.floor(Math.random() * pool.length)],
+          others = all.filter((i) => i !== a);
+        setColors(
+          others.length && Math.random() < 0.6
+            ? [a, others[Math.floor(Math.random() * others.length)]]
+            : [a],
+        );
+      };
+
+      // --- encryption helpers: the GitHub token is stored on the owner's phone, locked with the secret code
+      const b64 = (u) => btoa(String.fromCharCode(...u)),
+        unb64 = (t) => Uint8Array.from(atob(t), (c) => c.charCodeAt(0));
+      async function aesKey(code, salt) {
+        const km = await crypto.subtle.importKey(
+          "raw",
+          new TextEncoder().encode(code),
+          "PBKDF2",
+          false,
+          ["deriveKey"],
+        );
+        return crypto.subtle.deriveKey(
+          { name: "PBKDF2", salt, iterations: 200000, hash: "SHA-256" },
+          km,
+          { name: "AES-GCM", length: 256 },
+          false,
+          ["encrypt", "decrypt"],
+        );
+      }
+      async function lockCfg(code, cfg) {
+        const salt = crypto.getRandomValues(new Uint8Array(16)),
+          iv = crypto.getRandomValues(new Uint8Array(12));
+        const ct = await crypto.subtle.encrypt(
+          { name: "AES-GCM", iv },
+          await aesKey(code, salt),
+          new TextEncoder().encode(JSON.stringify(cfg)),
+        );
+        localStorage.setItem(
+          "ahf_admin",
+          JSON.stringify({
+            s: b64(salt),
+            i: b64(iv),
+            d: b64(new Uint8Array(ct)),
+          }),
+        );
+      }
+      async function unlockCfg(code) {
+        try {
+          const o = JSON.parse(localStorage.getItem("ahf_admin"));
+          const pt = await crypto.subtle.decrypt(
+            { name: "AES-GCM", iv: unb64(o.i) },
+            await aesKey(code, unb64(o.s)),
+            unb64(o.d),
+          );
+          return JSON.parse(new TextDecoder().decode(pt));
+        } catch (_) {
+          return null;
+        }
+      }
+      async function publish(cfg) {
+        const base = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path.split("/").map(encodeURIComponent).join("/")}`;
+        const h = {
+          Authorization: "Bearer " + cfg.token,
+          Accept: "application/vnd.github+json",
+        };
+        const fail = (s) =>
+          new Error(
+            s === 401
+              ? "GitHub rejected the token. It may be expired or mistyped."
+              : s === 403
+                ? "The token does not have permission to change this repository."
+                : s === 404
+                  ? "Repository, branch or path not found. Check the setup details."
+                  : "GitHub error " + s + ". Please try again.",
+          );
+        for (let tries = 0; tries < 2; tries++) {
+          let sha;
+          const g = await fetch(
+            base + "?ref=" + encodeURIComponent(cfg.branch),
+            { headers: h },
+          );
+          if (g.ok) sha = (await g.json()).sha;
+          else if (g.status !== 404) throw fail(g.status);
+          const body = {
+            message: "Update shop settings",
+            branch: cfg.branch,
+            content: btoa(
+              unescape(
+                encodeURIComponent(
+                  JSON.stringify(
+                    { ...settings, updated: new Date().toISOString() },
+                    null,
+                    2,
+                  ),
+                ),
+              ),
+            ),
+          };
+          if (sha) body.sha = sha;
+          const r = await fetch(base, {
+            method: "PUT",
+            headers: { ...h, "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          if (r.ok) return;
+          if (r.status !== 409 && r.status !== 422) throw fail(r.status);
+        }
+        throw new Error(
+          "The file changed while saving. Please press Publish again.",
+        );
+      }
+
+      // --- panel interface
+      let adm = null,
+        cfgMem = null,
+        idleT = 0;
+      const dirty = () => JSON.stringify(settings) !== JSON.stringify(saved);
+      const fieldCls =
+        "w-full rounded-xl border border-rose-200 bg-rose-50/40 px-3 py-2.5 text-sm focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-200";
+      function shell(sub, body, foot) {
+        adm.innerHTML = `<div class="flex max-h-[92vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl bg-white text-[#3a1424] shadow-2xl">
+    <div class="flex items-center gap-3 border-b border-rose-100 bg-gradient-to-r from-rose-50 to-amber-50 px-5 py-4">
+      <svg width="38" height="38" viewBox="-56 -56 112 112" aria-hidden="true" style="--c:#d6457b"><use href="#rose"/></svg>
+      <div class="flex-1"><h2 class="font-display text-xl font-bold text-rose-800">Shop settings</h2><p class="text-xs text-rose-800/65">${sub}</p></div>
+      <button id="admX" class="grid h-9 w-9 place-items-center rounded-full text-lg text-rose-800 hover:bg-rose-100" aria-label="Close">✕</button></div>
+    <div id="admBody" class="flex-1 overflow-auto px-5 py-4">${body}</div>${foot ? `<div class="border-t border-rose-100 bg-white px-5 py-3">${foot}</div>` : ""}</div>`;
+        $("admX").onclick = () => closeAdmin();
+      }
+      function openAdmin() {
+        if (!adm) {
+          adm = document.createElement("div");
+          adm.className =
+            "fixed inset-0 z-[70] flex items-end justify-center bg-black/50 p-3 sm:items-center";
+          adm.setAttribute("role", "dialog");
+          adm.setAttribute("aria-modal", "true");
+          ["click", "input", "keydown"].forEach((ev) =>
+            adm.addEventListener(ev, bump),
+          );
+          document.body.appendChild(adm);
+        }
+        if (!window.crypto || !crypto.subtle) {
+          shell(
+            "Not available",
+            '<p class="text-sm">The secure panel needs the https version of the page, such as your GitHub Pages link.</p>',
+          );
+          return;
+        }
+        localStorage.getItem("ahf_admin")
+          ? cfgMem
+            ? panel()
+            : lockView()
+          : setupView();
+        bump();
+      }
+      function bump() {
+        clearTimeout(idleT);
+        idleT = setTimeout(() => closeAdmin(true), 300000);
+      }
+      function closeAdmin(force) {
+        if (
+          !force &&
+          cfgMem &&
+          dirty() &&
+          !confirm("You have unpublished changes. Discard them?")
+        )
+          return;
+        settings = clone(saved);
+        applyAll();
+        cfgMem = null;
+        clearTimeout(idleT);
+        if (adm) {
+          adm.remove();
+          adm = null;
+        }
+      }
+      function setupView() {
+        const f = (id, label, val, type = "text", ph = "") =>
+          `<label class="block"><span class="text-xs font-semibold text-rose-800">${label}</span><input id="${id}" type="${type}" value="${val}" placeholder="${ph}" autocomplete="off" class="mt-1 ${fieldCls}"></label>`;
+        shell(
+          "First-time setup",
+          `<p class="mb-3 text-sm text-rose-800/80">Enter your GitHub details once. The token is locked with your secret code and kept only on this phone.</p>
+    <div class="grid gap-3">${f("s_owner", "GitHub username", "Mastery866")}${f("s_repo", "Repository name", "", "text", "e.g. flower-shop")}
+    <div class="grid grid-cols-2 gap-3">${f("s_branch", "Branch", "main")}${f("s_path", "Settings file", "settings.json")}</div>
+    ${f("s_token", "GitHub token", "", "password", "github_pat_…")}${f("s_code", "Choose a secret code (6+ characters)", "", "password")}${f("s_code2", "Repeat the secret code", "", "password")}</div>
+    <details class="mt-3 rounded-xl bg-rose-50 px-3 py-2 text-xs text-rose-800/80"><summary class="cursor-pointer font-semibold">How do I get a token?</summary><ol class="mt-2 list-decimal space-y-1 pl-4"><li>GitHub → your profile → Settings → Developer settings → Personal access tokens → Fine-grained tokens.</li><li>Generate a new token. Under Repository access, choose Only select repositories and pick this one.</li><li>Under Permissions, set Contents to Read and write.</li><li>Copy the token and paste it above.</li></ol></details>
+    <p id="admErr" class="mt-3 hidden rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></p>`,
+          '<button id="s_go" class="w-full rounded-full bg-rose-800 py-3 font-semibold text-white">Save setup</button>',
+        );
+        $("s_go").onclick = async () => {
+          const v = (id) => $(id).value.trim(),
+            e = $("admErr"),
+            bad = (m) => {
+              e.textContent = m;
+              e.classList.remove("hidden");
+            };
+          const cfg = {
+            owner: v("s_owner"),
+            repo: v("s_repo"),
+            branch: v("s_branch") || "main",
+            path: v("s_path") || "settings.json",
+            token: v("s_token"),
+          };
+          if (!cfg.owner || !cfg.repo || !cfg.token)
+            return bad("Please fill in the username, repository and token.");
+          if (v("s_code").length < 6)
+            return bad("The secret code needs at least 6 characters.");
+          if (v("s_code") !== v("s_code2"))
+            return bad("The two codes do not match.");
+          await lockCfg(v("s_code"), cfg);
+          cfgMem = cfg;
+          panel();
+        };
+      }
+      function lockView() {
+        const lock = JSON.parse(
+            localStorage.getItem("ahf_lock") || '{"n":0,"until":0}',
+          ),
+          wait = Math.ceil((lock.until - Date.now()) / 1000);
+        shell(
+          "Owner access",
+          `<label class="block"><span class="text-xs font-semibold text-rose-800">Secret code</span><input id="l_code" type="password" autocomplete="off" class="mt-1 ${fieldCls}" ${wait > 0 ? "disabled" : ""}></label>
+    <p id="admErr" class="mt-3 ${wait > 0 ? "" : "hidden"} rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">${wait > 0 ? "Too many tries. Please wait " + wait + " seconds." : ""}</p>
+    <button id="l_reset" class="mt-4 text-xs text-rose-800/60 underline">Forgot the code? Reset setup</button>`,
+          '<button id="l_go" class="w-full rounded-full bg-rose-800 py-3 font-semibold text-white disabled:opacity-50" ' +
+            (wait > 0 ? "disabled" : "") +
+            ">Unlock</button>",
+        );
+        const go = async () => {
+          const e = $("admErr"),
+            cfg = await unlockCfg($("l_code").value);
+          if (cfg) {
+            localStorage.removeItem("ahf_lock");
+            cfgMem = cfg;
+            return panel();
+          }
+          lock.n++;
+          if (lock.n >= 5) {
+            lock.until = Date.now() + 60000;
+            lock.n = 0;
+          }
+          localStorage.setItem("ahf_lock", JSON.stringify(lock));
+          e.textContent =
+            lock.until > Date.now()
+              ? "Too many tries. Please wait a minute."
+              : "That code is not correct.";
+          e.classList.remove("hidden");
+        };
+        $("l_go").onclick = go;
+        if ($("l_code"))
+          $("l_code").onkeydown = (ev) => {
+            if (ev.key === "Enter") go();
+          };
+        $("l_reset").onclick = () => {
+          if (
+            confirm(
+              "This removes the saved GitHub token from this phone. You can set it up again afterwards.",
+            )
+          ) {
+            localStorage.removeItem("ahf_admin");
+            setupView();
+          }
+        };
+      }
+      function panel(msg) {
+        const keep = adm.querySelector("#admBody")
+            ? adm.querySelector("#admBody").scrollTop
+            : 0,
+          n =
+            settings.out.colors.length +
+            settings.out.wraps.length +
+            settings.out.dots.length;
+        const sw = (hex) =>
+          `<span class="inline-block h-5 w-5 shrink-0 rounded-full border border-black/10" style="background:${hex}"></span>`;
+        const row = (kind, name, hex) => {
+          const out = settings.out[kind].includes(name);
+          return `<label class="flex cursor-pointer items-center gap-3 rounded-xl border ${out ? "border-rose-200 bg-rose-50" : "border-rose-100 bg-white"} px-3 py-2.5">${sw(hex)}<span class="flex-1 text-sm font-medium ${out ? "text-rose-800/50 line-through" : ""}">${name}</span>
+      <span class="text-xs font-semibold ${out ? "text-rose-700" : "text-emerald-700"}">${out ? "Out of stock" : "In stock"}</span>
+      <input type="checkbox" class="sr-only" data-k="${kind}" data-n="${name}" ${out ? "" : "checked"}><span class="relative h-6 w-11 shrink-0 rounded-full transition ${out ? "bg-rose-300" : "bg-emerald-500"}"><span class="absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${out ? "left-0.5" : "left-[22px]"}"></span></span></label>`;
+        };
+        const sec = (t, sub, inner) =>
+          `<section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">${t}</h3><p class="mb-2 text-xs text-rose-800/65">${sub}</p><div class="grid gap-2">${inner}</div></section>`;
+        const priceIn = COUNTS.filter((c) => c.price)
+          .map(
+            (c) =>
+              `<label class="block"><span class="text-xs font-semibold text-rose-800">${c.label}</span><div class="relative mt-1"><span class="absolute left-3 top-2.5 text-sm text-rose-800/60">₱</span><input data-p="${c.id}" type="number" min="1" inputmode="numeric" value="${c.price}" class="${fieldCls} pl-7"></div></label>`,
+          )
+          .join("");
+        shell(
+          n
+            ? n + " item" + (n > 1 ? "s" : "") + " out of stock"
+            : "Everything is in stock",
+          `<section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">Prices</h3><p class="mb-2 text-xs text-rose-800/65">Sizes stay available. Only the price changes. "Other" is always quoted.</p><div class="grid grid-cols-2 gap-3">${priceIn}</div></section>` +
+            sec(
+              "Colors",
+              "Switch a color off when it runs out. Customers will see an Out of stock label.",
+              COLORS.map((c) => row("colors", c[0], c[1])).join(""),
+            ) +
+            sec(
+              "Wrapping",
+              "Same switch for the wrapping choices.",
+              WRAPS.map((w) => row("wraps", w[0], w[1])).join(""),
+            ) +
+            sec(
+              "Snow dots",
+              "Black or white.",
+              FILLERS.map((f) => row("dots", f[0], f[1])).join(""),
+            ),
+          `<p id="admMsg" class="mb-2 text-sm ${msg && msg.err ? "text-red-700" : "text-emerald-700"} ${msg ? "" : "hidden"}" role="status">${msg ? msg.t : ""}</p>
+     <div class="flex items-center gap-2"><span class="flex-1 text-xs ${dirty() ? "font-semibold text-amber-700" : "text-rose-800/55"}">${dirty() ? "● Unpublished changes" : "All changes published"}</span>
+     <button id="a_out" class="rounded-full border border-rose-200 px-4 py-2.5 text-sm font-medium">Log out</button>
+     <button id="a_pub" class="rounded-full bg-rose-800 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-40" ${dirty() ? "" : "disabled"}>Publish</button></div>`,
+        );
+        $("admBody").scrollTop = keep;
+        adm.querySelectorAll("input[data-k]").forEach(
+          (i) =>
+            (i.onchange = () => {
+              const list = settings.out[i.dataset.k],
+                name = i.dataset.n,
+                at = list.indexOf(name);
+              if (i.checked && at >= 0) list.splice(at, 1);
+              if (!i.checked && at < 0) list.push(name);
+              applyAll();
+              panel();
+            }),
+        );
+        adm.querySelectorAll("input[data-p]").forEach(
+          (i) =>
+            (i.oninput = () => {
+              const v = Math.round(+i.value);
+              if (v > 0) {
+                settings.prices[i.dataset.p] = v;
+                applyAll();
+                $("a_pub").disabled = !dirty();
+              }
+            }),
+        );
+        $("a_out").onclick = () => closeAdmin();
+        $("a_pub").onclick = async () => {
+          const b = $("a_pub");
+          b.disabled = true;
+          b.textContent = "Publishing…";
+          try {
+            await publish(cfgMem);
+            saved = clone(settings);
+            panel({
+              t: "Published. Customers will see the changes in about a minute.",
+            });
+          } catch (e) {
+            panel({
+              t: e.message || "Could not publish. Please try again.",
+              err: 1,
+            });
+          }
+        };
+      }
+      // --- hold the header rose for about 2 seconds to open the panel
+      (function () {
+        const b = $("secretBtn");
+        let t = 0;
+        const stop = () => {
+          clearTimeout(t);
+          b.classList.remove("holding");
+        };
+        b.addEventListener("pointerdown", () => {
+          b.classList.add("holding");
+          t = setTimeout(() => {
+            stop();
+            openAdmin();
+          }, 2200);
+        });
+        ["pointerup", "pointerleave", "pointercancel"].forEach((ev) =>
+          b.addEventListener(ev, stop),
+        );
+        b.addEventListener("contextmenu", (e) => e.preventDefault());
+      })();
+
       const messengerUrl = (t) =>
         "https://m.me/" +
         encodeURIComponent(FB_PAGE) +
@@ -2009,6 +2540,7 @@
         };
       })();
 
+      loadSettings();
       render();
     </script>
   </body>
