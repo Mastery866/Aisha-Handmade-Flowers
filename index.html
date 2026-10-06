@@ -620,6 +620,10 @@
           max-width: min(90vw, 62vh);
         }
       }
+      .fb {
+        fill: var(--fl);
+        opacity: 0.35;
+      }
     </style>
   </head>
   <body class="font-sans min-h-screen">
@@ -756,39 +760,46 @@
         <div class="rounded-2xl bg-white p-5 shadow-sm">
           <h2 class="font-display text-xl font-bold text-rose-800">
             <span class="stp">2</span>Pick up to 2 colors
+            <span
+              class="ml-1 rounded-full bg-rose-100 px-2 py-0.5 align-middle text-xs font-medium text-rose-800"
+              >2nd color is optional</span
+            >
           </h2>
           <p class="text-sm text-rose-800/70">
-            Choose 1 for a single-color bouquet, or 2 for a mix. Cream / Milky
-            White works only as a mix, so pair it with another color.
+            Mixing is optional. Pick 1 color for a single-color bouquet, or 2
+            colors for a mix. Cream / Milky White works only as a mix, so pair
+            it with another color.
           </p>
-          <div
-            id="combos"
-            class="mt-3 flex flex-wrap gap-2"
-            aria-label="Popular combinations"
-          ></div>
+          <button
+            id="surprise"
+            type="button"
+            class="mt-3 rounded-full border border-rose-200 bg-white px-3 py-1.5 text-sm font-medium hover:bg-rose-50"
+          >
+            ✨ Surprise me
+          </button>
           <div
             id="colors"
             class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2"
           ></div>
+          <p
+            id="colorHint"
+            class="mt-2 text-sm text-rose-800/70"
+            aria-live="polite"
+          ></p>
         </div>
 
         <div class="rounded-2xl bg-white p-5 shadow-sm">
           <h2 class="font-display text-xl font-bold text-rose-800">
             <span class="stp">3</span>Wrapping, ribbon and extras
           </h2>
-          <div id="wraps" class="mt-3 grid grid-cols-3 gap-2"></div>
-          <h3 class="mt-4 text-sm font-bold text-rose-800">
-            Baby's breath filler
-          </h3>
-          <div
-            id="fillers"
-            class="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2"
-          ></div>
-          <h3 class="mt-4 text-sm font-bold text-rose-800">Ribbon color</h3>
-          <div
-            id="ribbons"
-            class="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2"
-          ></div>
+          <div id="wraps" class="mt-3 grid grid-cols-2 gap-2"></div>
+          <h3 class="mt-4 text-sm font-bold text-rose-800">Snow dots</h3>
+          <div id="fillers" class="mt-2 grid grid-cols-2 gap-2"></div>
+          <p
+            class="mt-4 rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-800/80"
+          >
+            The ribbon automatically matches the color of your roses.
+          </p>
           <label
             class="opt mt-3 flex items-center gap-3 rounded-xl border border-rose-200 px-3 py-3 cursor-pointer"
           >
@@ -886,6 +897,24 @@
             <div>
               <label class="text-sm font-medium" for="time">Time</label>
               <input id="time" type="time" class="fld" />
+            </div>
+            <div
+              class="sm:col-span-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-3 text-sm text-amber-900"
+            >
+              <p class="font-bold">Order Reminder:</p>
+              <p class="mt-1">
+                🌸 <b>Big Bouquets:</b> Send a chat reminder 5 days before the
+                needed date.
+              </p>
+              <p class="mt-0.5">
+                🌷 <b>3-Ct Bouquets:</b> Send a chat reminder 2 days before the
+                needed date.
+              </p>
+              <p
+                id="remindLine"
+                class="mt-2 font-semibold"
+                aria-live="polite"
+              ></p>
             </div>
             <div id="addrBox" class="sm:col-span-2 hidden">
               <label class="text-sm font-medium" for="loc"
@@ -1135,7 +1164,7 @@
       const COUNTS = [
         { id: "3", label: "3 pcs", n: 3, price: 199 },
         { id: "6", label: "6 pcs", n: 6, price: 449 },
-        { id: "7", label: "7 pcs", n: 7, price: 649 },
+        { id: "7", label: "7 pcs", n: 7, price: 549 },
         { id: "20", label: "19–20 pcs", n: 20, price: 1399 },
         { id: "x", label: "Other", n: 12, price: null },
       ];
@@ -1155,7 +1184,6 @@
       ];
       const WRAPS = [
         ["White", "#f4f4f6", "#ffffff", 0.4],
-        ["Burgundy", "#8a1c3b", "#e8a0b8", 0.94],
         ["Black sparkle", "#26222b", "#9a94a6", 0.94],
       ];
       const st = { count: COUNTS[0], colors: [], wrap: 0 };
@@ -1219,10 +1247,8 @@
       // ---------- bouquet drawing (persistent SVG, animated updates) ----------
       const NS = "http://www.w3.org/2000/svg";
       const FILLERS = [
-        ["Pink", "#ff8fbf"],
         ["White", "#ffffff"],
-        ["Lavender", "#c4a8f0"],
-        ["None", null],
+        ["Black", "#26222b"],
       ];
       function petals(cnt, off, rx, ry, rot, cls) {
         let s = "";
@@ -1362,7 +1388,10 @@
         scene.style.setProperty("--w1", w[1]);
         scene.style.setProperty("--w2", w[2]);
         scene.style.setProperty("--wo", w[3]);
-        scene.style.setProperty("--rb", rbn[1] || picked[0]);
+        const rc = st.colors
+          .map((i) => COLORS[i])
+          .find((c) => !c[0].startsWith("Cream"));
+        scene.style.setProperty("--rb", rbn[1] || (rc ? rc[1] : picked[0]));
         scene.style.setProperty("--fl", fl[1] || "#ffffff");
         $("wrapG").style.transform = `translate(${CX}px,${CY}px) scale(${sc})`;
         const Rf = Math.min(e + 24, sc * 104);
@@ -1429,14 +1458,7 @@
       }
 
       // ---------- state, summary, validation ----------
-      const RIBBONS = [
-        ["Match flowers", null],
-        ["White", "#ffffff"],
-        ["Gold", "#d9a441"],
-        ["Burgundy", "#7d1230"],
-        ["Lavender", "#b79be0"],
-        ["Black", "#26222b"],
-      ];
+      const RIBBONS = [["Matches your roses", null]];
       st.ribbon = 0;
       st.ful = "Pick-up";
       st.filler = 0;
@@ -1455,22 +1477,6 @@
           render();
         };
         $("fillers").appendChild(l);
-      });
-      RIBBONS.forEach(([name, hex], i) => {
-        const l = document.createElement("label");
-        l.className =
-          "opt cursor-pointer rounded-xl border border-rose-200 px-2 py-2.5 text-center text-sm font-medium";
-        l.innerHTML =
-          `<input type="radio" name="ribbon" class="sr-only" ${i === 0 ? "checked" : ""}>` +
-          (hex
-            ? `<span class="inline-block h-4 w-4 rounded-full border border-black/10 align-middle mr-1" style="background:${hex}"></span>`
-            : "✦ ") +
-          name;
-        l.querySelector("input").onchange = () => {
-          st.ribbon = i;
-          render();
-        };
-        $("ribbons").appendChild(l);
       });
       document.querySelectorAll("input[name=ful]").forEach(
         (inp) =>
@@ -1499,7 +1505,7 @@
           colors:
             st.colors.map((i) => COLORS[i][0]).join(" + ") || "Not selected",
           wrap: WRAPS[st.wrap][0],
-          ribbon: RIBBONS[st.ribbon][0],
+          ribbon: ribbonName(),
           filler: FILLERS[st.filler][0],
           bf: $("butterfly").checked ? bfCount(qty()) : 0,
           occasion: $("occasion").value,
@@ -1546,7 +1552,7 @@
           ["Colors", d.colors],
           ["Wrapping", d.wrap],
           ["Ribbon", d.ribbon],
-          ["Filler", d.filler],
+          ["Snow dots", d.filler],
           ["Butterflies", d.bf || "None"],
           ["Occasion", d.occasion],
           ["When", [d.date, d.time].filter(Boolean).join(" · ") || "—"],
@@ -1571,6 +1577,8 @@
           : "Custom quote";
         drawBouquet();
         updateProgress();
+        updateReminder();
+        updateColorHint();
       }
       function orderText() {
         const d = data();
@@ -1584,10 +1592,11 @@
           `Colors: ${d.colors}`,
           `Wrapping: ${d.wrap}`,
           `Ribbon: ${d.ribbon}`,
-          `Filler: ${d.filler}`,
+          `Snow dots: ${d.filler}`,
           `Butterflies: ${d.bf || "None"}`,
           `${d.ful}: ${d.date}${d.time ? " " + d.time : ""}`,
           d.ful === "Delivery" ? `Address: ${d.loc}` : null,
+          remindDate() ? `Chat reminder date: ${remindDate()}` : null,
           `Price: ${d.price}`,
           d.msg ? `Card message: ${d.msg}` : null,
         ]
@@ -1620,7 +1629,7 @@
           ["Colors", d.colors],
           ["Wrapping", d.wrap],
           ["Ribbon", d.ribbon],
-          ["Filler", d.filler],
+          ["Snow dots", d.filler],
           ["Butterflies", d.bf || "None"],
           ["When", [d.date, d.time].filter(Boolean).join(" at ") || "—"],
           [
@@ -1809,50 +1818,27 @@
         render();
         sparkle();
       }
-      [
-        ["Pink & Cream", ["Light Pink", "Cream / Milky White"]],
-        ["Lavender Dream", ["Lavender Purple", "Deep Violet"]],
-        ["Royal Duo", ["Royal Blue", "Youlan Blue"]],
-        ["Sunshine", ["Sunflower Yellow", "Sunny Yellow"]],
-        ["Wine & Champagne", ["Wine Red", "Champagne"]],
-        ["Fresh Green", ["Moss Green", "Matcha Green"]],
-        ["Surprise me", null],
-      ].forEach(([name, names]) => {
-        const idx =
-          names && names.map((n) => COLORS.findIndex((c) => c[0] === n));
-        const b = document.createElement("button");
-        b.type = "button";
-        b.className =
-          "rounded-full border border-rose-200 bg-white px-3 py-1.5 text-sm font-medium hover:bg-rose-50";
-        b.innerHTML =
-          (idx
-            ? idx
-                .map(
-                  (i) =>
-                    `<span class="inline-block h-3 w-3 rounded-full border border-black/10 mr-0.5 align-middle" style="background:${COLORS[i][1]}"></span>`,
-                )
-                .join("") + " "
-            : "✨ ") + name;
-        b.onclick = () => {
-          if (idx) return setColors(idx);
-          const a = Math.floor(Math.random() * COLORS.length);
-          let c;
+      $("surprise").onclick = () => {
+        const cream = COLORS.findIndex((c) => c[0].startsWith("Cream")),
+          pool = COLORS.map((c, i) => i).filter((i) => i !== cream);
+        const a = pool[Math.floor(Math.random() * pool.length)],
+          two = Math.random() < 0.6;
+        let b;
+        if (two) {
           do {
-            c = Math.floor(Math.random() * COLORS.length);
-          } while (c === a);
-          setColors([a, c]);
-        };
-        $("combos").appendChild(b);
-      });
+            b = Math.floor(Math.random() * COLORS.length);
+          } while (b === a);
+        }
+        setColors(two ? [a, b] : [a]);
+      };
       document.addEventListener("change", (e) => {
         const t = e.target,
           n = t.name;
         if (n === "count") st.t1 = true;
-        if (["wrap", "ribbon", "filler"].includes(n) || t.id === "butterfly")
+        if (["wrap", "filler"].includes(n) || t.id === "butterfly")
           st.t3 = true;
         if (
-          (t.closest &&
-            t.closest("#colors,#counts,#wraps,#ribbons,#fillers")) ||
+          (t.closest && t.closest("#colors,#counts,#wraps,#fillers")) ||
           t.id === "butterfly"
         )
           sparkle();
@@ -1860,6 +1846,52 @@
       });
       $("bouquet").onclick = () => $("bouquet").classList.toggle("exp");
 
+      function ribbonName() {
+        const c =
+          st.colors
+            .map((i) => COLORS[i])
+            .find((x) => !x[0].startsWith("Cream")) ||
+          (st.colors.length ? COLORS[st.colors[0]] : null);
+        return c ? c[0] : "Not selected";
+      }
+      function remindDate() {
+        const v = $("date").value;
+        if (!v) return "";
+        const [y, m, d] = v.split("-").map(Number),
+          days = st.count.id === "3" ? 2 : 5;
+        return new Date(y, m - 1, d - days).toLocaleDateString("en-PH", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        });
+      }
+      function updateReminder() {
+        const v = $("date").value;
+        if (!v) {
+          $("remindLine").textContent = "";
+          return;
+        }
+        const [y, m, d] = v.split("-").map(Number),
+          days = st.count.id === "3" ? 2 : 5,
+          r = new Date(y, m - 1, d - days),
+          t = new Date();
+        t.setHours(0, 0, 0, 0);
+        $("remindLine").textContent =
+          r < t
+            ? "Your date is very close. Please message us right after sending your order."
+            : "Your reminder date: " + remindDate();
+      }
+      function updateColorHint() {
+        const n = st.colors.length,
+          cream = n === 1 && COLORS[st.colors[0]][0].startsWith("Cream");
+        $("colorHint").textContent = cream
+          ? "Cream / Milky White must be mixed. Pick one more color."
+          : n === 0
+            ? "Pick a color to begin."
+            : n === 1
+              ? "Single color is perfect. You can also add one more color to mix."
+              : "Mixed: your two colors alternate in the bouquet.";
+      }
       const messengerUrl = (t) =>
         "https://m.me/" +
         encodeURIComponent(FB_PAGE) +
