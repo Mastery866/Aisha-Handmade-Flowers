@@ -2505,6 +2505,21 @@
               id="bouquet"
               class="aspect-square w-full mx-auto max-w-[26vh] lg:max-w-[520px] cursor-zoom-in lg:cursor-default"
             ></div>
+            <p
+              id="plainHint"
+              aria-live="polite"
+              class="pointer-events-none rounded-full bg-white/90 px-3 py-1 text-[11px] sm:text-xs font-medium text-rose-800 shadow"
+              style="
+                position: absolute;
+                left: 50%;
+                bottom: 4px;
+                transform: translateX(-50%);
+                white-space: nowrap;
+                transition: opacity 0.5s;
+              "
+            >
+              🌸 Pick a color to bring it to life
+            </p>
           </div>
           <p
             id="previewNote"
@@ -2653,7 +2668,6 @@
               id="butterfly"
               type="checkbox"
               class="h-4 w-4 accent-rose-500"
-              checked
             />
             <span class="font-medium"
               >Add butterflies
@@ -3267,7 +3281,7 @@
           fl = FILLERS[st.filler];
         const picked = st.colors.length
           ? st.colors.map((i) => COLORS[i][1])
-          : ["#f9bcd2"];
+          : ["#ffffff"];
         const pts = layout(n),
           ext = Math.max(...pts.map((p) => Math.hypot(p[0], p[1]))) + 1;
         const r = Math.min(46, 84 / ext),
@@ -3281,7 +3295,10 @@
         const rc = st.colors
           .map((i) => COLORS[i])
           .find((c) => !c[0].startsWith("Cream"));
-        scene.style.setProperty("--rb", rbn[1] || (rc ? rc[1] : picked[0]));
+        scene.style.setProperty(
+          "--rb",
+          rbn[1] || (rc ? rc[1] : st.colors.length ? picked[0] : "#efe6ea"),
+        );
         scene.style.setProperty("--fl", fl[1] || "#ffffff");
         $("wrapG").style.transform = `translate(${CX}px,${CY}px) scale(${sc})`;
         const Rf = Math.min(e + 24, sc * 104);
@@ -3476,6 +3493,7 @@
         $("barTotal").textContent = st.count.price
           ? peso(st.count.price)
           : "Quote";
+        $("plainHint").style.opacity = st.colors.length ? 0 : 1;
         applyTheme();
         drawBouquet();
         updateProgress();
@@ -4765,7 +4783,7 @@
       function tintColor() {
         const cs = st.colors.map((i) => COLORS[i]),
           m = cs.find((c) => !c[0].startsWith("Cream")) || cs[0];
-        return m ? m[1] : "#f9bcd2";
+        return m ? m[1] : "#ffffff";
       }
       const hexA = (hex, a) => {
         const c = parseInt(hex.slice(1), 16);
