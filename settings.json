@@ -34,7 +34,7 @@
       "wrap": "White",
       "dots": "White",
       "bf": true,
-      "size": "7"
+      "size": ""
     },
     {
       "id": "d3",
@@ -46,7 +46,7 @@
       "wrap": "Black sparkle",
       "dots": "White",
       "bf": true,
-      "size": ""
+      "size": "7"
     },
     {
       "id": "d4",
@@ -62,5 +62,5 @@
       "size": ""
     }
   ],
-  "updated": "2026-10-07T04:57:03.947Z"
+  "updated": "2026-10-07T04:58:14.198Z"
 }
