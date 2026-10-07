@@ -10,5 +10,57 @@
     "wraps": [],
     "dots": []
   },
-  "updated": "2026-10-06T18:54:10.600Z"
+  "top": [
+    {
+      "id": "d2",
+      "name": "Lavender Dream",
+      "badge": "",
+      "colors": [
+        "Lavender Purple",
+        "Deep Violet"
+      ],
+      "wrap": "White",
+      "dots": "White",
+      "bf": true,
+      "size": ""
+    },
+    {
+      "id": "d1",
+      "name": "Blush & Cream",
+      "badge": "",
+      "colors": [
+        "Light Pink"
+      ],
+      "wrap": "White",
+      "dots": "White",
+      "bf": true,
+      "size": "7"
+    },
+    {
+      "id": "d3",
+      "name": "Wine Red Romance",
+      "badge": "",
+      "colors": [
+        "Wine Red"
+      ],
+      "wrap": "Black sparkle",
+      "dots": "White",
+      "bf": true,
+      "size": ""
+    },
+    {
+      "id": "d4",
+      "name": "Royal Blue Classic",
+      "badge": "",
+      "colors": [
+        "Royal Blue",
+        "Youlan Blue"
+      ],
+      "wrap": "White",
+      "dots": "White",
+      "bf": false,
+      "size": ""
+    }
+  ],
+  "updated": "2026-10-07T04:57:03.947Z"
 }
