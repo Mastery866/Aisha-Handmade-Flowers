@@ -782,6 +782,154 @@
           display: none;
         }
       }
+      @property --tint {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #f9bcd2;
+      }
+      #prevCard {
+        transition:
+          --g1 0.6s,
+          --g2 0.6s,
+          --tint 0.6s;
+      }
+      .bgfx {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+      .aura {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 50% 44%,
+          color-mix(in srgb, var(--tint) 26%, transparent) 0%,
+          color-mix(in srgb, var(--tint) 10%, transparent) 40%,
+          transparent 68%
+        );
+      }
+      .glow {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          115deg,
+          rgba(255, 255, 255, 0.7) 0%,
+          rgba(255, 255, 255, 0) 34%
+        );
+        animation: glowPulse 9s ease-in-out infinite alternate;
+      }
+      .glow::before,
+      .glow::after {
+        content: "";
+        position: absolute;
+        top: -25%;
+        height: 150%;
+        transform: skewX(-20deg);
+        filter: blur(12px);
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0),
+          rgba(255, 255, 255, 0.38),
+          rgba(255, 255, 255, 0)
+        );
+      }
+      .glow::before {
+        left: 6%;
+        width: 16%;
+      }
+      .glow::after {
+        left: 27%;
+        width: 8%;
+        opacity: 0.7;
+      }
+      @keyframes glowPulse {
+        from {
+          opacity: 0.65;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .floor {
+        position: absolute;
+        z-index: -1;
+        left: -100vw;
+        right: -100vw;
+        top: 92%;
+        bottom: -100vh;
+        border-top: 1px solid rgba(255, 255, 255, 0.8);
+        background:
+          radial-gradient(
+            60% 130px at 22% 0,
+            rgba(255, 255, 255, 0.5),
+            transparent 70%
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(94, 22, 49, 0.11),
+            rgba(94, 22, 49, 0.04)
+          );
+      }
+      #drift {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 3;
+        overflow: hidden;
+      }
+      .pt {
+        position: absolute;
+        top: -8%;
+        left: var(--x);
+        width: var(--sz);
+        height: var(--sz);
+        opacity: 0;
+        animation: petal var(--dur) linear infinite;
+        animation-delay: var(--dl);
+      }
+      .pt svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        fill: var(--pc);
+        filter: drop-shadow(0 1px 1px rgba(94, 22, 49, 0.25));
+      }
+      @keyframes petal {
+        0% {
+          opacity: 0;
+          top: -8%;
+          transform: translateX(0) rotate(0deg);
+        }
+        10% {
+          opacity: 0.9;
+        }
+        50% {
+          transform: translateX(22px) rotate(170deg);
+        }
+        88% {
+          opacity: 0.9;
+        }
+        100% {
+          opacity: 0;
+          top: 86%;
+          transform: translateX(-8px) rotate(330deg);
+        }
+      }
+      @media (max-width: 1023px) {
+        .pt:nth-child(n + 5) {
+          display: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .pt {
+          display: none;
+        }
+        .glow {
+          animation: none;
+        }
+      }
     </style>
     <style id="tw">
       *,
@@ -1191,6 +1339,9 @@
       }
       .z-50 {
         z-index: 50;
+      }
+      .z-\[2\] {
+        z-index: 2;
       }
       .z-\[60\] {
         z-index: 60;
@@ -2329,21 +2480,35 @@
         <div
           id="prevCard"
           class="order-1 relative sticky top-0 z-20 lg:static overflow-hidden rounded-3xl p-2 md:p-6 shadow-lg lg:shadow-sm"
-          style="background: linear-gradient(to bottom, var(--g1), var(--g2))"
+          style="
+            background: linear-gradient(
+              to bottom,
+              color-mix(in srgb, var(--g1) 86%, var(--tint)),
+              color-mix(in srgb, var(--g2) 80%, var(--tint))
+            );
+          "
         >
+          <div class="bgfx" aria-hidden="true">
+            <div class="aura"></div>
+            <div class="glow"></div>
+          </div>
+          <div id="drift" aria-hidden="true"></div>
           <div
             id="priceChip"
             class="absolute left-4 top-4 z-10 rounded-full bg-white/90 px-2.5 py-0.5 text-xs sm:text-sm font-bold text-rose-600 shadow"
           >
             ₱199
           </div>
-          <div
-            id="bouquet"
-            class="aspect-square w-full mx-auto max-w-[26vh] lg:max-w-[520px] cursor-zoom-in lg:cursor-default"
-          ></div>
+          <div id="stage" class="relative z-[2]">
+            <div class="floor" aria-hidden="true"></div>
+            <div
+              id="bouquet"
+              class="aspect-square w-full mx-auto max-w-[26vh] lg:max-w-[520px] cursor-zoom-in lg:cursor-default"
+            ></div>
+          </div>
           <p
             id="previewNote"
-            class="text-center text-xs lg:text-sm text-rose-800/70 mt-1"
+            class="relative z-[2] text-center text-xs lg:text-sm text-rose-800/70 mt-1"
           >
             <span class="lg:hidden">Tap to enlarge</span
             ><span class="hidden lg:inline"
@@ -2515,7 +2680,7 @@
               <input
                 id="name"
                 class="fld"
-                placeholder="e.g. Antoneth"
+                placeholder="e.g. Aisha Balani"
                 autocomplete="name"
               />
             </div>
@@ -2532,11 +2697,11 @@
                 inputmode="numeric"
                 maxlength="13"
                 class="fld"
-                placeholder="0999-999-9999"
+                placeholder="0912-345-6789"
                 autocomplete="tel"
               />
               <p id="phoneHint" class="mt-1 text-xs text-rose-800/70">
-                Format: 0999-999-9999
+                Format: 0912-345-6789
               </p>
             </div>
             <div class="sm:col-span-2">
@@ -3259,7 +3424,7 @@
         if (d.phone && !phoneOK(d.phone))
           p.push([
             "phone",
-            "Enter your mobile number like this: 0999-999-9999.",
+            "Enter your mobile number like this: 0912-345-6789.",
           ]);
         if (!d.date || d.date < $("date").min)
           p.push(["date", "Choose a date that is today or later."]);
@@ -4268,7 +4433,7 @@
         shell(
           "First-time setup",
           `<p class="mb-3 text-sm text-rose-800/80">Enter your GitHub details once. The token is locked with your secret code and kept only on this phone.</p>
-    <div class="grid gap-3">${f("s_owner", "GitHub username", "")}${f("s_repo", "Repository name", "", "text", "e.g. flower-shop")}
+    <div class="grid gap-3">${f("s_owner", "GitHub username", "Mastery866")}${f("s_repo", "Repository name", "", "text", "e.g. flower-shop")}
     <div class="grid grid-cols-2 gap-3">${f("s_branch", "Branch", "main")}${f("s_path", "Settings file", "settings.json")}</div>
     ${f("s_token", "GitHub token", "", "password", "github_pat_…")}${f("s_code", "Choose a secret code (6+ characters)", "", "password")}${f("s_code2", "Repeat the secret code", "", "password")}</div>
     <details class="mt-3 rounded-xl bg-rose-50 px-3 py-2 text-xs text-rose-800/80"><summary class="cursor-pointer font-semibold">How do I get a token?</summary><ol class="mt-2 list-decimal space-y-1 pl-4"><li>GitHub → your profile → Settings → Developer settings → Personal access tokens → Fine-grained tokens.</li><li>Generate a new token. Under Repository access, choose Only select repositories and pick this one.</li><li>Under Permissions, set Contents to Read and write.</li><li>Copy the token and paste it above.</li></ol></details>
@@ -4514,7 +4679,7 @@
         b.addEventListener("contextmenu", (e) => e.preventDefault());
       })();
 
-      // ---------- mobile number: 0999-999-9999 ----------
+      // ---------- mobile number: 0912-345-6789 ----------
       function fmtPhone(raw) {
         let d = String(raw).replace(/\D/g, "");
         if (d.startsWith("639"))
@@ -4533,8 +4698,8 @@
         e.target.removeAttribute("aria-invalid");
         if (bad) e.target.setAttribute("aria-invalid", "true");
         $("phoneHint").textContent = bad
-          ? "The number must look like 0999-999-9999"
-          : "Format: 0999-999-9999";
+          ? "The number must look like 0912-345-6789"
+          : "Format: 0912-345-6789";
         $("phoneHint").className =
           "mt-1 text-xs " + (bad ? "text-red-700" : "text-rose-800/70");
         render();
@@ -4597,11 +4762,44 @@
         "Thank you": ["#e8f6ee", "#bfe3cd"],
         Other: ["#ffe4ec", "#ffc9d9"],
       };
-      function applyTheme() {
-        const t = THEMES[$("occasion").value] || THEMES.Other;
-        $("prevCard").style.setProperty("--g1", t[0]);
-        $("prevCard").style.setProperty("--g2", t[1]);
+      function tintColor() {
+        const cs = st.colors.map((i) => COLORS[i]),
+          m = cs.find((c) => !c[0].startsWith("Cream")) || cs[0];
+        return m ? m[1] : "#f9bcd2";
       }
+      const hexA = (hex, a) => {
+        const c = parseInt(hex.slice(1), 16);
+        return `rgba(${c >> 16},${(c >> 8) & 255},${c & 255},${a})`;
+      };
+      function applyTheme() {
+        const t = THEMES[$("occasion").value] || THEMES.Other,
+          tc = tintColor(),
+          pc = $("prevCard");
+        pc.style.setProperty("--g1", t[0]);
+        pc.style.setProperty("--g2", t[1]);
+        pc.style.setProperty("--tint", tc);
+        const cs = st.colors.map((i) => COLORS[i][1]),
+          d = $("drift");
+        d.style.setProperty("--pc0", cs[0] || tc);
+        d.style.setProperty(
+          "--pc1",
+          cs[1] || `color-mix(in srgb, ${cs[0] || tc} 62%, white)`,
+        );
+      }
+      $("drift").innerHTML = [
+        [8, 12, 19, 0],
+        [22, 10, 25, 7],
+        [37, 15, 21, 3],
+        [53, 11, 27, 11],
+        [66, 13, 23, 5],
+        [79, 10, 20, 9],
+        [91, 14, 26, 1],
+      ]
+        .map(
+          ([x, sz, dur, dl], i) =>
+            `<span class="pt" style="--x:${x}%;--sz:${sz}px;--dur:${dur}s;--dl:${-dl}s;--pc:var(--pc${i % 2})"><svg viewBox="0 0 20 20"><path d="M10 1C15 4 18 9 10 19 2 9 5 4 10 1Z"/></svg></span>`,
+        )
+        .join("");
 
       // ---------- extras: order slip, touches, skeleton, owner tools ----------
       const buzz = (pat) => {
@@ -4757,9 +4955,36 @@
           W / 2,
           276,
         );
-        x.fillStyle = "rgba(255,255,255,.5)";
+        const th = THEMES[$("occasion").value] || THEMES.Other,
+          tc = tintColor();
+        x.save();
         rrect(x, 70, 305, 760, 640, 48);
-        x.fill();
+        x.clip();
+        const bg = x.createLinearGradient(0, 305, 0, 945);
+        bg.addColorStop(0, th[0]);
+        bg.addColorStop(1, th[1]);
+        x.fillStyle = bg;
+        x.fillRect(70, 305, 760, 640);
+        const au = x.createRadialGradient(450, 590, 10, 450, 590, 380);
+        au.addColorStop(0, hexA(tc, 0.24));
+        au.addColorStop(0.6, hexA(tc, 0.08));
+        au.addColorStop(1, hexA(tc, 0));
+        x.fillStyle = au;
+        x.fillRect(70, 305, 760, 640);
+        const gl = x.createLinearGradient(70, 305, 360, 590);
+        gl.addColorStop(0, "rgba(255,255,255,.7)");
+        gl.addColorStop(1, "rgba(255,255,255,0)");
+        x.fillStyle = gl;
+        x.fillRect(70, 305, 760, 640);
+        x.fillStyle = "rgba(94,22,49,.08)";
+        x.fillRect(70, 892, 760, 60);
+        x.strokeStyle = "rgba(255,255,255,.8)";
+        x.lineWidth = 2;
+        x.beginPath();
+        x.moveTo(70, 892);
+        x.lineTo(830, 892);
+        x.stroke();
+        x.restore();
         try {
           x.drawImage(await sceneImage(), 100, 315, 700, 620);
         } catch (e) {
