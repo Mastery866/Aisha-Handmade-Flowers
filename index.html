@@ -624,23 +624,12 @@
         fill: var(--fl);
         opacity: 0.35;
       }
-      .secret,
-      .secret:hover,
-      .secret:focus,
-      .secret:focus-visible,
-      .secret:active,
-      .secret svg,
-      .secret svg:focus,
-      .secret svg:focus-visible {
-        outline: none !important;
-        box-shadow: none !important;
-        -webkit-tap-highlight-color: transparent;
-      }
       .secret {
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         user-select: none;
         touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
         cursor: default;
       }
       .secret .ring circle {
@@ -676,10 +665,126 @@
       .opt.is-oos .oosb {
         display: block;
       }
+      .secret,
+      .secret:hover,
+      .secret:focus,
+      .secret:focus-visible,
+      .secret:active,
+      .secret svg,
+      .secret svg:focus,
+      .secret svg:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+        -webkit-tap-highlight-color: transparent;
+      }
+      @property --g1 {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #ffe4ec;
+      }
+      @property --g2 {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #ffc9d9;
+      }
+      #prevCard {
+        transition:
+          --g1 0.6s,
+          --g2 0.6s;
+      }
+      .pa {
+        fill: color-mix(in oklch, var(--c) 76%, black);
+      }
+      .pc {
+        fill: color-mix(in oklch, var(--c) 84%, white);
+      }
+      .pd {
+        fill: color-mix(in oklch, var(--c) 68%, white);
+      }
+      .ln {
+        stroke: color-mix(in oklch, var(--c) 55%, black);
+      }
+      .pa,
+      .pb,
+      .pc,
+      .pd {
+        stroke: color-mix(in oklch, var(--c) 55%, white);
+      }
+      .d0,
+      .d1,
+      .d2 {
+        stroke: color-mix(in srgb, var(--fl) 40%, #a8738a);
+        stroke-width: 0.55;
+        stroke-opacity: 0.75;
+      }
+      .fg {
+        filter: drop-shadow(0 1px 1.5px rgba(94, 22, 49, 0.3));
+      }
+      .opt:has(input:checked) .sw {
+        box-shadow:
+          0 0 0 2px #fff,
+          0 0 0 4px #d6457b;
+      }
+      .opt:has(input:checked) .sw::after {
+        content: "✓";
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-size: 15px;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+      }
+      .sec {
+        scroll-margin-top: 30vh;
+      }
+      @media (min-width: 1024px) {
+        .sec {
+          scroll-margin-top: 1rem;
+        }
+      }
+      #bar2 {
+        transition: transform 0.3s ease;
+      }
+      #bar2.off {
+        transform: translateY(115%);
+      }
+      .topc {
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s,
+          border-color 0.15s;
+      }
+      .topc:not(:disabled):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(94, 22, 49, 0.14);
+      }
+      .topc.sel {
+        border-color: #d6457b;
+        background: #fff4f7;
+        box-shadow: 0 0 0 2px #d6457b44;
+      }
+      .topc:disabled {
+        opacity: 0.55;
+        filter: grayscale(0.9);
+        cursor: not-allowed;
+      }
+      .topc:disabled .oosb {
+        display: block;
+      }
+      .thumb .wa,
+      .thumb .wb {
+        stroke-width: 1.2;
+      }
+      #topRow {
+        scrollbar-width: thin;
+        scroll-snap-type: x proximity;
+      }
     </style>
   </head>
   <body class="font-sans min-h-screen">
-    <header class="px-5 pt-8 pb-3 text-center">
+    <header class="px-5 pt-4 sm:pt-8 pb-2 sm:pb-3 text-center">
       <div class="flex items-center justify-center gap-3">
         <button
           id="secretBtn"
@@ -716,18 +821,20 @@
             />
           </svg>
         </button>
-        <h1 class="font-display text-3xl md:text-5xl font-bold text-rose-800">
+        <h1
+          class="font-display text-2xl sm:text-3xl md:text-5xl font-bold text-rose-800"
+        >
           Aisha Handmade Flowers
         </h1>
       </div>
       <div
         class="mx-auto mt-3 h-px w-28 bg-gradient-to-r from-transparent via-amber-400 to-transparent"
       ></div>
-      <p class="mt-3 text-rose-800/75 max-w-xl mx-auto">
+      <p class="mt-3 hidden sm:block text-rose-800/75 max-w-xl mx-auto">
         Design your own bouquet. Every flower is folded by hand from satin
         ribbon.
       </p>
-      <p class="mt-2 text-xs uppercase tracking-[.18em] text-rose-800/55">
+      <p class="mt-2 text-xs uppercase tracking-[.18em] text-rose-800/75">
         Handmade · Made to order · Your colors
       </p>
     </header>
@@ -742,30 +849,30 @@
     </nav>
 
     <main
-      class="max-w-6xl mx-auto px-4 pb-16 flex flex-col lg:grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-6 lg:items-start"
+      class="max-w-6xl mx-auto px-4 pb-28 lg:pb-16 flex flex-col lg:grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-6 lg:items-start"
     >
       <!-- LIVE PREVIEW -->
       <section class="contents lg:block lg:sticky lg:top-4">
         <div
           id="prevCard"
-          class="order-1 relative sticky top-0 z-20 lg:static overflow-hidden rounded-[2rem] bg-gradient-to-b from-rose-100 to-rose-200 p-3 md:p-6 shadow-md lg:shadow-none"
+          class="order-1 relative sticky top-0 z-20 lg:static overflow-hidden rounded-[2rem] p-2 md:p-6 shadow-md lg:shadow-none"
+          style="background: linear-gradient(to bottom, var(--g1), var(--g2))"
         >
           <div
             id="priceChip"
-            class="absolute left-4 top-4 z-10 rounded-full bg-white/90 px-3 py-1 text-sm font-bold text-rose-600 shadow"
+            class="absolute left-4 top-4 z-10 rounded-full bg-white/90 px-2.5 py-0.5 text-xs sm:text-sm font-bold text-rose-600 shadow"
           >
             ₱199
           </div>
           <div
             id="bouquet"
-            class="aspect-square w-full mx-auto max-w-[32vh] lg:max-w-[520px] cursor-zoom-in lg:cursor-default"
+            class="aspect-square w-full mx-auto max-w-[26vh] lg:max-w-[520px] cursor-zoom-in lg:cursor-default"
           ></div>
           <p
             id="previewNote"
             class="text-center text-xs lg:text-sm text-rose-800/70 mt-1"
           >
-            <span class="lg:hidden"
-              >Tap the preview to enlarge. It is a sketch.</span
+            <span class="lg:hidden">Tap to enlarge</span
             ><span class="hidden lg:inline"
               >Preview is a sketch. Your real bouquet is made to order.</span
             >
@@ -800,7 +907,7 @@
             </svg>
             Send this design on Messenger
           </button>
-          <p class="mt-2 text-xs text-center text-rose-800/60">
+          <p class="mt-2 text-xs text-center text-rose-800/70">
             Tap the button to get your order image. Then save it, open
             Messenger, and send the image with your order text.
           </p>
@@ -809,8 +916,24 @@
 
       <!-- CONTROLS -->
       <section class="order-2 space-y-5">
-        <div class="rounded-2xl bg-white p-5 shadow-sm">
+        <div id="topCard" class="hidden rounded-2xl bg-white p-5 shadow-sm">
           <h2 class="font-display text-xl font-bold text-rose-800">
+            ✨ Top choices
+          </h2>
+          <p class="text-sm text-rose-800/70">
+            Not sure where to start? Tap one, then change anything you like.
+          </p>
+          <div
+            id="topRow"
+            class="-mx-1 mt-3 flex snap-x gap-3 overflow-x-auto px-1 pb-2"
+          ></div>
+        </div>
+
+        <div class="rounded-2xl bg-white p-5 shadow-sm">
+          <h2
+            id="sec1"
+            class="sec font-display text-xl font-bold text-rose-800"
+          >
             <span class="stp">1</span>How many flowers?
           </h2>
           <div
@@ -829,14 +952,17 @@
               value="12"
               class="mt-1 w-32 rounded-lg border border-rose-200 px-3 py-2"
             />
-            <p class="text-xs text-rose-800/60 mt-1">
+            <p class="text-xs text-rose-800/70 mt-1">
               We will send you a price quote on Messenger.
             </p>
           </div>
         </div>
 
         <div class="rounded-2xl bg-white p-5 shadow-sm">
-          <h2 class="font-display text-xl font-bold text-rose-800">
+          <h2
+            id="sec2"
+            class="sec font-display text-xl font-bold text-rose-800"
+          >
             <span class="stp">2</span>Pick up to 2 colors
             <span
               class="ml-1 rounded-full bg-rose-100 px-2 py-0.5 align-middle text-xs font-medium text-rose-800"
@@ -867,8 +993,11 @@
         </div>
 
         <div class="rounded-2xl bg-white p-5 shadow-sm">
-          <h2 class="font-display text-xl font-bold text-rose-800">
-            <span class="stp">3</span>Wrapping, ribbon and extras
+          <h2
+            id="sec3"
+            class="sec font-display text-xl font-bold text-rose-800"
+          >
+            <span class="stp">3</span>Wrapping, snow dots and extras
           </h2>
           <div id="wraps" class="mt-3 grid grid-cols-2 gap-2"></div>
           <h3 class="mt-4 text-sm font-bold text-rose-800">Snow dots</h3>
@@ -889,18 +1018,21 @@
             />
             <span class="font-medium"
               >Add butterflies
-              <span class="font-normal text-rose-800/60"
+              <span class="font-normal text-rose-800/70"
                 >(more for bigger bouquets)</span
               ></span
             >
-            <span id="bfNote" class="text-xs text-rose-800/60 ml-auto"
+            <span id="bfNote" class="text-xs text-rose-800/70 ml-auto"
               >Free</span
             >
           </label>
         </div>
 
         <div class="rounded-2xl bg-white p-5 shadow-sm">
-          <h2 class="font-display text-xl font-bold text-rose-800">
+          <h2
+            id="sec4"
+            class="sec font-display text-xl font-bold text-rose-800"
+          >
             <span class="stp">4</span>Your details
           </h2>
           <div class="mt-3 grid sm:grid-cols-2 gap-3">
@@ -916,18 +1048,22 @@
             <div>
               <label class="text-sm font-medium" for="phone"
                 >Mobile number
-                <span class="text-rose-800/50 font-normal"
+                <span class="text-rose-800/60 font-normal"
                   >(optional)</span
                 ></label
               >
               <input
                 id="phone"
                 type="tel"
-                inputmode="tel"
+                inputmode="numeric"
+                maxlength="13"
                 class="fld"
-                placeholder="09xx xxx xxxx"
+                placeholder="0999-999-9999"
                 autocomplete="tel"
               />
+              <p id="phoneHint" class="mt-1 text-xs text-rose-800/70">
+                Format: 0999-999-9999
+              </p>
             </div>
             <div class="sm:col-span-2">
               <label class="text-sm font-medium" for="occasion"
@@ -968,6 +1104,10 @@
                 >
               </div>
             </fieldset>
+            <div class="sm:col-span-2">
+              <span class="text-sm font-medium">Need it soon?</span>
+              <div id="dateChips" class="mt-1 flex flex-wrap gap-2"></div>
+            </div>
             <div>
               <label class="text-sm font-medium" for="date">Date needed</label>
               <input id="date" type="date" class="fld" />
@@ -1015,10 +1155,10 @@
               <div class="flex justify-between">
                 <label class="text-sm font-medium" for="msg"
                   >Card message
-                  <span class="text-rose-800/50 font-normal"
+                  <span class="text-rose-800/60 font-normal"
                     >(optional)</span
                   ></label
-                ><span class="text-xs text-rose-800/60"
+                ><span class="text-xs text-rose-800/70"
                   ><span id="count">0</span>/150</span
                 >
               </div>
@@ -1035,6 +1175,28 @@
       </section>
     </main>
 
+    <div
+      id="bar2"
+      class="lg:hidden fixed inset-x-0 bottom-0 z-30 flex items-center gap-3 border-t border-rose-100 bg-white/95 px-4 pt-3 shadow-[0_-6px_18px_rgba(94,22,49,.12)] backdrop-blur"
+      style="padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px))"
+    >
+      <div>
+        <div class="text-xs text-rose-800/70">Total</div>
+        <div
+          id="barTotal"
+          class="font-display text-xl font-bold leading-none text-rose-600"
+        >
+          ₱199
+        </div>
+      </div>
+      <button
+        id="bar2btn"
+        type="button"
+        class="flex-1 rounded-xl bg-[#0a7cff] py-3 font-bold text-white"
+      >
+        Send on Messenger
+      </button>
+    </div>
     <div
       id="gate"
       class="gate-bg hidden fixed inset-0 z-[60] overflow-hidden"
@@ -1126,7 +1288,7 @@
               >
             </li>
           </ol>
-          <p class="mt-4 text-xs text-rose-800/60">
+          <p class="mt-4 text-xs text-rose-800/70">
             Messenger's built-in browser cannot save your order image.
           </p>
           <a
@@ -1235,7 +1397,7 @@
 
     <script>
       // ====== SETTINGS: change these ======
-      const FB_PAGE = "aisha.balani.2025"; // your Facebook page username, e.g. "handmadeflowersph" (facebook.com/<this>)
+      const FB_PAGE = "aisha.balani.2025"; // your Facebook username (facebook.com/<this>)
       const SHOP_NAME = "Aisha Handmade Flowers";
       // ====================================
 
@@ -1296,7 +1458,7 @@
         const l = document.createElement("label");
         l.className =
           "opt flex items-center gap-2 cursor-pointer rounded-xl border border-rose-200 px-3 py-2.5";
-        l.innerHTML = `<input type="checkbox" class="sr-only" value="${i}"><span class="h-8 w-8 rounded-full shrink-0 border border-black/10 shadow-inner" style="background:${hex}"></span><span class="text-sm font-medium leading-tight">${name}</span>`;
+        l.innerHTML = `<input type="checkbox" class="sr-only" value="${i}"><span class="sw relative h-8 w-8 rounded-full shrink-0 border border-black/10 shadow-inner" style="background:${hex}"></span><span class="text-sm font-medium leading-tight">${name}</span>`;
         l.querySelector("input").onchange = (e) => {
           if (e.target.checked) st.colors.push(i);
           else st.colors = st.colors.filter((x) => x !== i);
@@ -1320,7 +1482,17 @@
       ["name", "date", "time", "loc", "msg"].forEach(
         (id) => ($(id).oninput = render),
       );
-      $("date").value = new Date().toISOString().slice(0, 10);
+      const todayStr = () => {
+        const d = new Date();
+        return (
+          d.getFullYear() +
+          "-" +
+          String(d.getMonth() + 1).padStart(2, "0") +
+          "-" +
+          String(d.getDate()).padStart(2, "0")
+        );
+      };
+      $("date").min = todayStr();
 
       // ---------- bouquet drawing (persistent SVG, animated updates) ----------
       const NS = "http://www.w3.org/2000/svg";
@@ -1565,12 +1737,12 @@
             render();
           }),
       );
-      ["phone", "occasion"].forEach((id) => ($(id).oninput = render));
+      $("occasion").oninput = render;
       $("msg").addEventListener(
         "input",
         () => ($("count").textContent = $("msg").value.length),
       );
-      $("date").min = $("date").value;
+      $("date").min = todayStr();
       function qty() {
         return st.count.id === "x"
           ? Math.max(1, Math.min(50, +$("customQty").value || 1))
@@ -1609,6 +1781,11 @@
             "Cream / Milky White must be mixed. Pick one more color.",
           ]);
         if (!d.name) p.push(["name", "Enter your name."]);
+        if (d.phone && !phoneOK(d.phone))
+          p.push([
+            "phone",
+            "Enter your mobile number like this: 0999-999-9999.",
+          ]);
         if (!d.date || d.date < $("date").min)
           p.push(["date", "Choose a date that is today or later."]);
         if (d.ful === "Delivery" && !d.loc)
@@ -1647,7 +1824,7 @@
         $("summary").innerHTML = rows
           .map(
             ([k, v]) =>
-              `<div class="flex justify-between gap-4 py-1.5"><dt class="text-rose-800/70">${k}</dt><dd class="font-medium text-right">${k === "Colors" ? st.colors.map((i) => `<span class="inline-block h-3 w-3 rounded-full border border-black/10 mr-1 align-middle" style="background:${COLORS[i][1]}"></span>`).join("") : ""}${String(v).replace(/</g, "&lt;")}</dd></div>`,
+              `<div class="flex justify-between gap-4 py-1.5"><dt class="text-rose-800/70">${k}</dt><dd class="font-medium text-right">${k === "Colors" ? st.colors.map((i) => `<span class="inline-block h-3 w-3 rounded-full border border-black/10 mr-1 align-middle" style="background:${COLORS[i][1]}"></span>`).join("") : ""}${k === "Colors" && !st.colors.length ? '<button type="button" data-s="2" class="font-medium text-rose-600 underline">Pick your colors</button>' : String(v).replace(/</g, "&lt;")}</dd></div>`,
           )
           .join("");
         $("total").textContent = st.count.price
@@ -1656,10 +1833,15 @@
         $("priceChip").textContent = st.count.price
           ? peso(st.count.price)
           : "Custom quote";
+        $("barTotal").textContent = st.count.price
+          ? peso(st.count.price)
+          : "Quote";
+        applyTheme();
         drawBouquet();
         updateProgress();
         updateReminder();
         updateColorHint();
+        updateTopSel();
       }
       function orderText() {
         const d = data();
@@ -1729,7 +1911,7 @@
         const css =
           [...document.querySelectorAll("style")]
             .map((x) => x.textContent)
-            .find((t) => t.includes(".pa {")) || "";
+            .find((t) => /\.pa\s*\{/.test(t)) || "";
         const sty = document.createElementNS(NS, "style");
         sty.textContent =
           css + " *{animation:none!important;transition:none!important}";
@@ -1855,8 +2037,8 @@
         }
       }
       // ---------- progress, popular combos, sparkles, tap-to-enlarge ----------
-      st.t1 = false;
-      st.t3 = false;
+      st.t1 = true;
+      st.t3 = true;
       const STEP_NAMES = ["Size", "Colors", "Style", "Details"];
       function updateProgress() {
         const d = data(),
@@ -1871,7 +2053,7 @@
         $("steps").innerHTML = done
           .map(
             (ok, i) =>
-              `<li class="${ok ? "text-rose-800 font-semibold" : "text-rose-800/55"}"><span class="mx-auto mb-1 grid h-7 w-7 place-items-center rounded-full font-bold ${ok ? "bg-rose-800 text-white" : "bg-rose-100"}">${ok ? "✓" : i + 1}</span>${STEP_NAMES[i]}</li>`,
+              `<li><button type="button" data-s="${i + 1}" class="w-full ${ok ? "text-rose-800 font-semibold" : "text-rose-800/75"}"><span class="mx-auto mb-1 grid h-7 w-7 place-items-center rounded-full font-bold ${ok ? "bg-rose-800 text-white" : "bg-rose-100"}">${ok ? "✓" : i + 1}</span>${STEP_NAMES[i]}</button></li>`,
           )
           .join("");
         $("bar").style.width = done.filter(Boolean).length * 25 + "%";
@@ -1920,13 +2102,13 @@
             .map((i) => COLORS[i])
             .find((x) => !x[0].startsWith("Cream")) ||
           (st.colors.length ? COLORS[st.colors[0]] : null);
-        return c ? c[0] : "Not selected";
+        return c ? c[0] : "Same as your roses";
       }
       function remindDate() {
         const v = $("date").value;
         if (!v) return "";
         const [y, m, d] = v.split("-").map(Number),
-          days = st.count.id === "3" ? 2 : 5;
+          days = qty() <= 3 ? 2 : 5;
         return new Date(y, m - 1, d - days).toLocaleDateString("en-PH", {
           month: "long",
           day: "numeric",
@@ -1940,7 +2122,7 @@
           return;
         }
         const [y, m, d] = v.split("-").map(Number),
-          days = st.count.id === "3" ? 2 : 5,
+          days = qty() <= 3 ? 2 : 5,
           r = new Date(y, m - 1, d - days),
           t = new Date();
         t.setHours(0, 0, 0, 0);
@@ -1968,6 +2150,90 @@
       const clone = (o) => JSON.parse(JSON.stringify(o));
       const arr = (a) =>
         Array.isArray(a) ? a.filter((x) => typeof x === "string") : [];
+      const newId = () => "p" + Math.random().toString(36).slice(2, 8);
+      const DEFAULT_TOP = [
+        {
+          id: "d1",
+          name: "Blush & Cream",
+          badge: "",
+          colors: ["Light Pink", "Cream / Milky White"],
+          wrap: "White",
+          dots: "White",
+          bf: true,
+          size: "",
+        },
+        {
+          id: "d2",
+          name: "Lavender Dream",
+          badge: "",
+          colors: ["Lavender Purple", "Deep Violet"],
+          wrap: "White",
+          dots: "White",
+          bf: true,
+          size: "",
+        },
+        {
+          id: "d3",
+          name: "Wine Red Romance",
+          badge: "",
+          colors: ["Wine Red"],
+          wrap: "Black sparkle",
+          dots: "White",
+          bf: true,
+          size: "",
+        },
+        {
+          id: "d4",
+          name: "Royal Blue Classic",
+          badge: "",
+          colors: ["Royal Blue", "Youlan Blue"],
+          wrap: "White",
+          dots: "White",
+          bf: false,
+          size: "",
+        },
+        {
+          id: "d5",
+          name: "Sunshine",
+          badge: "",
+          colors: ["Sunflower Yellow"],
+          wrap: "White",
+          dots: "Black",
+          bf: true,
+          size: "",
+        },
+      ];
+      function cleanTop(list) {
+        const names = COLORS.map((c) => c[0]);
+        return list
+          .slice(0, 8)
+          .map((p) => {
+            if (!p || typeof p !== "object") return null;
+            const cols = arr(p.colors)
+              .filter((n) => names.includes(n))
+              .filter((n, i, a) => a.indexOf(n) === i)
+              .slice(0, 2);
+            if (
+              !cols.length ||
+              (cols.length === 1 && cols[0].startsWith("Cream"))
+            )
+              return null;
+            return {
+              id:
+                typeof p.id === "string" && p.id ? p.id.slice(0, 12) : newId(),
+              name: String(p.name || "Top choice").slice(0, 28),
+              badge: String(p.badge || "").slice(0, 14),
+              colors: cols,
+              wrap: WRAPS.some((w) => w[0] === p.wrap) ? p.wrap : WRAPS[0][0],
+              dots: FILLERS.some((f) => f[0] === p.dots)
+                ? p.dots
+                : FILLERS[0][0],
+              bf: p.bf !== false,
+              size: DEFAULT_PRICES[p.size] ? p.size : "",
+            };
+          })
+          .filter(Boolean);
+      }
       function normalize(j) {
         j = j || {};
         const o = j.out || {},
@@ -1982,6 +2248,9 @@
             wraps: arr(o.wraps),
             dots: arr(o.dots),
           },
+          top: Array.isArray(j.top)
+            ? cleanTop(j.top)
+            : cleanTop(clone(DEFAULT_TOP)),
         };
       }
       let settings = normalize(),
@@ -2037,13 +2306,23 @@
         st.colors = st.colors.filter((i) => !OOS.colors.has(COLORS[i][0]));
         fixRadio("#wraps", "wrap", WRAPS, OOS.wraps);
         fixRadio("#fillers", "filler", FILLERS, OOS.dots);
+        renderTop();
         render();
       }
       async function loadSettings() {
+        const pulse = (on) =>
+          ["counts", "priceChip"].forEach((id) =>
+            $(id).classList.toggle("animate-pulse", on),
+          );
+        pulse(true);
         try {
+          const ac = new AbortController(),
+            to = setTimeout(() => ac.abort(), 4000);
           const r = await fetch("settings.json?t=" + Date.now(), {
             cache: "no-store",
+            signal: ac.signal,
           });
+          clearTimeout(to);
           if (r.ok) {
             settings = normalize(await r.json());
             saved = clone(settings);
@@ -2051,6 +2330,7 @@
         } catch (_) {
           /* no file yet or offline: everything stays in stock at normal prices */
         }
+        pulse(false);
         applyAll();
       }
       $("surprise").onclick = () => {
@@ -2170,6 +2450,293 @@
         );
       }
 
+      // ---------- top choices: ready-made combinations (editable by the owner) ----------
+      const esc = (x) =>
+        String(x).replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      const TD = (() => {
+        const r = rng(11),
+          a = [];
+        for (let i = 0; i < 90; i++) {
+          const t = r() * 6.2832,
+            d = 22 + r() * 18;
+          a.push([60 + Math.cos(t) * d, 52 + Math.sin(t) * d, 0.9 + r() * 0.9]);
+        }
+        return a;
+      })();
+      function thumb(p) {
+        const w = WRAPS.find((x) => x[0] === p.wrap) || WRAPS[0],
+          f = FILLERS.find((x) => x[0] === p.dots) || FILLERS[0];
+        const cs = p.colors.map(
+          (n) => (COLORS.find((c) => c[0] === n) || COLORS[5])[1],
+        );
+        const rb = (p.colors
+          .map((n) => COLORS.find((c) => c[0] === n))
+          .find((c) => c && !c[0].startsWith("Cream")) || COLORS[5])[1];
+        const pts = [
+          [0, 0],
+          ...[...Array(6)].map((_, i) => [
+            Math.cos(i * 1.0472 - 1.5708) * 14,
+            Math.sin(i * 1.0472 - 1.5708) * 14,
+          ]),
+        ];
+        return `<svg viewBox="0 0 120 120" class="thumb block h-full w-full" style="--w1:${w[1]};--w2:${w[2]};--wo:${w[3]};--rb:${rb}" aria-hidden="true">
+    <path class="rb" d="M52 80L60 112 68 80z"/>
+    ${[0, 30, 60].map((r, i) => `<rect class="${i % 2 ? "wb" : "wa"}" x="-40" y="-40" width="80" height="80" rx="4" transform="translate(60 52) rotate(${r})"/>`).join("")}
+    ${TD.map(([x, y, r]) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="${f[1]}" stroke="#a8738a" stroke-width=".25" stroke-opacity=".6"/>`).join("")}
+    ${pts.map(([x, y], i) => `<use href="#rose" transform="translate(${60 + x} ${52 + y}) rotate(${i * 47}) scale(.15)" style="--c:${cs[i % cs.length]}"/>`).join("")}
+    <path class="rb" d="M60 90C56 100 55 108 56 114L60 111 64 114C65 108 64 100 60 90Z"/>
+    <path class="rl" d="M60 86C48 76 45 91 56 93 60 94 60 89 60 86ZM60 86C72 76 75 91 64 93 60 94 60 89 60 86Z"/>
+    ${p.bf ? '<g transform="translate(90 26) rotate(25) scale(.42)"><path d="M0 0C-8-22-34-24-30-4-28 8-12 8 0 0zM0 0C8-22 34-24 30-4 28 8 12 8 0 0zM0 0C-6 10-22 18-16 28-10 34-2 14 0 0zM0 0C6 10 22 18 16 28 10 34 2 14 0 0z" fill="#2b2233" fill-opacity=".85"/></g>' : ""}</svg>`;
+      }
+      const topNA = (p) =>
+        p.colors.some((n) => OOS.colors.has(n)) ||
+        OOS.wraps.has(p.wrap) ||
+        OOS.dots.has(p.dots);
+      function renderTop() {
+        const list = settings.top;
+        $("topCard").classList.toggle("hidden", !list.length);
+        $("topRow").innerHTML = list
+          .map((p) => {
+            const size = p.size
+              ? (COUNTS.find((c) => c.id === p.size) || {}).label
+              : "";
+            return `<button type="button" data-top="${esc(p.id)}" ${topNA(p) ? "disabled" : ""} class="topc relative w-40 shrink-0 snap-start rounded-2xl border border-rose-200 bg-white p-2 text-left">
+      ${p.badge ? `<span class="absolute left-3 top-3 z-10 rounded-full bg-rose-800 px-2 py-0.5 text-[10px] font-bold text-white">${esc(p.badge)}</span>` : ""}
+      <span class="tsel absolute right-3 top-3 z-10 hidden h-6 w-6 place-items-center rounded-full bg-rose-500 text-xs font-bold text-white">✓</span>
+      <div class="aspect-square overflow-hidden rounded-xl" style="background:linear-gradient(#fff4f7,#ffe4ec)">${thumb(p)}</div>
+      <div class="mt-2 font-display text-base font-bold leading-tight text-rose-800">${esc(p.name)}</div>
+      <div class="mt-1 flex items-center gap-1">${p.colors.map((n) => `<span class="h-4 w-4 rounded-full border border-black/10" style="background:${(COLORS.find((c) => c[0] === n) || COLORS[5])[1]}"></span>`).join("")}${size ? `<span class="ml-1 text-xs font-semibold text-rose-600">${esc(size)}</span>` : ""}</div>
+      <div class="mt-1 text-xs leading-snug text-rose-800/70">${esc(p.wrap)} wrap · ${esc(p.dots)} dots${p.bf ? " · butterflies" : ""}</div>
+      ${topNA(p) ? '<span class="oosb">Out of stock</span>' : ""}</button>`;
+          })
+          .join("");
+        updateTopSel();
+      }
+      function updateTopSel() {
+        const cur = st.colors
+          .map((i) => COLORS[i][0])
+          .sort()
+          .join("|");
+        document.querySelectorAll("#topRow [data-top]").forEach((b) => {
+          const p = settings.top.find((x) => x.id === b.dataset.top);
+          if (!p) return;
+          const on =
+            cur === p.colors.slice().sort().join("|") &&
+            WRAPS[st.wrap][0] === p.wrap &&
+            FILLERS[st.filler][0] === p.dots &&
+            $("butterfly").checked === p.bf &&
+            (!p.size || st.count.id === p.size);
+          b.classList.toggle("sel", on);
+          b.querySelector(".tsel").classList.toggle("hidden", !on);
+          b.querySelector(".tsel").classList.toggle("grid", on);
+        });
+      }
+      function applyPreset(id) {
+        const p = settings.top.find((x) => x.id === id);
+        if (!p || topNA(p)) return;
+        st.colors = p.colors.map((n) => COLORS.findIndex((c) => c[0] === n));
+        document
+          .querySelectorAll("#colors input")
+          .forEach((inp) => (inp.checked = st.colors.includes(+inp.value)));
+        st.wrap = Math.max(
+          0,
+          WRAPS.findIndex((w) => w[0] === p.wrap),
+        );
+        document.querySelectorAll("#wraps input")[st.wrap].checked = true;
+        st.filler = Math.max(
+          0,
+          FILLERS.findIndex((f) => f[0] === p.dots),
+        );
+        document.querySelectorAll("#fillers input")[st.filler].checked = true;
+        $("butterfly").checked = p.bf;
+        if (p.size) {
+          const i = COUNTS.findIndex((c) => c.id === p.size);
+          if (i >= 0) {
+            st.count = COUNTS[i];
+            document.querySelectorAll("#counts input")[i].checked = true;
+            $("customBox").classList.add("hidden");
+          }
+        }
+        st.t1 = true;
+        st.t3 = true;
+        render();
+        sparkle();
+      }
+      $("topRow").onclick = (e) => {
+        const b = e.target.closest("[data-top]");
+        if (b) applyPreset(b.dataset.top);
+      };
+
+      // --- owner: edit the top choices
+      let openTop = -1;
+      function refreshDirty() {
+        const b = $("a_pub"),
+          sd = $("admDirty");
+        if (b) b.disabled = !dirty();
+        if (sd) {
+          sd.textContent = dirty()
+            ? "● Unpublished changes"
+            : "All changes published";
+          sd.className =
+            "flex-1 text-xs " +
+            (dirty() ? "font-semibold text-amber-700" : "text-rose-800/75");
+        }
+      }
+      function topEditor(p, i) {
+        const seg = (attr, items, cur) =>
+          items
+            .map(
+              (n) =>
+                `<button type="button" ${attr} data-v="${esc(n)}" data-i="${i}" class="rounded-lg border px-3 py-1.5 text-sm ${n === cur ? "border-rose-500 bg-rose-100 font-semibold text-rose-800" : "border-rose-200 bg-white"}">${esc(n)}</button>`,
+            )
+            .join("");
+        const chips = COLORS.map((c) => {
+          const on = p.colors.includes(c[0]);
+          return `<button type="button" data-tc data-v="${esc(c[0])}" data-i="${i}" class="flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs ${on ? "border-rose-500 bg-rose-100 font-semibold" : "border-rose-200 bg-white"}"><span class="h-4 w-4 rounded-full border border-black/10" style="background:${c[1]}"></span>${esc(c[0])}${on ? " ✓" : ""}</button>`;
+        }).join("");
+        const lab = (t) =>
+          `<span class="mb-1 block text-xs font-semibold text-rose-800">${t}</span>`;
+        return `<details data-ti="${i}" class="rounded-2xl border border-rose-100 bg-white" ${openTop === i ? "open" : ""}>
+    <summary class="flex cursor-pointer list-none items-center gap-3 px-3 py-2.5"><span class="h-12 w-12 shrink-0 overflow-hidden rounded-lg" style="background:#ffe4ec">${thumb(p)}</span>
+      <span class="min-w-0 flex-1"><b class="block truncate text-sm text-rose-800">${esc(p.name || "Untitled")}</b><span class="block truncate text-xs text-rose-800/70">${esc(p.colors.join(" + "))} · ${esc(p.wrap)} · ${esc(p.dots)} dots</span></span><span class="text-rose-800/70">▾</span></summary>
+    <div class="space-y-3 border-t border-rose-100 px-3 py-3">
+      <div class="grid grid-cols-3 gap-2"><label class="col-span-2 block">${lab("Name")}<input data-tf="name" data-i="${i}" maxlength="28" value="${esc(p.name)}" class="${fieldCls}"></label><label class="block">${lab("Label (optional)")}<input data-tf="badge" data-i="${i}" maxlength="14" placeholder="e.g. Popular" value="${esc(p.badge)}" class="${fieldCls}"></label></div>
+      <div>${lab("Flower colors (1 or 2)")}<div class="flex flex-wrap gap-1.5">${chips}</div></div>
+      <div>${lab("Wrapping")}<div class="flex flex-wrap gap-1.5">${seg(
+        "data-tw",
+        WRAPS.map((w) => w[0]),
+        p.wrap,
+      )}</div></div>
+      <div>${lab("Snow dots")}<div class="flex flex-wrap gap-1.5">${seg(
+        "data-td",
+        FILLERS.map((f) => f[0]),
+        p.dots,
+      )}</div></div>
+      <div class="grid grid-cols-2 gap-3"><label class="flex items-center gap-2 rounded-xl border border-rose-100 px-3 py-2.5 text-sm"><input type="checkbox" data-tb data-i="${i}" ${p.bf ? "checked" : ""} class="h-4 w-4 accent-rose-500">Butterflies</label>
+        <label class="block"><select data-ts data-i="${i}" class="${fieldCls}"><option value="">Keep customer's size</option>${COUNTS.filter(
+          (c) => c.price,
+        )
+          .map(
+            (c) =>
+              `<option value="${c.id}" ${p.size === c.id ? "selected" : ""}>${c.label}</option>`,
+          )
+          .join("")}</select></label></div>
+      <div class="flex gap-2"><button type="button" data-up data-i="${i}" ${i === 0 ? "disabled" : ""} class="rounded-lg border border-rose-200 px-3 py-1.5 text-sm disabled:opacity-40">↑ Up</button><button type="button" data-down data-i="${i}" ${i === settings.top.length - 1 ? "disabled" : ""} class="rounded-lg border border-rose-200 px-3 py-1.5 text-sm disabled:opacity-40">↓ Down</button>
+        <button type="button" data-del data-i="${i}" class="ml-auto rounded-lg border border-red-200 px-3 py-1.5 text-sm text-red-700">Delete</button></div>
+    </div></details>`;
+      }
+      function topSection() {
+        const full = settings.top.length >= 8;
+        return `<section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">Top choices</h3>
+    <p class="mb-2 text-xs text-rose-800/70">Ready-made combinations for customers who feel unsure. Tapping one fills in the colors, wrapping, snow dots and butterflies. They can still change anything afterwards.</p>
+    <div class="grid gap-2">${settings.top.map(topEditor).join("") || '<p class="rounded-xl bg-rose-50 px-3 py-3 text-sm text-rose-800/70">No top choices yet. The section is hidden for customers.</p>'}</div>
+    <button type="button" data-add ${full ? "disabled" : ""} class="mt-2 w-full rounded-xl border border-dashed border-rose-300 py-2.5 text-sm font-medium text-rose-800 disabled:opacity-40">＋ Add a top choice${full ? " (maximum 8)" : ""}</button></section>`;
+      }
+      function bindTop() {
+        const body = adm.querySelector("#admBody");
+        adm.querySelectorAll("details[data-ti]").forEach((d) =>
+          d.addEventListener("toggle", () => {
+            const i = +d.dataset.ti;
+            if (d.open) openTop = i;
+            else if (openTop === i) openTop = -1;
+          }),
+        );
+        adm.querySelectorAll("input[data-tf]").forEach(
+          (inp) =>
+            (inp.oninput = () => {
+              settings.top[+inp.dataset.i][inp.dataset.tf] = inp.value;
+              if (inp.dataset.tf === "name")
+                inp.closest("details").querySelector("summary b").textContent =
+                  inp.value || "Untitled";
+              renderTop();
+              refreshDirty();
+            }),
+        );
+        adm.querySelectorAll("input[data-tb]").forEach(
+          (inp) =>
+            (inp.onchange = () => {
+              settings.top[+inp.dataset.i].bf = inp.checked;
+              renderTop();
+              panel();
+            }),
+        );
+        adm.querySelectorAll("select[data-ts]").forEach(
+          (sel) =>
+            (sel.onchange = () => {
+              settings.top[+sel.dataset.i].size = sel.value;
+              renderTop();
+              panel();
+            }),
+        );
+        body.addEventListener("click", (e) => {
+          const t = e.target.closest("button");
+          if (!t) return;
+          if (t.hasAttribute("data-add")) {
+            settings.top.push({
+              id: newId(),
+              name: "New top choice",
+              badge: "",
+              colors: ["Light Pink"],
+              wrap: WRAPS[0][0],
+              dots: FILLERS[0][0],
+              bf: true,
+              size: "",
+            });
+            openTop = settings.top.length - 1;
+            renderTop();
+            return panel();
+          }
+          if (t.dataset.i === undefined) return;
+          const i = +t.dataset.i,
+            p = settings.top[i];
+          if (!p) return;
+          if (t.hasAttribute("data-tc")) {
+            let cols = p.colors.slice(),
+              n = t.dataset.v;
+            if (cols.includes(n)) {
+              if (cols.length > 1) cols = cols.filter((x) => x !== n);
+            } else {
+              cols.push(n);
+              if (cols.length > 2) cols.shift();
+            }
+            if (cols.length === 1 && cols[0].startsWith("Cream"))
+              return panel({
+                t: "Cream / Milky White must be mixed with another color.",
+                err: 1,
+              });
+            p.colors = cols;
+          } else if (t.hasAttribute("data-tw")) p.wrap = t.dataset.v;
+          else if (t.hasAttribute("data-td")) p.dots = t.dataset.v;
+          else if (t.hasAttribute("data-up") && i > 0) {
+            settings.top.splice(i - 1, 0, settings.top.splice(i, 1)[0]);
+            openTop = i - 1;
+          } else if (
+            t.hasAttribute("data-down") &&
+            i < settings.top.length - 1
+          ) {
+            settings.top.splice(i + 1, 0, settings.top.splice(i, 1)[0]);
+            openTop = i + 1;
+          } else if (t.hasAttribute("data-del")) {
+            if (!confirm('Delete "' + (p.name || "this top choice") + '"?'))
+              return;
+            settings.top.splice(i, 1);
+            openTop = -1;
+          } else return;
+          renderTop();
+          panel();
+        });
+      }
+
       // --- panel interface
       let adm = null,
         cfgMem = null,
@@ -2181,7 +2748,7 @@
         adm.innerHTML = `<div class="flex max-h-[92vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl bg-white text-[#3a1424] shadow-2xl">
     <div class="flex items-center gap-3 border-b border-rose-100 bg-gradient-to-r from-rose-50 to-amber-50 px-5 py-4">
       <svg width="38" height="38" viewBox="-56 -56 112 112" aria-hidden="true" style="--c:#d6457b"><use href="#rose"/></svg>
-      <div class="flex-1"><h2 class="font-display text-xl font-bold text-rose-800">Shop settings</h2><p class="text-xs text-rose-800/65">${sub}</p></div>
+      <div class="flex-1"><h2 class="font-display text-xl font-bold text-rose-800">Shop settings</h2><p class="text-xs text-rose-800/70">${sub}</p></div>
       <button id="admX" class="grid h-9 w-9 place-items-center rounded-full text-lg text-rose-800 hover:bg-rose-100" aria-label="Close">✕</button></div>
     <div id="admBody" class="flex-1 overflow-auto px-5 py-4">${body}</div>${foot ? `<div class="border-t border-rose-100 bg-white px-5 py-3">${foot}</div>` : ""}</div>`;
         $("admX").onclick = () => closeAdmin();
@@ -2280,7 +2847,7 @@
           "Owner access",
           `<label class="block"><span class="text-xs font-semibold text-rose-800">Secret code</span><input id="l_code" type="password" autocomplete="off" class="mt-1 ${fieldCls}" ${wait > 0 ? "disabled" : ""}></label>
     <p id="admErr" class="mt-3 ${wait > 0 ? "" : "hidden"} rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">${wait > 0 ? "Too many tries. Please wait " + wait + " seconds." : ""}</p>
-    <button id="l_reset" class="mt-4 text-xs text-rose-800/60 underline">Forgot the code? Reset setup</button>`,
+    <button id="l_reset" class="mt-4 text-xs text-rose-800/70 underline">Forgot the code? Reset setup</button>`,
           '<button id="l_go" class="w-full rounded-full bg-rose-800 py-3 font-semibold text-white disabled:opacity-50" ' +
             (wait > 0 ? "disabled" : "") +
             ">Unlock</button>",
@@ -2333,23 +2900,24 @@
           `<span class="inline-block h-5 w-5 shrink-0 rounded-full border border-black/10" style="background:${hex}"></span>`;
         const row = (kind, name, hex) => {
           const out = settings.out[kind].includes(name);
-          return `<label class="flex cursor-pointer items-center gap-3 rounded-xl border ${out ? "border-rose-200 bg-rose-50" : "border-rose-100 bg-white"} px-3 py-2.5">${sw(hex)}<span class="flex-1 text-sm font-medium ${out ? "text-rose-800/50 line-through" : ""}">${name}</span>
+          return `<label class="flex cursor-pointer items-center gap-3 rounded-xl border ${out ? "border-rose-200 bg-rose-50" : "border-rose-100 bg-white"} px-3 py-2.5">${sw(hex)}<span class="flex-1 text-sm font-medium ${out ? "text-rose-800/60 line-through" : ""}">${name}</span>
       <span class="text-xs font-semibold ${out ? "text-rose-700" : "text-emerald-700"}">${out ? "Out of stock" : "In stock"}</span>
       <input type="checkbox" class="sr-only" data-k="${kind}" data-n="${name}" ${out ? "" : "checked"}><span class="relative h-6 w-11 shrink-0 rounded-full transition ${out ? "bg-rose-300" : "bg-emerald-500"}"><span class="absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${out ? "left-0.5" : "left-[22px]"}"></span></span></label>`;
         };
         const sec = (t, sub, inner) =>
-          `<section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">${t}</h3><p class="mb-2 text-xs text-rose-800/65">${sub}</p><div class="grid gap-2">${inner}</div></section>`;
+          `<section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">${t}</h3><p class="mb-2 text-xs text-rose-800/70">${sub}</p><div class="grid gap-2">${inner}</div></section>`;
         const priceIn = COUNTS.filter((c) => c.price)
           .map(
             (c) =>
-              `<label class="block"><span class="text-xs font-semibold text-rose-800">${c.label}</span><div class="relative mt-1"><span class="absolute left-3 top-2.5 text-sm text-rose-800/60">₱</span><input data-p="${c.id}" type="number" min="1" inputmode="numeric" value="${c.price}" class="${fieldCls} pl-7"></div></label>`,
+              `<label class="block"><span class="text-xs font-semibold text-rose-800">${c.label}</span><div class="relative mt-1"><span class="absolute left-3 top-2.5 text-sm text-rose-800/70">₱</span><input data-p="${c.id}" type="number" min="1" inputmode="numeric" value="${c.price}" class="${fieldCls} pl-7"></div></label>`,
           )
           .join("");
         shell(
           n
             ? n + " item" + (n > 1 ? "s" : "") + " out of stock"
             : "Everything is in stock",
-          `<section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">Prices</h3><p class="mb-2 text-xs text-rose-800/65">Sizes stay available. Only the price changes. "Other" is always quoted.</p><div class="grid grid-cols-2 gap-3">${priceIn}</div></section>` +
+          `<section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">Prices</h3><p class="mb-2 text-xs text-rose-800/70">Sizes stay available. Only the price changes. "Other" is always quoted.</p><div class="grid grid-cols-2 gap-3">${priceIn}</div></section>` +
+            topSection() +
             sec(
               "Colors",
               "Switch a color off when it runs out. Customers will see an Out of stock label.",
@@ -2366,7 +2934,7 @@
               FILLERS.map((f) => row("dots", f[0], f[1])).join(""),
             ),
           `<p id="admMsg" class="mb-2 text-sm ${msg && msg.err ? "text-red-700" : "text-emerald-700"} ${msg ? "" : "hidden"}" role="status">${msg ? msg.t : ""}</p>
-     <div class="flex items-center gap-2"><span class="flex-1 text-xs ${dirty() ? "font-semibold text-amber-700" : "text-rose-800/55"}">${dirty() ? "● Unpublished changes" : "All changes published"}</span>
+     <div class="flex items-center gap-2"><span id="admDirty" class="flex-1 text-xs ${dirty() ? "font-semibold text-amber-700" : "text-rose-800/75"}">${dirty() ? "● Unpublished changes" : "All changes published"}</span>
      <button id="a_out" class="rounded-full border border-rose-200 px-4 py-2.5 text-sm font-medium">Log out</button>
      <button id="a_pub" class="rounded-full bg-rose-800 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-40" ${dirty() ? "" : "disabled"}>Publish</button></div>`,
         );
@@ -2390,10 +2958,11 @@
               if (v > 0) {
                 settings.prices[i.dataset.p] = v;
                 applyAll();
-                $("a_pub").disabled = !dirty();
+                refreshDirty();
               }
             }),
         );
+        bindTop();
         $("a_out").onclick = () => closeAdmin();
         $("a_pub").onclick = async () => {
           const b = $("a_pub");
@@ -2433,6 +3002,94 @@
         );
         b.addEventListener("contextmenu", (e) => e.preventDefault());
       })();
+
+      // ---------- mobile number: 0999-999-9999 ----------
+      function fmtPhone(raw) {
+        let d = String(raw).replace(/\D/g, "");
+        if (d.startsWith("639"))
+          d = "0" + d.slice(2); // +63 9xx... pasted with the country code
+        else if (d.startsWith("9")) d = "0" + d; // typed without the leading 0
+        d = d.slice(0, 11);
+        return [d.slice(0, 4), d.slice(4, 7), d.slice(7, 11)]
+          .filter(Boolean)
+          .join("-");
+      }
+      const phoneOK = (v) => /^09\d{2}-\d{3}-\d{4}$/.test(v);
+      $("phone").addEventListener("input", (e) => {
+        e.target.value = fmtPhone(e.target.value);
+        const v = e.target.value,
+          bad = v && !phoneOK(v) && v.length >= 13;
+        e.target.removeAttribute("aria-invalid");
+        if (bad) e.target.setAttribute("aria-invalid", "true");
+        $("phoneHint").textContent = bad
+          ? "The number must look like 0999-999-9999"
+          : "Format: 0999-999-9999";
+        $("phoneHint").className =
+          "mt-1 text-xs " + (bad ? "text-red-700" : "text-rose-800/70");
+        render();
+      });
+      // ---------- polish: step taps, date chips, order bar, occasion colors ----------
+      document.addEventListener("click", (e) => {
+        const b = e.target.closest && e.target.closest("[data-s]");
+        if (b && $("sec" + b.dataset.s))
+          $("sec" + b.dataset.s).scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+      });
+      const addDays = (n) => {
+        const d = new Date();
+        d.setDate(d.getDate() + n);
+        return (
+          d.getFullYear() +
+          "-" +
+          String(d.getMonth() + 1).padStart(2, "0") +
+          "-" +
+          String(d.getDate()).padStart(2, "0")
+        );
+      };
+      const nextSat = () => {
+        const n = (6 - new Date().getDay() + 7) % 7;
+        return addDays(n === 0 ? 7 : n);
+      };
+      [
+        ["Tomorrow", () => addDays(1)],
+        ["Saturday", nextSat],
+        ["Next week", () => addDays(7)],
+        ["In 2 weeks", () => addDays(14)],
+      ].forEach(([t, f]) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = t;
+        b.className =
+          "rounded-full border border-rose-200 bg-white px-3 py-1.5 text-sm font-medium hover:bg-rose-50";
+        b.onclick = () => {
+          $("date").value = f();
+          render();
+        };
+        $("dateChips").appendChild(b);
+      });
+      $("bar2btn").onclick = () => $("send").click();
+      if ("IntersectionObserver" in window)
+        new IntersectionObserver(
+          ([en]) => $("bar2").classList.toggle("off", en.isIntersecting),
+          { rootMargin: "0px 0px -70px 0px" },
+        ).observe($("send"));
+      const THEMES = {
+        "Just because": ["#ffe4ec", "#ffc9d9"],
+        Birthday: ["#fff0e0", "#ffcfd9"],
+        Anniversary: ["#ffe0e8", "#f7b6c9"],
+        "Valentine's Day": ["#ffd9e1", "#ff9fb5"],
+        Graduation: ["#ece6ff", "#cdbdf5"],
+        Wedding: ["#fff8ea", "#f4e2c0"],
+        "Thank you": ["#e8f6ee", "#bfe3cd"],
+        Other: ["#ffe4ec", "#ffc9d9"],
+      };
+      function applyTheme() {
+        const t = THEMES[$("occasion").value] || THEMES.Other;
+        $("prevCard").style.setProperty("--g1", t[0]);
+        $("prevCard").style.setProperty("--g2", t[1]);
+      }
 
       const messengerUrl = (t) =>
         "https://m.me/" +
