@@ -10,6 +10,12 @@
     "wraps": [],
     "dots": []
   },
+  "soon": {
+    "colors": [],
+    "wraps": [],
+    "dots": []
+  },
+  "updated": "2026-10-08T14:08:50.526Z",
   "top": [
     {
       "id": "d2",
@@ -46,7 +52,7 @@
       "wrap": "Black sparkle",
       "dots": "White",
       "bf": true,
-      "size": ""
+      "size": "7"
     },
     {
       "id": "d4",
@@ -61,6 +67,5 @@
       "bf": false,
       "size": ""
     }
-  ],
-  "updated": "2026-10-07T05:00:17.082Z"
+  ]
 }
