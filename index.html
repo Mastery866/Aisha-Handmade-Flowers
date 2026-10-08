@@ -2264,6 +2264,10 @@
             var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
         }
       }
+
+      .min-h-\[56px\] {
+        min-height: 56px;
+      }
     </style>
   </head>
   <body class="font-sans min-h-screen">
@@ -2492,18 +2496,18 @@
           <button
             id="surprise"
             type="button"
-            class="mt-3 rounded-full border border-rose-200 bg-white px-3 py-1.5 text-sm font-medium hover:bg-rose-50"
+            class="mt-4 rounded-full border border-rose-200 bg-white px-3 py-1.5 text-sm font-medium hover:bg-rose-50"
           >
             ✨ Surprise me
           </button>
-          <div id="slots" class="mt-3 hidden grid-cols-2 gap-2"></div>
+          <div id="slots" class="mt-4 hidden grid-cols-2 gap-3"></div>
           <div
             id="colors"
-            class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2"
+            class="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-2"
           ></div>
           <p
             id="colorHint"
-            class="mt-2 text-sm text-rose-800/70"
+            class="mt-3 text-sm text-rose-800/70"
             aria-live="polite"
           ></p>
         </div>
@@ -3667,10 +3671,11 @@
         const box = $("slots"),
           three = isThree();
         box.classList.toggle("hidden", !three);
+        box.classList.toggle("grid", three);
         if (!three) return;
         const [a, b] = st.colors.map((i) => COLORS[i]);
         const slot = (role, c, label, empty) =>
-          `<button type="button" data-slot="${role}" class="flex min-w-0 items-center gap-2 rounded-xl border px-3 py-2 text-left transition ${st.slot === role ? "border-rose-500 bg-rose-100" : "border-rose-200 bg-white"}"><span class="h-7 w-7 shrink-0 rounded-full border border-black/10" style="background:${c ? c[1] : "transparent"}"></span><span class="min-w-0 flex-1"><span class="block text-[11px] font-semibold uppercase tracking-wide text-rose-800/70">${label}</span><span class="block truncate text-sm font-semibold">${c ? c[0] : empty}</span></span>${role === 1 && c ? '<span data-clear class="grid h-6 w-6 place-items-center rounded-full bg-white text-xs text-rose-800">✕</span>' : ""}</button>`;
+          `<button type="button" data-slot="${role}" class="flex min-h-[56px] min-w-0 items-center gap-2 rounded-xl border px-3 py-2 text-left transition ${st.slot === role ? "border-rose-500 bg-rose-100" : role === 1 && !c ? "border-dashed border-rose-300 bg-white" : "border-rose-200 bg-white"}"><span class="h-7 w-7 shrink-0 rounded-full border border-black/10" style="background:${c ? c[1] : "transparent"}"></span><span class="min-w-0 flex-1"><span class="block text-[11px] font-semibold uppercase tracking-wide text-rose-800/70">${label}</span><span class="block truncate text-sm font-semibold">${c ? c[0] : empty}</span></span>${role === 1 && c ? '<span data-clear class="grid h-6 w-6 place-items-center rounded-full bg-white text-xs text-rose-800">✕</span>' : ""}</button>`;
         box.innerHTML =
           slot(0, a, "Flower color", "Pick below") +
           slot(
