@@ -3660,7 +3660,7 @@
           const [a, b] = st.colors;
           if (st.slot === 1 && a !== undefined) {
             if (i !== a) st.colors = [a, i];
-            st.slot = 0;
+            // stay on the center slot so you can keep changing it
           } else st.colors = b !== undefined && b !== i ? [i, b] : [i];
           syncColorInputs();
         } else if (on) st.colors.push(i);
@@ -4437,7 +4437,7 @@
         shell(
           "First-time setup",
           `<p class="mb-3 text-sm text-rose-800/80">Enter your GitHub details once. The token is locked with your secret code and kept only on this phone.</p>
-    <div class="grid gap-3">${f("s_owner", "GitHub username", "Mastery866")}${f("s_repo", "Repository name", "", "text", "e.g. flower-shop")}
+    <div class="grid gap-3">${f("s_owner", "GitHub username", "")}${f("s_repo", "Repository name", "", "text", "e.g. flower-shop")}
     <div class="grid grid-cols-2 gap-3">${f("s_branch", "Branch", "main")}${f("s_path", "Settings file", "settings.json")}</div>
     ${f("s_token", "GitHub token", "", "password", "github_pat_…")}${f("s_code", "Choose a secret code (6+ characters)", "", "password")}${f("s_code2", "Repeat the secret code", "", "password")}</div>
     <details class="mt-3 rounded-xl bg-rose-50 px-3 py-2 text-xs text-rose-800/80"><summary class="cursor-pointer font-semibold">How do I get a token?</summary><ol class="mt-2 list-decimal space-y-1 pl-4"><li>GitHub → your profile → Settings → Developer settings → Personal access tokens → Fine-grained tokens.</li><li>Generate a new token. Under Repository access, choose Only select repositories and pick this one.</li><li>Under Permissions, set Contents to Read and write.</li><li>Copy the token and paste it above.</li></ol></details>
