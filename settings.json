@@ -1,6 +1,6 @@
 {
   "prices": {
-    "3": 199,
+    "3": 249,
     "6": 449,
     "7": 549,
     "20": 1399
@@ -15,7 +15,7 @@
     "wraps": [],
     "dots": []
   },
-  "updated": "2026-10-08T14:08:50.526Z",
+  "updated": "2026-10-11T10:10:42.156Z",
   "top": [
     {
       "id": "d2",
@@ -59,7 +59,6 @@
       "name": "Royal Blue Classic",
       "badge": "",
       "colors": [
-        "Royal Blue",
         "Youlan Blue"
       ],
       "wrap": "White",
