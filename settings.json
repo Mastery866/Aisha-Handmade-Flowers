@@ -1,21 +1,25 @@
 {
   "prices": {
-    "3": 249,
+    "3": 2,
     "6": 449,
     "7": 549,
     "20": 1399
   },
   "out": {
-    "colors": [],
+    "colors": [
+      "Royal Blue"
+    ],
     "wraps": [],
     "dots": []
   },
   "soon": {
-    "colors": [],
+    "colors": [
+      "Royal Blue"
+    ],
     "wraps": [],
     "dots": []
   },
-  "updated": "2026-10-11T11:42:11.584Z",
+  "updated": "2026-10-11T11:45:10.902Z",
   "top": [
     {
       "id": "d2",
