@@ -15,7 +15,7 @@
     "wraps": [],
     "dots": []
   },
-  "updated": "2026-10-11T10:10:42.156Z",
+  "updated": "2026-10-11T11:11:13.702Z",
   "top": [
     {
       "id": "d2",
@@ -59,6 +59,7 @@
       "name": "Royal Blue Classic",
       "badge": "",
       "colors": [
+        "Royal Blue",
         "Youlan Blue"
       ],
       "wrap": "White",
