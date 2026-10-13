@@ -2379,6 +2379,7 @@ section.space-y-5>div.hidden+div::before{display:none}
 #send:hover,#bar2btn:hover,#shs:hover{background:color-mix(in srgb,var(--acc) 85%,black)}
 @keyframes rdy{0%,100%{box-shadow:0 0 0 0 var(--accr)}50%{box-shadow:0 0 0 10px transparent}}
 #vineFg{stroke:var(--acc)}
+#vineFgS{clip-path:inset(0 100% 0 0);transition:clip-path .8s ease}
 .bdd.on{box-shadow:0 0 0 2px var(--acc)}
 .frb.on{border-color:var(--acc);background:var(--accs)}
 #thanks{position:fixed;inset:0;z-index:90;display:grid;place-items:center;text-align:center;padding:24px;background:radial-gradient(circle at 50% 40%,rgba(255,244,247,.97),rgba(255,201,217,.95));backdrop-filter:blur(6px);animation:tkin .5s ease both;color:#5e1631}
@@ -2454,8 +2455,10 @@ section.space-y-5>div.hidden+div::before{display:none}
       <ol id="steps" class="grid grid-cols-4 gap-2 text-center text-xs"></ol>
       <div id="vine" class="relative mt-1 h-7">
         <svg viewBox="0 0 400 28" preserveAspectRatio="none" class="absolute inset-0 h-full w-full" aria-hidden="true">
-          <path id="vineBg" pathLength="100" fill="none" stroke="#ffc9d9" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke" d="M0 14C16 2 34 2 50 14S84 26 100 14S134 2 150 14S184 26 200 14S234 2 250 14S284 26 300 14S334 2 350 14S384 26 400 14"/>
-          <path id="vineFg" pathLength="100" fill="none" stroke="#d6457b" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke" stroke-dasharray="100" stroke-dashoffset="100" style="transition:stroke-dashoffset .8s ease" d="M0 14C16 2 34 2 50 14S84 26 100 14S134 2 150 14S184 26 200 14S234 2 250 14S284 26 300 14S334 2 350 14S384 26 400 14"/>
+          <path id="vineBg" fill="none" stroke="#ffc9d9" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke" d="M0 14C16 2 34 2 50 14S84 26 100 14S134 2 150 14S184 26 200 14S234 2 250 14S284 26 300 14S334 2 350 14S384 26 400 14"/>
+        </svg>
+        <svg id="vineFgS" viewBox="0 0 400 28" preserveAspectRatio="none" class="absolute inset-0 h-full w-full" aria-hidden="true">
+          <path id="vineFg" fill="none" stroke="#d6457b" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke" d="M0 14C16 2 34 2 50 14S84 26 100 14S134 2 150 14S184 26 200 14S234 2 250 14S284 26 300 14S334 2 350 14S384 26 400 14"/>
         </svg>
         <div id="vineR"></div>
         <div id="bar" class="hidden"></div>
@@ -5596,7 +5599,7 @@ let lastN = -1;
         if (!host.children.length)
           host.innerHTML = done.map((_, i) => `<span style="left:${12.5 + i * 25}%"><svg viewBox="-56 -56 112 112" width="24" height="24" aria-hidden="true" style="--c:var(--acc)"><use href="#rose"/></svg></span>`).join("");
         [...host.children].forEach((sp, i) => sp.classList.toggle("on", !!done[i]));
-        $("vineFg").style.strokeDashoffset = 100 - done.filter(Boolean).length * 25;
+        $("vineFgS").style.clipPath = `inset(0 ${100 - done.filter(Boolean).length * 25}% 0 0)`;
         const all = done.every(Boolean);
         if (all && vineUpd.all === false) { sparkle(); popBurst(3); }
         vineUpd.all = all;
