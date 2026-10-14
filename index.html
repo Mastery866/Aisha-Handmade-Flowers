@@ -436,10 +436,6 @@
           max-width: min(90vw, 62vh);
         }
       }
-      .fb {
-        fill: var(--fl);
-        opacity: 0.35;
-      }
       .secret {
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -2293,17 +2289,11 @@ h1,h2,.font-display{letter-spacing:-.01em}
 @keyframes breathe{from{transform:scale(1)}to{transform:scale(1.016)}}
 .dp{fill:var(--pc);opacity:0;stroke:rgba(0,0,0,.08);animation:dpf 4s ease-in-out forwards}
 @keyframes dpf{0%{opacity:0;transform:translate(0,0) rotate(0)}12%{opacity:.95}45%{transform:translate(calc(var(--dx)*-.5),calc(var(--dy)*.4)) rotate(calc(var(--rot)*.5))}75%{opacity:.8}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot))}}
-.shim{animation:shim 7s ease-in-out infinite}
-@keyframes shim{0%,55%{transform:translateX(0)}100%{transform:translateX(480px)}}
 .tie{transform-origin:0 115px}
 .tie.go{animation:tie 1s cubic-bezier(.3,1.4,.5,1) both}
 @keyframes tie{0%{transform:scale(.2,.05) rotate(-14deg);opacity:0}40%{opacity:1;transform:scale(1.18,.7) rotate(5deg)}65%{transform:scale(.94,1.08) rotate(-2deg)}100%{transform:scale(1) rotate(0)}}
 .bfl{--lx:0px;--ly:0px;animation:flit 16s ease-in-out infinite}
 @keyframes flit{0%{transform:translate(0,0)}15%{transform:translate(8px,-12px)}30%{transform:translate(-6px,-18px)}45%{transform:translate(-10px,-4px)}58%{transform:translate(4px,6px)}68%,82%{transform:translate(var(--lx),var(--ly))}100%{transform:translate(0,0)}}
-#prevCard{--px:0;--py:0}
-.bgfx{transform:translate(calc(var(--px)*-7px),calc(var(--py)*-6px)) scale(1.06);transition:transform .35s ease-out}
-#stage{transform:translate(calc(var(--px)*4px),calc(var(--py)*3px));transition:transform .35s ease-out}
-#drift,#occ{transform:translate(calc(var(--px)*10px),calc(var(--py)*8px));transition:transform .35s ease-out}
 .tod{position:absolute;inset:0;background:radial-gradient(circle at 15% 6%,var(--todc,transparent),transparent 64%)}
 #bokeh{position:absolute;inset:0;pointer-events:none}
 #bokeh i{position:absolute;border-radius:50%;background:color-mix(in srgb,var(--o) 55%,white);opacity:.32;filter:blur(2.5px);animation:bk 9s ease-in-out infinite alternate}
@@ -2312,14 +2302,7 @@ h1,h2,.font-display{letter-spacing:-.01em}
 .rv.rv-in{opacity:1;transform:none}
 .rv-in .opt,.rv-in .topc{animation:optin .5s ease backwards;animation-delay:calc(var(--i,0)*45ms + 120ms)}
 @keyframes optin{from{opacity:0;transform:translateY(10px) scale(.97)}}
-.opt:active{transform:scale(.95)}
-.topc:not(:disabled):active,button:active:not(:disabled),#openM:active{transform:scale(.97)}
-.opt:has(input:checked) .sw::after{animation:ckdraw .4s ease-out}
-@keyframes ckdraw{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
-.ripc{position:relative;overflow:hidden}
-.rip{position:absolute;border-radius:9999px;background:currentColor;opacity:.2;transform:scale(0);animation:rip .6s ease-out forwards;pointer-events:none}
-@keyframes rip{to{transform:scale(1);opacity:0}}
-@media (prefers-reduced-motion:reduce){#roses,.dp,.shim,.tie.go,.bfl,#bokeh i,.rv-in .opt,.rv-in .topc{animation:none}.bgfx,#stage,#drift,#occ{transform:none}.dp,.rip{display:none}}
+@media (prefers-reduced-motion:reduce){#roses,.dp,.tie.go,.bfl,#bokeh i,.rv-in .opt,.rv-in .topc{animation:none}.dp{display:none}}
 .ff{position:relative}
 .ff>.fld{margin-top:0;padding-top:.75rem;padding-bottom:.75rem}
 .ff>label{position:absolute;left:.7rem;top:.85rem;z-index:1;padding:0 .3rem;font-size:.9rem;font-weight:400;line-height:1.2;color:rgba(94,22,49,.7);pointer-events:none;transition:all .15s ease}
@@ -2359,7 +2342,6 @@ section.space-y-5>div.hidden+div::before{display:none}
 .bdd.on{box-shadow:0 0 0 2px #d6457b}
 #prevCard.night #previewNote,#prevCard.night #previewNote span{color:#efe6ff}
 #prevCard.night .glow{animation:none;opacity:.22}
-#prevCard.mini #bdDots{display:none}
 #bouquet{-webkit-user-select:none;user-select:none}
 #lens{position:fixed;z-index:95;width:130px;height:130px;border-radius:50%;overflow:hidden;border:3px solid #fff;box-shadow:0 8px 24px rgba(94,22,49,.35);pointer-events:none;background:#fff4f7}
 #lens .lw{position:absolute}
@@ -2382,6 +2364,33 @@ section.space-y-5>div.hidden+div::before{display:none}
 #vineFgS{clip-path:inset(0 100% 0 0);transition:clip-path .8s ease}
 .bdd.on{box-shadow:0 0 0 2px var(--acc)}
 .frb.on{border-color:var(--acc);background:var(--accs)}
+body{background:var(--pg,#fff4f7);transition:background-color .6s ease}
+#mute{display:inline-flex;align-items:center;gap:.3rem}
+.palb,.tfb{flex:none;display:flex;align-items:center;gap:.35rem;border:1px solid #ffc9d9;border-radius:9999px;padding:.3rem .75rem;font-size:.75rem;font-weight:500;background:#fff;white-space:nowrap}
+.palb.on,.tfb.on{border-color:var(--acc);background:var(--accs);font-weight:700}
+.palb:disabled{opacity:.45;cursor:not-allowed}
+#toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:58;display:flex;align-items:center;gap:.4rem;max-width:90vw;padding:.7rem 1.1rem;border-radius:9999px;background:#5e1631;color:#fff;font-size:.9rem;box-shadow:0 8px 24px rgba(94,22,49,.3);opacity:0;transform:translate(-50%,16px);pointer-events:none;transition:opacity .3s,transform .3s}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media (min-width:1024px){#toast{bottom:28px}}
+#counts.hint label{animation:hring 1.8s ease-out infinite}
+@keyframes hring{0%{box-shadow:0 0 0 0 var(--accr)}70%,100%{box-shadow:0 0 0 9px transparent}}
+#startHere{animation:hbob 1.6s ease-in-out infinite alternate}
+@keyframes hbob{to{transform:translateY(-2px)}}
+@media (prefers-reduced-motion:reduce){#counts.hint label,#startHere{animation:none}}
+@property --fbc{syntax:"<color>";inherits:true;initial-value:#ffffff}
+#scene{transition:--w1 .5s,--w2 .5s,--rb .5s,--wo .5s,--fl .5s,--fbc .5s}
+html.scrolling #sway,html.scrolling #roses,html.scrolling .tail,html.scrolling .bow,html.scrolling .bfl,html.scrolling .bob,html.scrolling .wing,html.scrolling .spk,html.scrolling #bokeh i,html.scrolling .glow,html.scrolling .pt,html.scrolling .dp{animation-play-state:paused}
+.palc{position:relative;flex:none;width:7.2rem;display:flex;flex-direction:column;align-items:center;gap:.25rem;border:1px solid #ffc9d9;border-radius:1rem;background:#fff;padding:.55rem .4rem .5rem;text-align:center;transition:border-color .15s,box-shadow .15s,background .15s}
+.palp{display:flex;align-items:center;justify-content:center;height:46px}
+.palp svg{width:42px;height:42px;filter:drop-shadow(0 2px 2px rgba(94,22,49,.22))}
+.palp svg+svg{margin-left:-14px}
+.paln{font-size:.75rem;font-weight:600;line-height:1.15;color:#5e1631}
+.palx{display:none;font-size:10px;font-weight:700;color:#b92f64}
+.palk{display:none;position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:50%;background:var(--acc);color:#fff;font-size:11px;font-weight:700;place-items:center}
+.palc.on{border-color:var(--acc);background:var(--accs);box-shadow:0 0 0 2px var(--accr)}
+.palc.on .palk{display:grid}
+.palc:disabled{opacity:.5;filter:grayscale(.8);cursor:not-allowed}
+.palc:disabled .palx{display:block}
 #thanks{position:fixed;inset:0;z-index:90;display:grid;place-items:center;text-align:center;padding:24px;background:radial-gradient(circle at 50% 40%,rgba(255,244,247,.97),rgba(255,201,217,.95));backdrop-filter:blur(6px);animation:tkin .5s ease both;color:#5e1631}
 #thanks.out{animation:tkout .6s ease forwards}
 @keyframes tkin{from{opacity:0}}
@@ -2393,7 +2402,6 @@ section.space-y-5>div.hidden+div::before{display:none}
 #thanks h2{font-family:Fraunces,Georgia,serif;font-size:1.9rem;font-weight:700;margin-top:8px}
 #thanks p{margin-top:6px;font-size:.95rem;opacity:.8;max-width:20rem}
 @media (prefers-reduced-motion:reduce){#thanks,#thanks .tkr{animation:none}#thanks .tkr{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) rotate(var(--rot))}}
-@media (max-width:1023px){html{overflow-anchor:none}#prevCard.mini{padding:.25rem}#prevCard.mini #bouquet:not(.exp){max-width:12vh}#prevCard.mini:not(:has(.exp)) #previewNote,#prevCard.mini:not(:has(.exp)) #plainHint{display:none}}
 </style>
 </head>
   <body class="font-sans min-h-screen">
@@ -2450,6 +2458,12 @@ section.space-y-5>div.hidden+div::before{display:none}
       <p class="mt-2 text-xs uppercase tracking-[.18em] text-rose-800/75">
         Handmade · Made to order · Your colors
       </p>
+      <div id="trust" class="mx-auto mt-3 flex max-w-xl flex-wrap items-center justify-center text-xs text-rose-800/80" style="column-gap:1rem;row-gap:.25rem">
+        <span class="flex items-center gap-1"><svg class="inline-block align-middle" width="16" height="16" viewBox="-56 -56 112 112" aria-hidden="true" style="--c:#d6457b"><use href="#rose"/></svg> Folded by hand</span>
+        <span class="flex items-center gap-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d6457b" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Order 2–5 days ahead</span>
+        <span class="flex items-center gap-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="#d6457b" aria-hidden="true"><path d="M12 21C4 15 3 9.5 6.5 6.5 9 4.4 11.6 5.6 12 8c.4-2.4 3-3.6 5.5-1.5C21 9.5 20 15 12 21z"/></svg> Made just for you</span>
+        <p id="revLine" class="w-full text-center italic"></p>
+      </div>
     </header>
     <nav aria-label="Progress" class="max-w-6xl mx-auto px-4 pb-4">
       <ol id="steps" class="grid grid-cols-4 gap-2 text-center text-xs"></ol>
@@ -2497,7 +2511,11 @@ section.space-y-5>div.hidden+div::before{display:none}
             249
           </div>
           <div id="bdDots" class="absolute left-4 z-10 flex flex-col gap-1.5" style="top:48px"></div>
-          <button id="mute" type="button" aria-pressed="false" aria-label="Sound and vibration" class="absolute right-3 top-4 z-10 rounded-full bg-white/90 px-2.5 py-0.5 text-xs sm:text-sm font-semibold text-rose-800 shadow">🔊 On</button>
+          <button id="mute" type="button" aria-pressed="false" aria-label="Sound and vibration" class="absolute right-3 top-4 z-10 rounded-full bg-white/90 px-2.5 py-0.5 text-xs sm:text-sm font-semibold text-rose-800 shadow">On</button>
+          <div class="absolute right-3 z-10 flex flex-col items-end gap-1.5" style="top:46px">
+            <button id="undoBtn" type="button" disabled class="rounded-full bg-white/90 px-2.5 py-0.5 text-xs font-semibold text-rose-800 shadow disabled:opacity-40">↶ Undo</button>
+            <button id="resetBtn" type="button" class="rounded-full bg-white/90 px-2.5 py-0.5 text-xs font-semibold text-rose-800 shadow">Start over</button>
+          </div>
           <div id="stage" class="relative z-[2]">
             <div class="floor" aria-hidden="true"></div>
             <div
@@ -2517,8 +2535,7 @@ section.space-y-5>div.hidden+div::before{display:none}
                 transition: opacity 0.5s;
               "
             >
-              🌸 Pick a color to bring it to life
-            </p>
+              Pick a color to bring it to life</p>
           </div>
           <p
             id="previewNote"
@@ -2571,12 +2588,14 @@ section.space-y-5>div.hidden+div::before{display:none}
       <section class="order-2 space-y-5">
         <div id="topCard" class="hidden rounded-2xl bg-white p-5 shadow-sm">
           <h2 class="font-display text-xl font-bold text-rose-800">
-            ✨ Top choices
+            <span style="display:inline-block;vertical-align:middle"><svg class="inline-block align-middle" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.6 7.4L22 11l-7.4 2.6L12 21l-2.6-7.4L2 11l7.4-2.6z" fill="#f4b400"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z" fill="#d6457b"/></svg></span> Top choices
           </h2>
           <p class="text-sm text-rose-800/70">
             Not sure where to start? Tap one, then change anything you like.
             Previews use the size you picked.
           </p>
+          <div id="topFilt" class="mt-3 flex gap-2 overflow-x-auto pb-1"></div>
+          <div id="filtDots" class="mt-1 flex items-center justify-center gap-1.5" aria-hidden="true"></div>
           <div
             id="topRow"
             class="-mx-1 mt-3 flex snap-x gap-3 overflow-x-auto px-1 pb-2"
@@ -2589,12 +2608,13 @@ section.space-y-5>div.hidden+div::before{display:none}
             id="sec1"
             class="sec font-display text-xl font-bold text-rose-800"
           >
-            <span class="stp">1</span>How many flowers?
+            <span class="stp">1</span>How many flowers?<span id="startHere" class="hidden ml-2 rounded-full bg-rose-500 px-2 py-0.5 align-middle text-xs font-semibold text-white">Start here</span>
           </h2>
           <div
             id="counts"
             class="-mx-1 mt-3 flex snap-x gap-2 overflow-x-auto px-1 pb-2"
           ></div>
+          <div id="countDots" class="mt-1 flex items-center justify-center gap-1.5" aria-hidden="true"></div>
           <div id="customBox" class="hidden mt-3">
             <label class="text-sm font-medium" for="customQty"
               >How many flowers do you want? (1–50)</label
@@ -2631,13 +2651,15 @@ section.space-y-5>div.hidden+div::before{display:none}
             colors for a mix. Cream / Milky White works only as a mix, so pair
             it with another color.
           </p>
-          <button
-            id="surprise"
-            type="button"
-            class="mt-4 rounded-full border border-rose-200 bg-white px-3 py-1.5 text-sm font-medium hover:bg-rose-50"
-          >
-            ✨ Surprise me
-          </button>
+          <button id="surprise" type="button" class="mt-4 rounded-full border border-rose-200 bg-white px-3 py-1.5 text-sm font-medium hover:bg-rose-50"><svg class="inline-block align-middle" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.6 7.4L22 11l-7.4 2.6L12 21l-2.6-7.4L2 11l7.4-2.6z" fill="#f4b400"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z" fill="#d6457b"/></svg> Surprise me</button>
+          <div class="mt-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-rose-800">Ready-made pairs</h3>
+              <span class="text-xs text-rose-800/70">Swipe for more →</span>
+            </div>
+            <div id="pals" class="mt-2 flex snap-x gap-2 overflow-x-auto px-1 pb-2" style="margin-left:-.25rem;margin-right:-.25rem;scrollbar-width:thin;scroll-snap-type:x proximity"></div>
+            <div id="palDots" class="mt-1 flex items-center justify-center gap-1.5" aria-hidden="true"></div>
+          </div>
           <div id="slots" class="mt-4 hidden grid-cols-2 gap-3"></div>
           <div
             id="colors"
@@ -2679,9 +2701,7 @@ section.space-y-5>div.hidden+div::before{display:none}
                 >(more for bigger bouquets)</span
               ></span
             >
-            <span id="bfNote" class="text-xs text-rose-800/70 ml-auto"
-              >Free</span
-            >
+            <span id="bfNote" class="text-xs text-rose-800/70 ml-auto">Free</span>
           </label>
         </div>
 
@@ -2787,11 +2807,11 @@ section.space-y-5>div.hidden+div::before{display:none}
             >
               <p class="font-bold">Order Reminder:</p>
               <p class="mt-1">
-                🌸 <b>Big Bouquets:</b> Send a chat reminder 5 days before the
+                <svg class="inline-block align-middle" width="16" height="16" viewBox="-56 -56 112 112" aria-hidden="true" style="--c:#d6457b"><use href="#rose"/></svg> <b>Big Bouquets:</b> Send a chat reminder 5 days before the
                 needed date.
               </p>
               <p class="mt-0.5">
-                🌷 <b>3-Ct Bouquets:</b> Send a chat reminder 2 days before the
+                <svg class="inline-block align-middle" width="16" height="16" viewBox="-56 -56 112 112" aria-hidden="true" style="--c:#f08cb4"><use href="#rose"/></svg> <b>3-Ct Bouquets:</b> Send a chat reminder 2 days before the
                 needed date.
               </p>
               <p
@@ -3044,6 +3064,7 @@ section.space-y-5>div.hidden+div::before{display:none}
             </p>
           </li>
         </ol>
+        <button id="storyImg" type="button" class="mt-3 w-full rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium">Save story image (for Facebook / Instagram)</button>
         <details class="mt-3">
           <summary class="cursor-pointer text-sm text-rose-600">
             Show order text
@@ -3066,6 +3087,8 @@ section.space-y-5>div.hidden+div::before{display:none}
       // ====== SETTINGS: change these ======
       const FB_PAGE = "aisha.balani.2025"; // your Facebook username (facebook.com/<this>)
       const SHOP_NAME = "Aisha Handmade Flowers";
+      const GH_REPO = "Aisha-Handmade-Flowers"; // GitHub repository (not secret)
+      const SHOP_REVIEWS = []; // optional: add real customer quotes, e.g. ["So pretty! - Mia"]
       // ====================================
 
       const COUNTS = [
@@ -3116,7 +3139,7 @@ section.space-y-5>div.hidden+div::before{display:none}
       }
       const popBurst = (k) => { for (let j = 0; j < k; j++) setTimeout(() => pop(470 + j * 85), j * 75); };
       const bloom = () => { if (!matchMedia("(prefers-reduced-motion: reduce)").matches) bloomNext = true; };
-let lastN = -1;
+let lastN = -1, topFilter = "All";
       const RM = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
       function refold() {
         if (RM()) return;
@@ -3134,7 +3157,7 @@ let lastN = -1;
         if (t) { t.classList.remove("go"); t.getBoundingClientRect(); t.classList.add("go"); }
       }
       function updMute() {
-        $("mute").textContent = muted ? "🔇 Off" : "🔊 On";
+        $("mute").innerHTML = (muted ? ICON.mute : ICON.sound) + (muted ? " Off" : " On");
         $("mute").setAttribute("aria-pressed", muted);
         $("mute").title = muted ? "Sound and vibration are off" : "Sound and vibration are on";
       }
@@ -3206,7 +3229,8 @@ let lastN = -1;
           s +=
             `<g transform="rotate(${rot + (i * 360) / cnt})"><ellipse cy="${-off}" rx="${rx}" ry="${ry}" class="${cls}"/>` +
             `<path class="ln" d="M${-rx * 0.75} ${-off - ry * 0.45}Q0 ${-off - ry * 1.05} ${rx * 0.75} ${-off - ry * 0.45}"/>` +
-            `<ellipse cx="${-rx * 0.25}" cy="${-off - ry * 0.4}" rx="${rx * 0.4}" ry="${ry * 0.22}" fill="#fff" opacity=".3"/></g>`;
+            `<ellipse cx="${-rx * 0.25}" cy="${-off - ry * 0.4}" rx="${rx * 0.4}" ry="${ry * 0.22}" fill="#fff" opacity=".3"/>` +
+            `<path d="M${-rx * 0.5} ${-off - ry * 0.55}Q${-rx * 0.1} ${-off - ry * 0.8} ${rx * 0.4} ${-off - ry * 0.62}" stroke="#fff" stroke-opacity=".38" stroke-width="1.3" fill="none" stroke-linecap="round"/></g>`;
         }
         return s;
       }
@@ -3274,15 +3298,15 @@ let lastN = -1;
       $("bouquet").innerHTML =
         `<svg id="scene" viewBox="0 0 400 400" role="img" aria-label="Live bouquet preview" class="w-full h-full">
 <defs><radialGradient id="sheen" cx=".32" cy=".28" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".4"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></radialGradient>
-<g id="rose">${ROSE}</g><g id="dotsG">${DOTS}</g><clipPath id="shc"><circle cx="200" cy="165" r="108"/></clipPath><linearGradient id="shg" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
-<ellipse id="shadow" cx="200" cy="388" rx="90" ry="7" fill="#5e1631" opacity=".14"/>
+<g id="rose">${ROSE}</g><g id="dotsG">${DOTS}</g><radialGradient id="csh"><stop offset="0" stop-color="#5e1631" stop-opacity=".34"/><stop offset="1" stop-color="#5e1631" stop-opacity="0"/></radialGradient><radialGradient id="fbg"><stop offset="0" style="stop-color:var(--fbc,#ffffff)" stop-opacity=".5"/><stop offset=".65" style="stop-color:var(--fbc,#ffffff)" stop-opacity=".32"/><stop offset="1" style="stop-color:var(--fbc,#ffffff)" stop-opacity="0"/></radialGradient></defs>
+<ellipse id="shadow" cx="200" cy="388" rx="90" ry="9" fill="url(#csh)" opacity=".8"/><ellipse id="shadow2" cx="200" cy="388" rx="40" ry="4" fill="url(#csh)"/><g id="refl" opacity=".2" style="pointer-events:none;transform:translate(200px,392px)"><ellipse class="rb" cx="-22" cy="0" rx="10" ry="2.6"/><ellipse class="rb" cx="22" cy="0" rx="10" ry="2.6"/><ellipse class="rb" cx="0" cy="1.5" rx="7" ry="2.2"/></g>
 <g id="sway"><g id="wrapG">
   <path class="ws" d="M-38 95L0 198 38 95z"/>
   ${[0, 30, 60].map((r, i) => sheet(228, r, i % 2 ? "wb" : "wa")).join("")}${[15, 45, 75].map((r) => sheet(196, r, "wb")).join("")}${[0, 45].map((r) => sheet(160, r, "wc")).join("")}<g class="crk" aria-hidden="true">${CRK}</g>
   <g class="tie go" id="tie"><g class="tail t1"><path class="rb" d="M0 116C-26 152-34 186-30 212l13-8 8 16C-6 184-4 152 0 116Z"/></g>
   <g class="tail t2"><path class="rb" d="M0 116C26 152 34 186 30 212l-13-8-8 16C6 184 4 152 0 116Z"/></g>
   <g transform="translate(0 115) scale(1.2) translate(0 -115)"><g class="bow"><g>${bowHalf}</g><g transform="scale(-1 1)">${bowHalf}</g><circle class="rl" cy="115" r="8"/></g></g></g>
-</g><g id="fillG" class="fg"><circle class="fb" r="100"/><use href="#dotsG"/></g><g id="roses"></g><g style="pointer-events:none" clip-path="url(#shc)"><g transform="rotate(20 200 165)"><rect class="shim" x="-140" y="30" width="70" height="270" fill="url(#shg)"/></g></g><g id="bfs"></g><g id="tagG" style="opacity:0;transition:opacity .4s;transform:translate(318px,286px) rotate(7deg)"><path d="M-6 -34Q-12 -50 -2 -56" stroke="#b92f64" stroke-width="1.5" fill="none"/><rect x="-50" y="-34" width="100" height="68" rx="8" fill="#fffdf8" stroke="#e8a9bf" stroke-width="1.5"/><text y="-22" text-anchor="middle" font-size="9" fill="#d6457b">♥</text><text id="tagT" y="-6" text-anchor="middle" font-size="10.5" fill="#5e1631" font-family="'DM Sans',sans-serif"></text></g></g></svg>`;
+</g><g id="fillG" class="fg"><circle r="104" fill="url(#fbg)"/><use href="#dotsG"/></g><g id="roses"></g><g id="bfs"></g><g id="tagG" style="opacity:0;transition:opacity .4s;transform:translate(318px,286px) rotate(7deg)"><path d="M-6 -34Q-12 -50 -2 -56" stroke="#b92f64" stroke-width="1.5" fill="none"/><rect x="-50" y="-34" width="100" height="68" rx="8" fill="#fffdf8" stroke="#e8a9bf" stroke-width="1.5"/><text y="-22" text-anchor="middle" font-size="9" fill="#d6457b">♥</text><text id="tagT" y="-6" text-anchor="middle" font-size="10.5" fill="#5e1631" font-family="'DM Sans',sans-serif"></text></g></g></svg>`;
 
       // wrapping unfolds once on load
       document.querySelectorAll(".lf").forEach((l) => {
@@ -3401,10 +3425,13 @@ let lastN = -1;
         sty.setProperty("--wo", w[3]);
         sty.setProperty("--rb", ribbonHex());
         sty.setProperty("--fl", fl[1]);
+        sty.setProperty("--fbc", w[0] === "White" ? "#ffffff" : "#120c1a");
         $("wrapG").style.transform = `translate(${CX}px,${CY}px) scale(${sc})`;
         $("fillG").style.transform =
           `translate(${CX}px,${CY}px) scale(${Rf / 100})`;
         $("shadow").setAttribute("rx", 40 + sc * 90);
+        $("shadow2").setAttribute("rx", 22 + sc * 42);
+        $("refl").style.transform = `translate(200px,392px) scale(${sc})`;
         const col = roseColor(n, hx),
           host = $("roses");
         let born = 0;
@@ -3671,6 +3698,7 @@ let lastN = -1;
         updateReminder();
       }
       function render() {
+        schedSnap();
         if (!isThree()) st.slot = 0;
         const price = st.count.price ? peso(st.count.price) : null;
         roll($("total"), !st.t1 ? "Pick a size" : price || "Quote");
@@ -3687,7 +3715,7 @@ let lastN = -1;
                 (!isThree() && st.colors.length >= 2 && !inp.checked) ||
                 OOS.colors.has(COLORS[+inp.value][0])),
           );
-        $("plainHint").textContent = st.colors.length ? "🌸 " + st.colors.map((i) => COLORS[i][0]).join(" + ") : "🌸 Pick a color to bring it to life";
+        $("plainHint").innerHTML = ICON.rose("#d6457b", 14) + " " + (st.colors.length ? st.colors.map((i) => COLORS[i][0]).join(" + ") : "Pick a color to bring it to life");
         applyTheme();
         applyOcc();
         setAccent();
@@ -3759,13 +3787,14 @@ let lastN = -1;
           d.msg ? ["Card message", d.msg] : null,
         ].filter(Boolean);
       }
-      async function sceneImage() {
+      async function sceneImage(noTag) {
         const c = $("scene").cloneNode(true);
         c.setAttribute("xmlns", NS);
         c.setAttribute("width", 800);
         c.setAttribute("height", 800);
         c.removeAttribute("class");
         c.querySelectorAll(".dp-g").forEach((q) => q.remove());
+        if (noTag) { const tg = c.querySelector("#tagG"); if (tg) tg.remove(); }
         const css =
           [...document.querySelectorAll("style")]
             .map((x) => x.textContent)
@@ -3856,7 +3885,7 @@ let lastN = -1;
         for (let i = 0; i < 7; i++) {
           const sp = document.createElement("span");
           sp.className = "sp";
-          sp.textContent = "✨";
+          sp.innerHTML = ICON.sparkle(1);
           sp.style.left = 15 + Math.random() * 70 + "%";
           sp.style.top = 20 + Math.random() * 55 + "%";
           sp.style.fontSize = 12 + Math.random() * 12 + "px";
@@ -3979,6 +4008,7 @@ let lastN = -1;
         updateColorUI();
       };
       function updateColorUI() {
+        updPals();
         const three = isThree(),
           n = st.colors.length,
           nm = st.colors.map((i) => COLORS[i][0]),
@@ -4392,13 +4422,15 @@ let lastN = -1;
               );
             bf += `<g style="color:${dark ? "#ffffff" : "#8a7358"};transform:${bflyT(k, e, bfScale(r))}">${wings}${BFB}</g>`;
           }
-        const out = `<svg viewBox="0 0 400 400" class="thumb block h-full w-full" style="--w1:${w[1]};--w2:${w[2]};--wo:${w[3]};--rb:${(rc || cl[0])[1]};--fl:${f[1]}" aria-hidden="true">
+        const fbc = w[0] === "White" ? "#ffffff" : "#120c1a",
+          gid = w[0] === "White" ? "tfbW" : "tfbB",
+          out = `<svg viewBox="0 0 400 400" class="thumb block h-full w-full" style="--w1:${w[1]};--w2:${w[2]};--wo:${w[3]};--rb:${(rc || cl[0])[1]};--fl:${f[1]}" aria-hidden="true"><defs><radialGradient id="${gid}"><stop offset="0" stop-color="${fbc}" stop-opacity=".5"/><stop offset=".65" stop-color="${fbc}" stop-opacity=".32"/><stop offset="1" stop-color="${fbc}" stop-opacity="0"/></radialGradient></defs>
     <ellipse cx="200" cy="388" rx="${40 + sc * 90}" ry="7" fill="#5e1631" opacity=".14"/>
     <g transform="translate(${CX} ${CY}) scale(${sc})"><path class="ws" d="M-38 95L0 198 38 95z"/>
       ${[0, 30, 60].map((rt, i) => sh(228, rt, i % 2 ? "wb" : "wa")).join("")}${[15, 45, 75].map((rt) => sh(196, rt, "wb")).join("")}${[0, 45].map((rt) => sh(160, rt, "wc")).join("")}
       <path class="rb" d="M0 116C-26 152-34 186-30 212l13-8 8 16C-6 184-4 152 0 116Z"/><path class="rb" d="M0 116C26 152 34 186 30 212l-13-8-8 16C6 184 4 152 0 116Z"/>
       <g transform="translate(0 115) scale(1.2) translate(0 -115)"><g>${bowHalf}</g><g transform="scale(-1 1)">${bowHalf}</g><circle class="rl" cy="115" r="8"/></g></g>
-    <g transform="translate(${CX} ${CY}) scale(${Rf / 100})"><circle class="fb" r="100"/><use href="#dotsG"/></g>
+    <g transform="translate(${CX} ${CY}) scale(${Rf / 100})"><circle r="104" fill="url(#${gid})"/><use href="#dotsG"/></g>
     ${roses}${bf}</svg>`;
         if (thumbCache.size > 80) thumbCache.clear();
         thumbCache.set(key, out);
@@ -4411,8 +4443,9 @@ let lastN = -1;
         OOS.wraps.has(p.wrap) ||
         OOS.dots.has(p.dots);
       function renderTop() {
-        const list = settings.top;
-        $("topCard").classList.toggle("hidden", !list.length);
+        const all = settings.top,
+          list = all.filter((p) => topFilter === "All" || tagsOf(p).includes(topFilter));
+        $("topCard").classList.toggle("hidden", !all.length);
         const keep = $("topRow").scrollLeft;
         $("topRow").innerHTML = list
           .map((p) => {
@@ -4429,6 +4462,7 @@ let lastN = -1;
       ${topNA(p) ? '<span class="oosb">Out of stock</span>' : ""}</button>`;
           })
           .join("");
+        if (!list.length) $("topRow").innerHTML = '<p class="px-1 py-6 text-sm text-rose-800/70">No choices in this style yet.</p>';
         $("topRow").scrollLeft = keep;
         thumbN0 = qty();
         updDots();
@@ -4489,12 +4523,14 @@ let lastN = -1;
         sparkle();
         buzz(12);
       }
-      function updDots() {
-        const r = $("topRow"), n = r.children.length, d = $("topDots"), mx = r.scrollWidth - r.clientWidth;
-        if (!n || mx < 4) return (d.innerHTML = "");
+      function dotsUpd(r, d) {
+        const n = r.children.length, mx = r.scrollWidth - r.clientWidth;
+        if (!n || mx < 4) { if (d.children.length) d.innerHTML = ""; return; }
+        if (d.children.length !== n) d.innerHTML = [...Array(n)].map(() => '<span class="h-1.5 rounded-full transition-all"></span>').join("");
         const i = Math.round((r.scrollLeft / mx) * (n - 1));
-        d.innerHTML = [...Array(n)].map((_, k) => `<span class="h-1.5 rounded-full transition-all" style="width:${k === i ? 18 : 6}px;background:${k === i ? "#d6457b" : "#ffc9d9"}"></span>`).join("");
+        [...d.children].forEach((sp, k) => { sp.style.width = (k === i ? 18 : 6) + "px"; sp.style.background = k === i ? "var(--acc)" : "#ffc9d9"; });
       }
+      function updDots() { dotsUpd($("topRow"), $("topDots")); }
       $("topRow").addEventListener("scroll", updDots, { passive: true });
       $("topRow").onclick = (e) => {
         const b = e.target.closest("[data-top]");
@@ -4732,9 +4768,9 @@ let lastN = -1;
         shell(
           "First-time setup",
           `<p class="mb-3 text-sm text-rose-800/80">Enter your GitHub details once. The token is locked with your secret code and kept only on this phone.</p>
-    <div class="grid gap-3">${f("s_owner", "GitHub username", "")}${f("s_repo", "Repository name", "", "text", "e.g. flower-shop")}
-    <div class="grid grid-cols-2 gap-3">${f("s_branch", "Branch", "main")}${f("s_path", "Settings file", "settings.json")}</div>
-    ${f("s_token", "GitHub token", "", "password", "github_pat_…")}${f("s_code", "Choose a secret code (6+ characters)", "", "password")}${f("s_code2", "Repeat the secret code", "", "password")}</div>
+    <div class="grid gap-3">${f("s_owner", "GitHub username", "")}${f("s_repo", "Repository name", GH_REPO, "text", "e.g. flower-shop")}
+    <details class="rounded-xl bg-rose-50 px-3 py-2"><summary class="cursor-pointer text-xs font-semibold text-rose-800">Advanced (usually leave as is)</summary><div class="mt-2 grid grid-cols-2 gap-3">${f("s_branch", "Branch", "main")}${f("s_path", "Settings file", "settings.json")}</div></details>
+    ${f("s_token", "GitHub token", "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", "password", "github_pat_…")}${f("s_code", "Choose a secret code (6+ characters)", "", "password")}${f("s_code2", "Repeat the secret code", "", "password")}</div>
     <details class="mt-3 rounded-xl bg-rose-50 px-3 py-2 text-xs text-rose-800/80"><summary class="cursor-pointer font-semibold">How do I get a token?</summary><ol class="mt-2 list-decimal space-y-1 pl-4"><li>GitHub → your profile → Settings → Developer settings → Personal access tokens → Fine-grained tokens.</li><li>Generate a new token. Under Repository access, choose Only select repositories and pick this one.</li><li>Under Permissions, set Contents to Read and write.</li><li>Copy the token and paste it above.</li></ol></details>
     <p id="admErr" class="mt-3 hidden rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></p>`,
           '<button id="s_go" class="w-full rounded-full bg-rose-800 py-3 font-semibold text-white">Save setup</button>',
@@ -5071,13 +5107,17 @@ let lastN = -1;
         return `rgba(${c >> 16},${(c >> 8) & 255},${c & 255},${a})`;
       };
       function applyTheme() {
-        const t = BD[st.bd] || THEMES[$("occasion").value] || THEMES.Other,
+        const t = themeNow(),
           tc = tintColor(),
           pc = $("prevCard");
         pc.style.setProperty("--g1", t[0]);
         pc.classList.toggle("night", st.bd === 4);
         pc.style.setProperty("--g2", t[1]);
         pc.style.setProperty("--tint", tc);
+        const pg = (st.bd === 0 && autoBg()) ? autoBg().pg : "#fff4f7";
+        document.documentElement.style.setProperty("--pg", pg);
+        const mt = document.querySelector('meta[name="theme-color"]');
+        if (mt) mt.setAttribute("content", pg);
         const cs = st.colors.map((i) => COLORS[i][1]),
           d = $("drift");
         d.style.setProperty("--pc0", cs[0] || tc);
@@ -5291,7 +5331,7 @@ let lastN = -1;
         x.fillStyle = "#8a4a62";
         x.font = '400 22px "DM Sans", system-ui, sans-serif';
         
-        const th = BD[st.bd] || THEMES[$("occasion").value] || THEMES.Other,
+        const th = themeNow(),
           tc = tintColor();
         x.save();
         rrect(x, 70, 305, 760, 640, 48);
@@ -5405,8 +5445,7 @@ let lastN = -1;
         const p = problems(),
           err = $("err");
         if (p.length) {
-          err.textContent = p.map((x) => x[1]).join(" ");
-          err.classList.remove("hidden");
+          toast("Almost there! " + p[0][1] + (p.length > 1 ? " (+" + (p.length - 1) + " more)" : ""));
           p.forEach(([id]) => {
             const el = $(id);
             if (el && el.tagName === "INPUT")
@@ -5449,6 +5488,7 @@ let lastN = -1;
         );
         $("inAppNote").classList.toggle("hidden", !inApp);
         $("saveImg").classList.toggle("hidden", inApp);
+        $("storyImg").classList.toggle("hidden", inApp);
         $("stepSave").classList.toggle(
           "hidden",
           inApp && $("shareImg").classList.contains("hidden"),
@@ -5515,7 +5555,7 @@ let lastN = -1;
       })();
 
       setInterval(() => {
-        if (document.hidden || RM() || !roses.length) return;
+        if (document.hidden || RM() || !roses.length || document.documentElement.classList.contains("scrolling")) return;
         const el = roses[Math.floor(Math.random() * roses.length)];
         const m = el && el.style.transform.match(/translate\(([-\d.]+)px,\s*([-\d.]+)px\)/);
         if (!m) return;
@@ -5529,28 +5569,6 @@ let lastN = -1;
         $("scene").appendChild(g);
         setTimeout(() => g.remove(), 4300);
       }, 4500);
-      (function () {
-        if (RM()) return;
-        const pc = $("prevCard");
-        let px = 0, py = 0, tk = false;
-        const set = (x, y) => {
-          px = Math.max(-1, Math.min(1, x)); py = Math.max(-1, Math.min(1, y));
-          if (tk) return;
-          tk = true;
-          requestAnimationFrame(() => { tk = false; pc.style.setProperty("--px", px.toFixed(2)); pc.style.setProperty("--py", py.toFixed(2)); });
-        };
-        pc.addEventListener("pointermove", (e) => {
-          if (e.pointerType === "touch") return;
-          const r = pc.getBoundingClientRect();
-          set(((e.clientX - r.left) / r.width) * 2 - 1, ((e.clientY - r.top) / r.height) * 2 - 1);
-        });
-        pc.addEventListener("pointerleave", () => set(0, 0));
-        const ori = (e) => { if (e.gamma != null) set(e.gamma / 25, (e.beta - 55) / 25); };
-        const go = () => addEventListener("deviceorientation", ori);
-        if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === "function")
-          addEventListener("pointerdown", () => { DeviceOrientationEvent.requestPermission().then((r) => { if (r === "granted") go(); }).catch(() => {}); }, { once: true });
-        else if (window.DeviceOrientationEvent) go();
-      })();
       function tod() {
         const h = new Date().getHours();
         $("prevCard").style.setProperty("--todc", h >= 5 && h < 10 ? "rgba(186,222,255,.38)" : h >= 10 && h < 16 ? "rgba(255,255,255,.3)" : h >= 16 && h < 19 ? "rgba(255,190,130,.42)" : "rgba(255,150,120,.3)");
@@ -5568,16 +5586,6 @@ let lastN = -1;
         }), { threshold: 0.08 });
         document.querySelectorAll("main section.order-2 > div").forEach((c) => { c.classList.add("rv"); io.observe(c); });
       }
-      document.querySelectorAll("#send,#bar2btn,#saveImg,#shareImg,#surprise,#closeDone,#openM,#dateChips button,#gateCopy").forEach((b) => b.classList.add("ripc"));
-      document.addEventListener("pointerdown", (e) => {
-        const b = e.target.closest && e.target.closest(".ripc");
-        if (!b || RM()) return;
-        const r = b.getBoundingClientRect(), d = Math.max(r.width, r.height) * 2, sp = document.createElement("span");
-        sp.className = "rip";
-        sp.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left - d / 2}px;top:${e.clientY - r.top - d / 2}px`;
-        b.appendChild(sp);
-        setTimeout(() => sp.remove(), 650);
-      });
       function updOk() {
         const ok = { name: !!$("name").value.trim(), phone: phoneOK($("phone").value.trim()), loc: !!$("loc").value.trim() };
         Object.keys(ok).forEach((id) => $(id).parentElement.classList.toggle("ok", ok[id]));
@@ -5588,7 +5596,8 @@ let lastN = -1;
       function updReady() {
         const p = problems(), n = $("need"), L = { counts: "a size", wraps: "a wrapping", fillers: "snow dots", colors: "colors", name: "your name", phone: "a valid mobile number", date: "a date", loc: "your address / place" };
         if (!n) return;
-        n.textContent = p.length ? "Still needed: " + [...new Set(p.map((x) => L[x[0]] || x[0]))].join(", ") : "All set! Ready to send 🌸";
+        if (p.length) n.textContent = "Still needed: " + [...new Set(p.map((x) => L[x[0]] || x[0]))].join(", ");
+        else n.innerHTML = "All set! Ready to send " + ICON.rose("#047857", 16);
         n.className = "mt-4 rounded-xl px-3 py-2 text-sm " + (p.length ? "bg-amber-50 text-amber-900" : "need-ok");
         $("send").classList.toggle("ready", !p.length);
         $("bar2btn").classList.toggle("ready", !p.length);
@@ -5596,6 +5605,7 @@ let lastN = -1;
       // 7. vine progress
       function vineUpd(done) {
         const host = $("vineR");
+        if (st.t1 && window.hideHint) window.hideHint();
         if (!host.children.length)
           host.innerHTML = done.map((_, i) => `<span style="left:${12.5 + i * 25}%"><svg viewBox="-56 -56 112 112" width="24" height="24" aria-hidden="true" style="--c:var(--acc)"><use href="#rose"/></svg></span>`).join("");
         [...host.children].forEach((sp, i) => sp.classList.toggle("on", !!done[i]));
@@ -5672,7 +5682,7 @@ let lastN = -1;
         bt.onclick = openSheet;
       }
       // 4. backdrop picker
-      const BD = [null, ["#e8f4e5", "#c3ddbf"], ["#fffaf0", "#f3e3c3"], ["#f1eaff", "#d6c6f5"], ["#4a3566", "#241838"]], BDN = ["Auto", "Sage", "Cream", "Lilac", "Night"];
+      const BD = [null, ["#e8f4e5", "#c3ddbf"], ["#fffaf0", "#f3e3c3"], ["#f1eaff", "#d6c6f5"], ["#4a3566", "#241838"]], BDN = ["Auto (matches your flowers)", "Sage", "Cream", "Lilac", "Night"];
       st.bd = 0;
       $("bdDots").innerHTML = BDN.map((n, i) => `<button type="button" data-bd="${i}" aria-label="${n} backdrop" title="${n}" class="bdd${i ? "" : " on"}" style="background:${BD[i] ? `linear-gradient(135deg,${BD[i][0]},${BD[i][1]})` : "conic-gradient(#ffc9d9,#f3e8ff,#fff0e0,#ffc9d9)"}"></button>`).join("");
       $("bdDots").onclick = (e) => {
@@ -5742,6 +5752,34 @@ let lastN = -1;
         });
       }
       $("bouquet").style.webkitTouchCallout = "none";
+      // ---- background follows the flowers
+      function hexHsl(hex) {
+        const n = parseInt(hex.slice(1), 16), r = (n >> 16) / 255, g = ((n >> 8) & 255) / 255, b = (n & 255) / 255,
+          mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn, l = (mx + mn) / 2;
+        let h = 0;
+        if (d) { h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h = (h * 60 + 360) % 360; }
+        return [h, d ? d / (1 - Math.abs(2 * l - 1)) : 0, l];
+      }
+      function hslHex(h, s, l) {
+        h = ((h % 360) + 360) % 360; s /= 100; l /= 100;
+        const a = s * Math.min(l, 1 - l), f = (n) => { const k = (n + h / 30) % 12; return Math.round(255 * (l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))).toString(16).padStart(2, "0"); };
+        return "#" + f(0) + f(8) + f(4);
+      }
+      // light/bright flowers get a soft complementary backdrop so they stand out;
+      // deep flowers get an airy tint of their own hue
+      function autoBg() {
+        if (!st.colors.length) return null;
+        const [h, , l] = hexHsl(tintColor());
+        const comp = l >= 0.55, bh = comp ? h + 180 : h + 8;
+        return {
+          g: comp ? [hslHex(bh, 42, 91), hslHex(bh + 12, 42, 82)] : [hslHex(bh, 75, 94), hslHex(bh + 12, 70, 86)],
+          pg: hslHex(bh, comp ? 40 : 70, 97),
+        };
+      }
+      function themeNow() {
+        const a = st.bd === 0 ? autoBg() : null;
+        return BD[st.bd] || (a && a.g) || THEMES[$("occasion").value] || THEMES.Other;
+      }
       // ---- accent follows the bouquet
       function accentOf(hex) {
         const n = parseInt(hex.slice(1), 16), r = (n >> 16) / 255, g = ((n >> 8) & 255) / 255, b = (n & 255) / 255,
@@ -5765,6 +5803,194 @@ let lastN = -1;
         setTimeout(endIntro, 2700);
         addEventListener("pointerdown", endIntro, { once: true });
       }
+      // ---- pause the heavy idle effects while scrolling (smoother on phones)
+      {
+        let scT = 0;
+        const h = document.documentElement;
+        addEventListener("scroll", () => {
+          if (!h.classList.contains("scrolling")) h.classList.add("scrolling");
+          clearTimeout(scT);
+          scT = setTimeout(() => h.classList.remove("scrolling"), 180);
+        }, { passive: true });
+      }
+      // ---- icons (same look on every phone)
+      const ICON = {
+        rose: (c = "#d6457b", z = 16) => `<svg class="inline-block align-middle" width="${z}" height="${z}" viewBox="-56 -56 112 112" aria-hidden="true" style="--c:${c}"><use href="#rose"/></svg>`,
+        sparkle: (em) => `<svg class="inline-block align-middle" width="${em ? "1em" : 16}" height="${em ? "1em" : 16}" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.6 7.4L22 11l-7.4 2.6L12 21l-2.6-7.4L2 11l7.4-2.6z" fill="#f4b400"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z" fill="#d6457b"/></svg>`,
+        sound: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>`,
+        mute: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9l6 6M22 9l-6 6"/></svg>`,
+      };
+      // ---- soft toast instead of an error box
+      function toast(msg) {
+        let t = $("toast");
+        if (!t) { t = document.createElement("div"); t.id = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); }
+        t.innerHTML = ICON.rose("#ffc9d9", 16) + " <span></span>";
+        t.lastElementChild.textContent = msg;
+        t.classList.add("on");
+        clearTimeout(toast.t);
+        toast.t = setTimeout(() => t.classList.remove("on"), 3400);
+        buzz(12);
+      }
+      // ---- ready-made color pairs
+      const PALS = [["Blush + Cream", ["Light Pink", "Cream / Milky White"]], ["Wine + Champagne", ["Wine Red", "Champagne"]], ["Royal + Youlan", ["Royal Blue", "Youlan Blue"]], ["Lavender + Violet", ["Lavender Purple", "Deep Violet"]], ["Matcha + Cream", ["Matcha Green", "Cream / Milky White"]], ["Sunny + Sunflower", ["Sunny Yellow", "Sunflower Yellow"]]];
+      $("pals").innerHTML = PALS.map(([n, cs], i) => {
+        const hx = cs.map((c) => COLORS.find((x) => x[0] === c)[1]);
+        return `<button type="button" data-pal="${i}" class="palc snap-start" aria-label="${n}"><span class="palp">${hx.map((h) => `<svg viewBox="-56 -56 112 112" aria-hidden="true" style="--c:${h}"><use href="#rose"/></svg>`).join("")}</span><span class="paln">${n}</span><span class="palx">Out of stock</span><span class="palk">✓</span></button>`;
+      }).join("");
+      $("pals").onclick = (e) => {
+        const b = e.target.closest("[data-pal]");
+        if (!b || b.disabled) return;
+        setColors(PALS[+b.dataset.pal][1].map((n) => COLORS.findIndex((c) => c[0] === n)));
+      };
+      function updPals() {
+        if (!$("pals").children.length) return;
+        const cur = st.colors.map((i) => COLORS[i][0]);
+        [...$("pals").children].forEach((b, i) => {
+          const cs = PALS[i][1];
+          b.disabled = cs.some((n) => OOS.colors.has(n));
+          b.classList.toggle("on", cur.length === 2 && cs.every((n, k) => cur[k] === n));
+        });
+      }
+      // ---- top choice filters
+      function tagsOf(p) {
+        const T = { "Wine Red": ["Romantic", "Bold"], "Light Pink": ["Romantic", "Soft"], "Lavender Purple": ["Soft"], "Deep Violet": ["Bold"], "Royal Blue": ["Bold"], "Youlan Blue": ["Soft", "Fresh"], Champagne: ["Soft"], "Moss Green": ["Fresh"], "Matcha Green": ["Fresh", "Soft"], "Sunflower Yellow": ["Bold", "Fresh"], "Sunny Yellow": ["Fresh"], "Cream / Milky White": ["Soft"] };
+        const out = new Set(p.colors.flatMap((n) => T[n] || []));
+        if (p.wrap === "Black sparkle") out.add("Bold");
+        return [...out];
+      }
+      $("topFilt").innerHTML = ["All", "Romantic", "Soft", "Bold", "Fresh"].map((n) => `<button type="button" data-tf2="${n}" class="tfb${n === "All" ? " on" : ""}">${n}</button>`).join("");
+      $("topFilt").onclick = (e) => {
+        const b = e.target.closest("[data-tf2]");
+        if (!b) return;
+        topFilter = b.dataset.tf2;
+        [...$("topFilt").children].forEach((x) => x.classList.toggle("on", x === b));
+        renderTop();
+      };
+      // ---- undo / start over
+      const snap = () => JSON.stringify({ c: st.count.id, t1: st.t1, tw: st.tw, td: st.td, cols: st.colors, w: st.wrap, f: st.filler, bd: st.bd, bf: $("butterfly").checked, q: $("customQty").value });
+      let stack = [], snapT = 0;
+      function schedSnap() {
+        clearTimeout(snapT);
+        snapT = setTimeout(() => {
+          if (!stack.length) return;
+          const t = snap();
+          if (t !== stack[stack.length - 1]) { stack.push(t); if (stack.length > 30) stack.splice(1, 1); }
+          $("undoBtn").disabled = stack.length < 2;
+        }, 250);
+      }
+      function restore(t) {
+        const o = JSON.parse(t);
+        st.count = COUNTS.find((c) => c.id === o.c) || COUNTS[0];
+        st.t1 = o.t1; st.tw = o.tw; st.td = o.td; st.colors = o.cols.slice(); st.wrap = o.w; st.filler = o.f; st.bd = o.bd; st.slot = 0;
+        $("butterfly").checked = o.bf; $("customQty").value = o.q;
+        document.querySelectorAll("#counts input").forEach((x, i) => (x.checked = o.t1 && COUNTS[i] === st.count));
+        document.querySelectorAll("#wraps input").forEach((x, i) => (x.checked = o.tw && i === o.w));
+        document.querySelectorAll("#fillers input").forEach((x, i) => (x.checked = o.td && i === o.f));
+        syncColorInputs();
+        $("customBox").classList.toggle("hidden", st.count.id !== "x" || !o.t1);
+        [...$("bdDots").children].forEach((x, i) => x.classList.toggle("on", i === st.bd));
+        bloom();
+        render();
+      }
+      stack = [snap()];
+      $("undoBtn").onclick = () => {
+        if (stack.length < 2) return;
+        stack.pop();
+        restore(stack[stack.length - 1]);
+        $("undoBtn").disabled = stack.length < 2;
+        buzz(8);
+      };
+      $("resetBtn").onclick = () => {
+        if (!confirm("Start over? This clears your whole design and details.")) return;
+        restore(stack[0]);
+        ["name", "phone", "date", "time", "loc", "msg"].forEach((id) => ($(id).value = ""));
+        $("count").textContent = "0";
+        $("occasion").selectedIndex = 0;
+        document.querySelector('input[name=ful][value="Pick-up"]').checked = true;
+        setFul("Pick-up");
+        render();
+      };
+      // ---- reviews line (only if the owner added real ones)
+      if (SHOP_REVIEWS.length) {
+        let k = 0;
+        const show = () => { $("revLine").textContent = SHOP_REVIEWS[k++ % SHOP_REVIEWS.length]; };
+        show();
+        if (SHOP_REVIEWS.length > 1) setInterval(show, 6000);
+      } else $("revLine").remove();
+      // ---- swipe dots on every row the customer has to swipe
+      [["counts", "countDots"], ["pals", "palDots"], ["topFilt", "filtDots"]].forEach(([a, b]) => {
+        const r = $(a), d = $(b), f = () => dotsUpd(r, d);
+        r.addEventListener("scroll", f, { passive: true });
+        if (window.ResizeObserver) new ResizeObserver(f).observe(r);
+        addEventListener("resize", f);
+        requestAnimationFrame(f);
+      });
+      // ---- story-size image (9:16)
+      async function buildStory() {
+        try { await document.fonts.ready; } catch (_) {}
+        const W = 1080, H = 1920, cv = document.createElement("canvas");
+        cv.width = W; cv.height = H;
+        const x = cv.getContext("2d"), th = themeNow(), tc = tintColor();
+        const g = x.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, th[0]); g.addColorStop(1, th[1]);
+        x.fillStyle = g; x.fillRect(0, 0, W, H);
+        const au = x.createRadialGradient(540, 860, 40, 540, 860, 760);
+        au.addColorStop(0, hexA(tc, 0.28)); au.addColorStop(1, hexA(tc, 0));
+        x.fillStyle = au; x.fillRect(0, 0, W, H);
+        x.textAlign = "center";
+        x.fillStyle = "#5e1631";
+        x.font = "700 76px Fraunces, Georgia, serif";
+        x.fillText(fit(x, SHOP_NAME, 980), W / 2, 210);
+        x.fillStyle = "#b92f64";
+        x.font = '700 30px "DM Sans", system-ui, sans-serif';
+        try { x.letterSpacing = "8px"; } catch (_) {}
+        x.fillText("MY CUSTOM BOUQUET", W / 2, 282);
+        try { x.letterSpacing = "0px"; } catch (_) {}
+        try { x.drawImage(await sceneImage(true), 60, 380, 960, 960); } catch (e) { console.error(e); }
+        const d = data(),
+          lines = [d.count, d.colors, d.wrap !== "Not selected" ? d.wrap + " wrap" : null, d.filler !== "Not selected" ? d.filler + " snow dots" : null].filter((l) => l && l !== "Not selected");
+        x.fillStyle = "#3a1424";
+        x.font = '700 46px "DM Sans", system-ui, sans-serif';
+        lines.forEach((l, i) => x.fillText(fit(x, l, 940), W / 2, 1470 + i * 66));
+        x.fillStyle = "#5e1631";
+        rrect(x, 190, 1730, 700, 110, 55);
+        x.fill();
+        x.fillStyle = "#fff";
+        x.font = '700 40px "DM Sans", system-ui, sans-serif';
+        x.fillText("Order yours on Messenger", W / 2, 1798);
+        const blob = await new Promise((r) => cv.toBlob(r, "image/png"));
+        return new File([blob], "aisha-bouquet-story.png", { type: "image/png" });
+      }
+      $("storyImg").onclick = async () => {
+        const b = $("storyImg");
+        b.disabled = true;
+        try {
+          const f = await buildStory();
+          if (navigator.canShare && navigator.canShare({ files: [f] })) {
+            try { await navigator.share({ files: [f], title: "My bouquet design" }); } catch (_) {}
+          } else {
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(f); a.download = f.name;
+            document.body.appendChild(a); a.click(); a.remove();
+          }
+        } catch (e) { console.error(e); }
+        b.disabled = false;
+      };
+      // ---- first-visit hint on step 1
+      (function () {
+        let seen = false;
+        try { seen = localStorage.getItem("ahf_seen") === "1"; } catch (_) {}
+        const tag = $("startHere"), row = $("counts");
+        window.hideHint = () => {
+          if (!row.classList.contains("hint")) return;
+          row.classList.remove("hint");
+          tag.classList.add("hidden");
+          try { localStorage.setItem("ahf_seen", "1"); } catch (_) {}
+        };
+        if (!seen) { row.classList.add("hint"); tag.classList.remove("hidden"); }
+        row.addEventListener("pointerdown", window.hideHint);
+        row.addEventListener("change", window.hideHint);
+      })();
       $("mute").onclick = () => {
         muted = !muted;
         try { localStorage.setItem("ahf_mute", muted ? "1" : "0"); } catch (_) {}
@@ -5772,17 +5998,6 @@ let lastN = -1;
         if (!muted) { acted = true; pop(520); buzz(8); }
       };
       updMute();
-      (function () {
-        const pc = $("prevCard");
-        let on = false;
-        const f = () => {
-          if (innerWidth >= 1024) { if (on) { pc.classList.remove("mini"); on = false; } return; }
-          if (!on && scrollY > 320) { pc.classList.add("mini"); on = true; }
-          else if (on && scrollY < 120) { pc.classList.remove("mini"); on = false; }
-        };
-        addEventListener("scroll", f, { passive: true });
-        addEventListener("resize", f);
-      })();
       skelTop();
       loadSettings();
       render();
