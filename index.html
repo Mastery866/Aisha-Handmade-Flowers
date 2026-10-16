@@ -8,7 +8,12 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <title>Aisha Handmade Flowers — Design Your Own Bouquet</title>
+    <script>
+(function(){var q=location.search.match(/[?&]lite=([01])/),c=navigator.connection||{};
+window.LITE=q?q[1]==="1":((navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=3||c.saveData===true);
+if(window.LITE)document.documentElement.classList.add("lite");})();
+</script>
+<title>Aisha Handmade Flowers — Design Your Own Bouquet</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=DM+Sans:wght@400;500;700&display=swap"
@@ -31,11 +36,7 @@
       .opt {
         transition: all 0.15s;
       }
-      .opt:has(input:checked) {
-        border-color: #d6457b;
-        background: #ffe4ec;
-        box-shadow: 0 0 0 2px #d6457b33;
-      }
+      
       .opt:has(input:disabled) {
         opacity: 0.45;
         cursor: not-allowed;
@@ -80,7 +81,6 @@
       }
       .ln {
         fill: none;
-        stroke: color-mix(in srgb, var(--c) 50%, black);
         stroke-opacity: 0.45;
         stroke-width: 0.9;
       }
@@ -144,8 +144,6 @@
       }
       .fld:focus {
         outline: none;
-        border-color: #d6457b;
-        box-shadow: 0 0 0 3px #d6457b2e;
       }
       .fld[aria-invalid="true"] {
         border-color: #c0392b;
@@ -193,21 +191,13 @@
         }
       }
       @media (prefers-reduced-motion: reduce) {
-        .ru,
         .tail,
         .bow {
           animation: none;
         }
       }
       .gate-bg {
-        background: linear-gradient(
-          135deg,
-          #fff4f7,
-          #ffe4ec,
-          #fde7f3,
-          #f3e8ff,
-          #fff4f7
-        );
+        background: linear-gradient( 135deg, #fff1e6, #ffe4ec, #ffd9cc, #ffeef2, #fff1e6 );
         background-size: 300% 300%;
         animation: shift 12s ease infinite;
       }
@@ -243,14 +233,7 @@
         inherits: true;
         initial-value: #ff8fbf;
       }
-      #scene {
-        transition:
-          --w1 0.5s,
-          --w2 0.5s,
-          --rb 0.5s,
-          --wo 0.5s,
-          --fl 0.5s;
-      }
+      
       .wa,
       .wb,
       .wc {
@@ -294,34 +277,6 @@
         fill: #fff;
         opacity: 0.9;
       }
-      .fly {
-        position: absolute;
-        left: 0;
-        top: 0;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-        will-change: transform;
-        opacity: 0.92;
-      }
-      .f0 {
-        animation-name: fly1;
-      }
-      .f1 {
-        animation-name: fly2;
-      }
-      .f2 {
-        animation-name: fly3;
-      }
-      .bw1 {
-        fill: var(--b);
-      }
-      .bw2 {
-        fill: color-mix(in srgb, var(--b) 68%, white);
-      }
-      .wg {
-        animation: flap var(--fs, 0.45s) ease-in-out infinite alternate;
-        transform-origin: 0 0;
-      }
       .blob {
         position: absolute;
         border-radius: 9999px;
@@ -337,63 +292,7 @@
           transform: translate(36px, -44px) scale(1.18);
         }
       }
-      @keyframes fly1 {
-        0% {
-          transform: translate(-18vw, 72vh) rotate(35deg);
-        }
-        25% {
-          transform: translate(22vw, 42vh) rotate(-10deg);
-        }
-        50% {
-          transform: translate(52vw, 58vh) rotate(18deg);
-        }
-        75% {
-          transform: translate(82vw, 22vh) rotate(-14deg);
-        }
-        100% {
-          transform: translate(118vw, 34vh) rotate(25deg);
-        }
-      }
-      @keyframes fly2 {
-        0% {
-          transform: translate(115vw, 20vh) rotate(-30deg);
-        }
-        30% {
-          transform: translate(75vw, 48vh) rotate(12deg);
-        }
-        55% {
-          transform: translate(40vw, 30vh) rotate(-16deg);
-        }
-        80% {
-          transform: translate(12vw, 64vh) rotate(14deg);
-        }
-        100% {
-          transform: translate(-18vw, 50vh) rotate(-24deg);
-        }
-      }
-      @keyframes fly3 {
-        0% {
-          transform: translate(10vw, 112vh) rotate(8deg);
-        }
-        30% {
-          transform: translate(34vw, 70vh) rotate(-12deg);
-        }
-        60% {
-          transform: translate(64vw, 40vh) rotate(14deg);
-        }
-        100% {
-          transform: translate(90vw, -14vh) rotate(-6deg);
-        }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .fly,
-        .blob {
-          animation: none;
-        }
-        .fly {
-          transform: translate(calc(var(--n, 20) * 1vw), 30vh);
-        }
-      }
+      @media (prefers-reduced-motion: reduce) { .blob { animation: none; } }
       .stp {
         display: inline-grid;
         place-items: center;
@@ -512,11 +411,7 @@
       .fg {
         filter: drop-shadow(0 1px 1.5px rgba(94, 22, 49, 0.3));
       }
-      .opt:has(input:checked) .sw {
-        box-shadow:
-          0 0 0 2px #fff,
-          0 0 0 4px #d6457b;
-      }
+      
       .opt:has(input:checked) .sw::after {
         content: "✓";
         position: absolute;
@@ -552,11 +447,7 @@
         transform: translateY(-2px);
         box-shadow: 0 8px 18px rgba(94, 22, 49, 0.14);
       }
-      .topc.sel {
-        border-color: #d6457b;
-        background: #fff4f7;
-        box-shadow: 0 0 0 2px #d6457b44;
-      }
+      
       .topc:disabled {
         opacity: 0.55;
         filter: grayscale(0.9);
@@ -1340,9 +1231,6 @@
       .min-h-screen {
         min-height: 100vh;
       }
-      .w-0 {
-        width: 0;
-      }
       .w-1\/2 {
         width: 50%;
       }
@@ -1684,11 +1572,6 @@
         --tw-gradient-to: rgba(255, 244, 247, 0) var(--tw-gradient-to-position);
         --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
       }
-      .from-rose-500 {
-        --tw-gradient-from: #d6457b var(--tw-gradient-from-position);
-        --tw-gradient-to: rgba(214, 69, 123, 0) var(--tw-gradient-to-position);
-        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-      }
       .from-transparent {
         --tw-gradient-from: transparent var(--tw-gradient-from-position);
         --tw-gradient-to: transparent var(--tw-gradient-to-position);
@@ -1699,9 +1582,6 @@
         --tw-gradient-stops:
           var(--tw-gradient-from), #fbbf24 var(--tw-gradient-via-position),
           var(--tw-gradient-to);
-      }
-      .to-amber-400 {
-        --tw-gradient-to: #fbbf24 var(--tw-gradient-to-position);
       }
       .to-amber-50 {
         --tw-gradient-to: #fffbeb var(--tw-gradient-to-position);
@@ -2100,9 +1980,6 @@
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 0.15s;
       }
-      .duration-500 {
-        transition-duration: 0.5s;
-      }
       .ease-in-out {
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       }
@@ -2173,9 +2050,6 @@
         }
         .sm\:grid-cols-3 {
           grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-        .sm\:grid-cols-5 {
-          grid-template-columns: repeat(5, minmax(0, 1fr));
         }
         .sm\:items-center {
           align-items: center;
@@ -2263,11 +2137,7 @@
       .min-h-\[56px\] {
         min-height: 56px;
       }
-      #counts {
-        scrollbar-width: thin;
-        scroll-snap-type: x proximity;
-        padding-top: 4px;
-      }
+      
     </style>
   <style id="polish">
 h1,h2,.font-display{letter-spacing:-.01em}
@@ -2314,7 +2184,7 @@ h1,h2,.font-display{letter-spacing:-.01em}
 .ff.ok>.fld{padding-right:2rem}
 .need-ok{background:#e8f8f1;color:#047857}
 #send.ready,#bar2btn.ready{animation:rdy 1.8s ease-out infinite}
-@keyframes rdy{0%,100%{box-shadow:0 0 0 0 rgba(10,124,255,.45)}50%{box-shadow:0 0 0 10px rgba(10,124,255,0)}}
+
 .od{display:inline-block;height:1em;line-height:1;overflow:hidden;vertical-align:top}
 .odi{display:block;transition:transform .8s cubic-bezier(.2,.9,.3,1.08)}
 .odi i{display:block;font-style:normal;height:1em;line-height:1}
@@ -2339,13 +2209,12 @@ section.space-y-5>div.hidden+div::before{display:none}
 #sheet .sht{display:flex;justify-content:space-between;align-items:baseline;margin:.8rem 0;font-family:Fraunces,Georgia,serif;font-size:1.6rem;font-weight:700;color:#b92f64}
 #shs{width:100%;border-radius:.75rem;background:#0a7cff;color:#fff;font-weight:700;padding:.85rem}
 .bdd{width:18px;height:18px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 3px rgba(94,22,49,.3)}
-.bdd.on{box-shadow:0 0 0 2px #d6457b}
 #prevCard.night #previewNote,#prevCard.night #previewNote span{color:#efe6ff}
 #prevCard.night .glow{animation:none;opacity:.22}
 #bouquet{-webkit-user-select:none;user-select:none}
 #lens{position:fixed;z-index:95;width:130px;height:130px;border-radius:50%;overflow:hidden;border:3px solid #fff;box-shadow:0 8px 24px rgba(94,22,49,.35);pointer-events:none;background:#fff4f7}
 #lens .lw{position:absolute}
-.frb.on{border-color:#d6457b;background:#ffe4ec;font-weight:700}
+.frb.on{font-weight:700}
 .pl{position:relative;width:54px;height:54px;animation:plspin 2.4s linear infinite}
 .pl i{position:absolute;left:50%;top:0;width:16px;height:26px;margin-left:-8px;border-radius:50% 50% 50% 50%/70% 70% 30% 30%;background:#d6457b;opacity:.85;transform-origin:50% 27px;transform:rotate(calc(var(--k)*72deg))}
 @keyframes plspin{to{transform:rotate(360deg)}}
@@ -2366,9 +2235,8 @@ section.space-y-5>div.hidden+div::before{display:none}
 .frb.on{border-color:var(--acc);background:var(--accs)}
 body{background:var(--pg,#fff4f7);transition:background-color .6s ease}
 #mute{display:inline-flex;align-items:center;gap:.3rem}
-.palb,.tfb{flex:none;display:flex;align-items:center;gap:.35rem;border:1px solid #ffc9d9;border-radius:9999px;padding:.3rem .75rem;font-size:.75rem;font-weight:500;background:#fff;white-space:nowrap}
-.palb.on,.tfb.on{border-color:var(--acc);background:var(--accs);font-weight:700}
-.palb:disabled{opacity:.45;cursor:not-allowed}
+.tfb{flex:none;display:flex;align-items:center;gap:.35rem;border:1px solid #ffc9d9;border-radius:9999px;padding:.3rem .75rem;font-size:.75rem;font-weight:500;background:#fff;white-space:nowrap}
+.tfb.on{border-color:var(--acc);background:var(--accs);font-weight:700}
 #toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:58;display:flex;align-items:center;gap:.4rem;max-width:90vw;padding:.7rem 1.1rem;border-radius:9999px;background:#5e1631;color:#fff;font-size:.9rem;box-shadow:0 8px 24px rgba(94,22,49,.3);opacity:0;transform:translate(-50%,16px);pointer-events:none;transition:opacity .3s,transform .3s}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 @media (min-width:1024px){#toast{bottom:28px}}
@@ -2402,6 +2270,31 @@ html.scrolling #sway,html.scrolling #roses,html.scrolling .tail,html.scrolling .
 #thanks h2{font-family:Fraunces,Georgia,serif;font-size:1.9rem;font-weight:700;margin-top:8px}
 #thanks p{margin-top:6px;font-size:.95rem;opacity:.8;max-width:20rem}
 @media (prefers-reduced-motion:reduce){#thanks,#thanks .tkr{animation:none}#thanks .tkr{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) rotate(var(--rot))}}
+.popb{position:absolute;top:-9px;left:8px;z-index:1;background:var(--acc);color:#fff;font-size:11px;font-weight:700;letter-spacing:.03em;padding:2px 9px;border-radius:9999px;box-shadow:0 2px 6px rgba(94,22,49,.25);white-space:nowrap;pointer-events:none}
+#counts .popb,.palc .popb{left:50%;transform:translateX(-50%)}
+#pals{padding-top:12px}
+.opt.is-oos .popb,.palc:disabled .popb{display:none}
+.bdd{position:relative;overflow:hidden}
+.bdd{font:700 9px/1 "DM Sans",sans-serif;display:grid;place-items:center;color:#5e1631}
+.bdd.dk{color:#fff}
+#prevCard.night .aura{background:radial-gradient(circle at 50% 44%,rgba(255,255,255,.13),transparent 52%),radial-gradient(circle at 50% 44%,color-mix(in srgb,var(--tint) 48%,transparent) 0%,color-mix(in srgb,var(--tint) 20%,transparent) 40%,transparent 68%)}
+/* open-in-browser screen: peach + pink, falling petals like the live preview */
+.gp{position:absolute;top:-10vh;left:var(--x);width:var(--sz);height:var(--sz);opacity:0;animation:gfall var(--dur) linear infinite;animation-delay:var(--dl);will-change:transform}
+.gp svg{display:block;width:100%;height:100%;fill:var(--pc);filter:drop-shadow(0 1px 1px rgba(150,60,50,.22));animation:gspin var(--sp) ease-in-out infinite alternate}
+@keyframes gfall{0%{opacity:0;transform:translate3d(0,0,0) rotate(0)}8%{opacity:.95}50%{transform:translate3d(var(--sw),55vh,0) rotate(160deg)}92%{opacity:.9}100%{opacity:0;transform:translate3d(calc(var(--sw)*-.6),112vh,0) rotate(340deg)}}
+@keyframes gspin{from{transform:rotateY(0) rotateZ(-12deg)}to{transform:rotateY(70deg) rotateZ(12deg)}}
+.gstep{display:grid;place-items:center;flex:none;width:1.6rem;height:1.6rem;border-radius:9999px;background:linear-gradient(135deg,#ffd6c4,#ffc2d4);color:#5e1631;font:700 .8rem "DM Sans",sans-serif;box-shadow:0 1px 3px rgba(150,60,50,.2)}
+.gbtn,.gbtn2{display:block;width:100%;margin-top:.75rem;border-radius:9999px;text-align:center;font-weight:600;cursor:pointer}
+.gbtn{padding:.9rem;color:#fff;background:linear-gradient(135deg,#c93a6f,#dd6b45);box-shadow:0 8px 18px rgba(201,58,111,.3)}
+.gbtn2{padding:.75rem;font-size:.9rem;color:#5e1631;background:rgba(255,255,255,.7);border:1px solid rgba(201,58,111,.25)}
+.gbtn.hidden,.gbtn2.hidden{display:none}
+@media (prefers-reduced-motion:reduce){.gp{animation:none;top:calc(var(--y)*1%);opacity:.75}.gp svg{animation:none}}
+/* lite mode: few cores, low RAM, Save-Data, or ?lite=1 (force) / ?lite=0 (off) */
+html.lite #drift,html.lite #occ,html.lite #bokeh,html.lite .glow,html.lite .blob,html.lite .gp:nth-child(n+8){display:none}
+html.lite #sway,html.lite #roses,html.lite .tail,html.lite .bow,html.lite .bfl,html.lite .bob,html.lite .wing,html.lite .spk,html.lite .logo,html.lite .gate-bg,html.lite #startHere,html.lite #steps .cur,html.lite #send.ready,html.lite #bar2btn.ready,html.lite #counts.hint label,html.lite .rv-in .opt,html.lite .rv-in .topc{animation:none}
+html.lite .spk{opacity:.85}
+html.lite #bouquet svg,html.lite #roses .rz,html.lite .fg,html.lite .palp svg{filter:none}
+html.lite .backdrop-blur,html.lite .backdrop-blur-xl,html.lite #pload,html.lite #thanks{-webkit-backdrop-filter:none;backdrop-filter:none}
 </style>
 </head>
   <body class="font-sans min-h-screen">
@@ -2475,7 +2368,7 @@ html.scrolling #sway,html.scrolling #roses,html.scrolling .tail,html.scrolling .
           <path id="vineFg" fill="none" stroke="#d6457b" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke" d="M0 14C16 2 34 2 50 14S84 26 100 14S134 2 150 14S184 26 200 14S234 2 250 14S284 26 300 14S334 2 350 14S384 26 400 14"/>
         </svg>
         <div id="vineR"></div>
-        <div id="bar" class="hidden"></div>
+        
       </div>
     </nav>
 
@@ -2639,27 +2532,15 @@ html.scrolling #sway,html.scrolling #roses,html.scrolling .tail,html.scrolling .
             class="sec font-display text-xl font-bold text-rose-800"
           >
             <span class="stp">2</span
-            ><span id="colorTitle">Pick up to 2 colors</span>
+            ><span id="colorTitle">Pick your color</span>
             <span
               id="colorBadge"
               class="ml-1 rounded-full bg-rose-100 px-2 py-0.5 align-middle text-xs font-medium text-rose-800"
               >2nd color is optional</span
             >
           </h2>
-          <p id="colorDesc" class="text-sm text-rose-800/70">
-            Mixing is optional. Pick 1 color for a single-color bouquet, or 2
-            colors for a mix. Cream / Milky White works only as a mix, so pair
-            it with another color.
-          </p>
+          <p id="colorDesc" class="text-sm text-rose-800/70">Pick 1 color for a classic single-color bouquet. Want a mix? Add a 2nd color, or open the ready-made pairs below. Cream / Milky White works only as a mix, so pair it with another color.</p>
           <button id="surprise" type="button" class="mt-4 rounded-full border border-rose-200 bg-white px-3 py-1.5 text-sm font-medium hover:bg-rose-50"><svg class="inline-block align-middle" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.6 7.4L22 11l-7.4 2.6L12 21l-2.6-7.4L2 11l7.4-2.6z" fill="#f4b400"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z" fill="#d6457b"/></svg> Surprise me</button>
-          <div class="mt-4">
-            <div class="flex items-center justify-between">
-              <h3 class="text-sm font-bold text-rose-800">Ready-made pairs</h3>
-              <span class="text-xs text-rose-800/70">Swipe for more →</span>
-            </div>
-            <div id="pals" class="mt-2 flex snap-x gap-2 overflow-x-auto px-1 pb-2" style="margin-left:-.25rem;margin-right:-.25rem;scrollbar-width:thin;scroll-snap-type:x proximity"></div>
-            <div id="palDots" class="mt-1 flex items-center justify-center gap-1.5" aria-hidden="true"></div>
-          </div>
           <div id="slots" class="mt-4 hidden grid-cols-2 gap-3"></div>
           <div
             id="colors"
@@ -2670,6 +2551,11 @@ html.scrolling #sway,html.scrolling #roses,html.scrolling .tail,html.scrolling .
             class="mt-3 text-sm text-rose-800/70"
             aria-live="polite"
           ></p>
+          <div id="palBox" class="hidden mt-4 rounded-xl border border-rose-100 bg-rose-50/40 px-3 py-3">
+            <p class="text-sm font-semibold text-rose-800">✿ Want a ready-made mix? <span class="font-normal text-rose-800/70">(optional)</span></p>
+            <p class="mt-2 text-xs text-rose-800/70">Tap a pair to use it. You can still change the colors afterwards. Swipe for more →</p>
+            <div id="pals" class="mt-2 flex snap-x gap-2 overflow-x-auto px-1 pb-2" style="scrollbar-width:thin;scroll-snap-type:x proximity"></div>
+            <div id="palDots" class="mt-1 flex items-center justify-center gap-1.5" aria-hidden="true"></div> </div>
         </div>
 
         <div class="rounded-2xl bg-white p-5 shadow-sm">
@@ -2890,106 +2776,25 @@ html.scrolling #sway,html.scrolling #roses,html.scrolling .tail,html.scrolling .
       aria-modal="true"
       aria-labelledby="gateTitle"
     >
-      <div
-        class="blob"
-        style="
-          width: 300px;
-          height: 300px;
-          background: #ffc9d9;
-          left: -90px;
-          top: -70px;
-        "
-        aria-hidden="true"
-      ></div>
-      <div
-        class="blob"
-        style="
-          width: 260px;
-          height: 260px;
-          background: #d9c8ff;
-          right: -80px;
-          top: 35%;
-          animation-delay: -5s;
-        "
-        aria-hidden="true"
-      ></div>
-      <div
-        class="blob"
-        style="
-          width: 240px;
-          height: 240px;
-          background: #ffe6a8;
-          left: 10%;
-          bottom: -90px;
-          animation-delay: -9s;
-        "
-        aria-hidden="true"
-      ></div>
-      <div
-        id="petals"
-        class="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-      ></div>
-      <div
-        class="relative z-10 flex h-full items-center justify-center overflow-auto p-5"
-      >
-        <div
-          class="w-full max-w-sm rounded-3xl border border-white/80 bg-white/70 p-6 text-center shadow-xl backdrop-blur-xl"
-        >
-          <svg
-            class="logo mx-auto"
-            width="58"
-            height="58"
-            viewBox="-56 -56 112 112"
-            aria-hidden="true"
-            style="--c: #d6457b"
-          >
-            <use href="#rose" />
-          </svg>
-          <p
-            class="mt-3 text-xs font-bold uppercase tracking-[.2em] text-rose-500"
-          >
-            Aisha Handmade Flowers
-          </p>
-          <h2
-            id="gateTitle"
-            class="mt-2 font-display text-3xl font-bold leading-tight text-rose-800"
-          >
-            Please open this page in your browser
-          </h2>
+      <div class="blob" style="width:300px;height:300px;background:#ffc9b8;left:-90px;top:-70px" aria-hidden="true"></div>
+      <div class="blob" style="width:260px;height:260px;background:#ffc2d4;right:-80px;top:35%;animation-delay:-5s" aria-hidden="true"></div>
+      <div class="blob" style="width:240px;height:240px;background:#ffe0c2;left:10%;bottom:-90px;animation-delay:-9s" aria-hidden="true"></div>
+      <div class="relative z-10 flex h-full items-center justify-center overflow-auto p-5" style="padding-top:calc(1.25rem + env(safe-area-inset-top,0px));padding-bottom:calc(1.25rem + env(safe-area-inset-bottom,0px))">
+        <div class="w-full max-w-sm rounded-3xl border border-white/80 bg-white/70 p-6 text-center shadow-xl backdrop-blur-xl">
+          <svg class="logo mx-auto" width="58" height="58" viewBox="-56 -56 112 112" aria-hidden="true" style="--c: #e8627f"><use href="#rose" /></svg>
+          <p class="mt-3 text-xs font-bold uppercase tracking-[.2em]" style="color:#c93a6f">Aisha Handmade Flowers</p>
+          <h2 id="gateTitle" class="mt-2 font-display text-3xl font-bold leading-tight text-rose-800">Please open this page in your browser</h2>
+          <p class="mt-2 text-sm text-rose-800/75">Just one quick step, so you can save your bouquet design.</p>
           <ol class="mt-5 space-y-3 text-left text-sm">
-            <li class="flex items-start gap-3">
-              <span
-                class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-rose-100 text-xs font-bold text-rose-800"
-                >1</span
-              ><span>Tap <b>⋮</b> or <b>•••</b> in Messenger.</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span
-                class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-rose-100 text-xs font-bold text-rose-800"
-                >2</span
-              ><span
-                >Choose <b>Open in browser</b>. On iPhone, choose
-                <b>Open in Safari</b>.</span
-              >
-            </li>
+            <li class="flex items-start gap-3"><span class="gstep">1</span><span>Tap <b>⋮</b> or <b>•••</b> in Messenger.</span></li>
+            <li class="flex items-start gap-3"><span class="gstep">2</span><span id="gStep2">Choose <b>Open in browser</b>. On iPhone, choose <b>Open in Safari</b>.</span></li>
           </ol>
-          <p class="mt-4 text-xs text-rose-800/70">
-            Messenger's built-in browser cannot save your order image.
-          </p>
-          <a
-            id="gateOpen"
-            class="mt-5 hidden w-full rounded-full bg-rose-800 py-3.5 text-center font-semibold text-white"
-            >Open in browser</a
-          >
-          <button
-            id="gateCopy"
-            class="mt-3 w-full rounded-full border border-rose-800/20 py-3 text-sm font-medium text-rose-800"
-          >
-            Copy page link
-          </button>
+          <p class="mt-4 text-xs text-rose-800/70">Messenger's built-in browser cannot save your order image.</p>
+          <a id="gateOpen" class="gbtn hidden">Open in browser</a>
+          <button id="gateCopy" type="button" class="gbtn2">Copy page link</button>
         </div>
       </div>
+      <div id="petals" class="absolute inset-0 z-20 pointer-events-none overflow-hidden" aria-hidden="true"></div>
     </div>
     <div
       id="done"
@@ -3177,18 +2982,22 @@ let lastN = -1, topFilter = "All";
           $("customBox").classList.toggle("hidden", c.id !== "x");
           render();
         };
-        if (c.id === "7") l.insertAdjacentHTML("beforeend", '<span style="position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:#d6457b;color:#fff;font-size:11px;font-weight:700;padding:1px 9px;border-radius:9999px;white-space:nowrap">Popular</span>');
         $("counts").appendChild(l);
       });
-      COLORS.forEach(([name, hex], i) => {
-        const l = document.createElement("label");
-        l.className =
-          "opt flex items-center gap-2 cursor-pointer rounded-xl border border-rose-200 px-3 py-2.5";
-        l.innerHTML = `<input type="checkbox" class="sr-only" value="${i}"><span class="sw relative h-8 w-8 rounded-full shrink-0 border border-black/10 shadow-inner" style="background:${hex}"></span><span class="text-sm font-medium leading-tight">${name}</span>`;
-        l.querySelector("input").onchange = (e) =>
-          pickColor(i, e.target.checked);
-        $("colors").appendChild(l);
-      });
+      function buildColors() {
+        $("colors").innerHTML = "";
+        COLORS.forEach(([name, hex], i) => {
+          const l = document.createElement("label");
+          l.className = "opt flex items-center gap-2 cursor-pointer rounded-xl border border-rose-200 px-3 py-2.5";
+          l.innerHTML = `<input type="checkbox" class="sr-only" value="${i}"><span class="sw relative h-8 w-8 rounded-full shrink-0 border border-black/10 shadow-inner" style="background:${hex}"></span><span class="text-sm font-medium leading-tight"></span>`;
+          l.lastElementChild.textContent = name;
+          const inp = l.querySelector("input");
+          inp.checked = st.colors.includes(i);
+          inp.onchange = (e) => pickColor(i, e.target.checked);
+          $("colors").appendChild(l);
+        });
+      }
+      buildColors();
       WRAPS.forEach(([name, a], i) => {
         const l = document.createElement("label");
         l.className =
@@ -3268,26 +3077,28 @@ let lastN = -1, topFilter = "All";
           return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
         };
       }
-      const R = rng(7);
-      let DOTS = "";
-      for (let i = 0; i < 620; i++) {
-        const ring = i < 500,
-          k = ring ? i : i - 500,
-          N = ring ? 500 : 120,
-          t = (k + 0.5) / N,
-          f = Math.min(
-            1,
-            (ring ? Math.sqrt(0.25 + 0.75 * t) : Math.sqrt(t)) +
-              (R() - 0.5) * 0.03,
-          ),
-          a = k * 2.39996 + (R() - 0.5) * 0.5 + (ring ? 0 : 1),
-          rr = 1.8 + R() * 2.4;
-        DOTS += `<circle class="d${i % 10 < 6 ? 0 : i % 10 < 9 ? 1 : 2}" cx="${(Math.cos(a) * f * 100).toFixed(1)}" cy="${(Math.sin(a) * f * 100).toFixed(1)}" r="${rr.toFixed(1)}" opacity="${(0.78 + R() * 0.22).toFixed(2)}"/>`;
+      const LITE = !!window.LITE;
+      function mkDots(ND, NR, SP, rs) {
+        const R = rng(7);
+        let out = "";
+        for (let i = 0; i < ND; i++) {
+          const ring = i < NR,
+            k = ring ? i : i - NR,
+            N = ring ? NR : ND - NR,
+            t = (k + 0.5) / N,
+            f = Math.min(1, (ring ? Math.sqrt(0.25 + 0.75 * t) : Math.sqrt(t)) + (R() - 0.5) * 0.03),
+            a = k * 2.39996 + (R() - 0.5) * 0.5 + (ring ? 0 : 1),
+            rr = (1.8 + R() * 2.4) * rs;
+          out += `<circle class="d${i % 10 < 6 ? 0 : i % 10 < 9 ? 1 : 2}" cx="${(Math.cos(a) * f * 100).toFixed(1)}" cy="${(Math.sin(a) * f * 100).toFixed(1)}" r="${rr.toFixed(1)}" opacity="${(0.78 + R() * 0.22).toFixed(2)}"/>`;
+        }
+        for (let k = 0; k < SP; k++) {
+          const a = R() * 6.2832, f = 0.2 + R() * 0.72;
+          out += `<g transform="translate(${(Math.cos(a) * f * 100).toFixed(1)} ${(Math.sin(a) * f * 100).toFixed(1)}) scale(${(0.5 + R() * 0.6).toFixed(2)})"><path class="spk" style="animation-delay:${(-R() * 3).toFixed(1)}s" d="M0-5L1.3-1.3 5 0 1.3 1.3 0 5-1.3 1.3-5 0-1.3-1.3Z"/></g>`;
+        }
+        return out;
       }
-      for (let k = 0; k < 16; k++) {
-        const a = R() * 6.2832, f = 0.2 + R() * 0.72;
-        DOTS += `<g transform="translate(${(Math.cos(a) * f * 100).toFixed(1)} ${(Math.sin(a) * f * 100).toFixed(1)}) scale(${(0.5 + R() * 0.6).toFixed(2)})"><path class="spk" style="animation-delay:${(-R() * 3).toFixed(1)}s" d="M0-5L1.3-1.3 5 0 1.3 1.3 0 5-1.3 1.3-5 0-1.3-1.3Z"/></g>`;
-      }
+      const DOTS_FULL = mkDots(620, 500, 16, 1);
+      const DOTS = LITE ? mkDots(240, 190, 5, 1.35) : DOTS_FULL;
       const CRK = [...Array(10)].map((_, i) => {
         const a = (i / 10) * 6.2832 + 0.3, d = 112 + (i % 3) * 8;
         return `<path d="M0 0L${(Math.cos(a) * d).toFixed(1)} ${(Math.sin(a) * d).toFixed(1)}" stroke="${i % 2 ? "#fff" : "#5e1631"}" stroke-opacity="${i % 2 ? 0.28 : 0.07}" stroke-width="${i % 2 ? 1.2 : 2.4}" fill="none"/>`;
@@ -3531,7 +3342,6 @@ let lastN = -1, topFilter = "All";
         "input",
         () => ($("count").textContent = $("msg").value.length),
       );
-      $("date").min = todayStr();
       const isThree = () => qty() === 3;
       function qty() {
         return st.count.id === "x"
@@ -3682,7 +3492,7 @@ let lastN = -1, topFilter = "All";
       let occKey = "";
       function applyOcc() {
         const o = $("occasion").value;
-        if (o === occKey) return;
+        if (LITE || o === occKey) return;
         occKey = o;
         const H = ["h", ["#e63b6f", "#ff7aa8", "#c2185b"]],
           S = { Birthday: ["c", ["#ff7aa8", "#ffd23f", "#6ec6ff", "#9b7bff", "#5ed6a0"]], "Valentine's Day": H, Anniversary: ["h", ["#f08cb4", "#e63b6f"]], Wedding: ["s", ["#f4c95d", "#e8b64a", "#fff1c1"]], Graduation: ["r", ["#5e1631", "#f4b400", "#7d3fb8"]] }[o],
@@ -3716,6 +3526,7 @@ let lastN = -1, topFilter = "All";
                 OOS.colors.has(COLORS[+inp.value][0])),
           );
         $("plainHint").innerHTML = ICON.rose("#d6457b", 14) + " " + (st.colors.length ? st.colors.map((i) => COLORS[i][0]).join(" + ") : "Pick a color to bring it to life");
+        syncBackdrops();
         applyTheme();
         applyOcc();
         setAccent();
@@ -3794,6 +3605,7 @@ let lastN = -1, topFilter = "All";
         c.setAttribute("height", 800);
         c.removeAttribute("class");
         c.querySelectorAll(".dp-g").forEach((q) => q.remove());
+        if (LITE) { const dg = c.querySelector("#dotsG"); if (dg) dg.innerHTML = DOTS_FULL; }
         if (noTag) { const tg = c.querySelector("#tagG"); if (tg) tg.remove(); }
         const css =
           [...document.querySelectorAll("style")]
@@ -3875,7 +3687,7 @@ let lastN = -1, topFilter = "All";
               `<li><button type="button" data-s="${i + 1}" class="w-full ${ok ? "text-rose-800 font-semibold" : "text-rose-800/75"}"><span class="mx-auto mb-1 grid h-7 w-7 place-items-center rounded-full font-bold ${ok ? "bg-rose-800 text-white" : "bg-rose-100"}${i === cur ? " cur" : ""}${ok && !prev[i] ? " pop" : ""}">${ok ? "✓" : i + 1}</span>${STEP_NAMES[i]}</button></li>`,
           )
           .join("");
-        $("bar").style.width = done.filter(Boolean).length * 25 + "%";
+        
         updateProgress.p = done;
         vineUpd(done);
       }
@@ -4015,13 +3827,13 @@ let lastN = -1, topFilter = "All";
           cream = n === 1 && nm[0].startsWith("Cream");
         $("colorTitle").textContent = three
           ? "Choose your colors"
-          : "Pick up to 2 colors";
+          : "Pick your color";
         $("colorBadge").textContent = three
           ? "Combined color · 3 pcs only"
           : "2nd color is optional";
         $("colorDesc").textContent = three
           ? "All 3 flowers share one color. For something special, add a center color: every rose gets a second color in its middle (combined color). Cream / Milky White works only as a combination, so pair it with another color."
-          : "Mixing is optional. Pick 1 color for a single-color bouquet, or 2 colors for a mix. Cream / Milky White works only as a mix, so pair it with another color.";
+          : "Pick 1 color for a classic single-color bouquet. Want a mix? Add a 2nd color, or open the ready-made pairs below. Cream / Milky White works only as a mix, so pair it with another color.";
         $("colorHint").textContent = cream
           ? three
             ? "Cream / Milky White must be combined. Add a center color, or pick a different flower color."
@@ -4043,6 +3855,40 @@ let lastN = -1, topFilter = "All";
       }
 
       // ---------- shop stock and price settings (owner panel) ----------
+      const BD_NAMES = ["Auto", "Sage", "Cream", "Lilac", "Night"];
+      const POPK = ["counts", "colors", "pairs", "wraps", "dots", "extras", "top"];
+      function cleanPop(o) {
+        const r = {};
+        POPK.forEach((k) => (r[k] = o && Array.isArray(o[k]) ? o[k].filter((x) => typeof x === "string").slice(0, 60) : []));
+        if (!o || !Array.isArray(o.counts)) r.counts = ["7"];
+        return r;
+      }
+      const isPop = (k, v) => settings.popular[k].includes(v);
+      const topBadge = (p) => p.badge || (isPop("top", p.id) ? "Popular" : "");
+      function markPop(nodes, keys, k) {
+        [...nodes].forEach((l, i) => {
+          const on = isPop(k, keys[i]), b = l.querySelector(":scope > .popb");
+          l.classList.toggle("is-pop", on);
+          if (on && !b) l.insertAdjacentHTML("beforeend", '<span class="popb">Popular</span>');
+          else if (!on && b) b.remove();
+        });
+      }
+      function markPopAll() {
+        markPop(document.querySelectorAll("#counts label"), COUNTS.map((c) => c.id), "counts");
+        markPop(document.querySelectorAll("#colors label"), COLORS.map((c) => c[0]), "colors");
+        markPop(document.querySelectorAll("#wraps label"), WRAPS.map((w) => w[0]), "wraps");
+        markPop(document.querySelectorAll("#fillers label"), FILLERS.map((f) => f[0]), "dots");
+        markPop([$("butterfly").closest("label")], ["butterfly"], "extras");
+      }
+      const DEFAULT_PAIRS = [["Blush + Cream", "Light Pink", "Cream / Milky White"], ["Wine + Champagne", "Wine Red", "Champagne"], ["Royal + Youlan", "Royal Blue", "Youlan Blue"], ["Lavender + Violet", "Lavender Purple", "Deep Violet"], ["Matcha + Cream", "Matcha Green", "Cream / Milky White"], ["Sunny + Sunflower", "Sunny Yellow", "Sunflower Yellow"]].map((p, i) => ({ id: "q" + (i + 1), name: p[0], colors: [p[1], p[2]] }));
+      function cleanPairs(list) {
+        return list.slice(0, 12).map((p) => {
+          if (!p || typeof p !== "object") return null;
+          const cs = arr(p.colors).filter((n, i, a) => a.indexOf(n) === i).slice(0, 2);
+          if (cs.length < 2) return null;
+          return { id: typeof p.id === "string" && p.id ? p.id.slice(0, 12) : newId(), name: String(p.name || "Pair").slice(0, 28), colors: cs };
+        }).filter(Boolean);
+      }
       const OOS = { colors: new Set(), wraps: new Set(), dots: new Set() };
       const DEFAULT_PRICES = Object.fromEntries(
         COUNTS.filter((c) => c.price).map((c) => [c.id, c.price]),
@@ -4075,6 +3921,7 @@ let lastN = -1, topFilter = "All";
         {
           id: "d3",
           name: "Wine Red Romance",
+          bd: "Night",
           badge: "",
           colors: ["Wine Red"],
           wrap: "Black sparkle",
@@ -4130,6 +3977,7 @@ let lastN = -1, topFilter = "All";
                 : FILLERS[0][0],
               bf: p.bf !== false,
               size: DEFAULT_PRICES[p.size] ? p.size : "",
+              bd: ["Sage", "Cream", "Lilac", "Night"].includes(p.bd) ? p.bd : "",
             };
           })
           .filter(Boolean);
@@ -4155,6 +4003,8 @@ let lastN = -1, topFilter = "All";
             dots: arr(sn.dots),
           },
           updated: typeof j.updated === "string" ? j.updated : "",
+          pairs: Array.isArray(j.pairs) ? cleanPairs(j.pairs) : clone(DEFAULT_PAIRS),
+          popular: cleanPop(j.popular),
           top: Array.isArray(j.top)
             ? cleanTop(j.top)
             : cleanTop(clone(DEFAULT_TOP)),
@@ -4220,6 +4070,8 @@ let lastN = -1, topFilter = "All";
         st.colors = st.colors.filter((i) => !OOS.colors.has(COLORS[i][0]));
         fixRadio("#wraps", "wrap", WRAPS, OOS.wraps);
         fixRadio("#fillers", "filler", FILLERS, OOS.dots);
+        markPopAll();
+        renderPals();
         renderTop();
         render();
       }
@@ -4453,9 +4305,9 @@ let lastN = -1, topFilter = "All";
               ? (COUNTS.find((c) => c.id === p.size) || {}).label
               : "";
             return `<button type="button" data-top="${esc(p.id)}" ${topNA(p) ? "disabled" : ""} class="topc relative flex flex-col justify-start w-40 shrink-0 snap-start rounded-2xl border border-rose-200 bg-white p-2 text-left">
-      ${p.badge ? `<span class="absolute left-3 top-3 z-10 rounded-full bg-rose-800 px-2 py-0.5 text-[11px] font-bold text-white">${esc(p.badge)}</span>` : ""}
+      ${topBadge(p) ? `<span class="absolute left-3 top-3 z-10 rounded-full bg-rose-800 px-2 py-0.5 text-[11px] font-bold text-white">${esc(topBadge(p))}</span>` : ""}
       <span class="tsel absolute right-3 top-3 z-10 hidden h-6 w-6 place-items-center rounded-full bg-rose-500 text-xs font-bold text-white">✓</span>
-      <div class="aspect-square overflow-hidden rounded-xl" style="background:linear-gradient(#ffe4ec,#ffc9d9)">${thumb(p)}</div>
+      <div class="aspect-square overflow-hidden rounded-xl" style="background:${topBg(p)}">${thumb(p)}</div>
       <div class="mt-2 font-display text-base font-bold leading-tight text-rose-800" style="min-height:2.5em">${esc(p.name)}</div>
       <div class="mt-1 flex items-center gap-1">${p.colors.map((n) => `<span class="h-4 w-4 rounded-full border border-black/10" style="background:${(COLORS.find((c) => c[0] === n) || COLORS[5])[1]}"></span>`).join("")}${size ? `<span class="ml-1 text-xs font-semibold text-rose-600">${esc(size)}</span>` : ""}</div>
       <div class="mt-1 text-xs leading-snug text-rose-800/70">${esc(p.wrap)} wrap · ${esc(p.dots)} dots${p.bf ? " · butterflies" : ""}</div>
@@ -4482,6 +4334,7 @@ let lastN = -1, topFilter = "All";
             WRAPS[st.wrap][0] === p.wrap &&
             FILLERS[st.filler][0] === p.dots &&
             $("butterfly").checked === p.bf &&
+            st.bd === Math.max(0, BD_NAMES.indexOf(p.bd)) &&
             (!p.size || st.count.id === p.size);
           b.classList.toggle("sel", on);
           b.querySelector(".tsel").classList.toggle("hidden", !on);
@@ -4507,6 +4360,7 @@ let lastN = -1, topFilter = "All";
         );
         document.querySelectorAll("#fillers input")[st.filler].checked = true;
         $("butterfly").checked = p.bf;
+        st.bd = Math.max(0, BD_NAMES.indexOf(p.bd));
         if (p.size) {
           const i = COUNTS.findIndex((c) => c.id === p.size);
           if (i >= 0) {
@@ -4567,7 +4421,7 @@ let lastN = -1, topFilter = "All";
         const lab = (t) =>
           `<span class="mb-1 block text-xs font-semibold text-rose-800">${t}</span>`;
         return `<details data-ti="${i}" class="rounded-2xl border border-rose-100 bg-white" ${openTop === i ? "open" : ""}>
-    <summary class="flex cursor-pointer list-none items-center gap-3 px-3 py-2.5"><span class="h-12 w-12 shrink-0 overflow-hidden rounded-xl" style="background:linear-gradient(#ffe4ec,#ffc9d9)">${thumb(p)}</span>
+    <summary class="flex cursor-pointer list-none items-center gap-3 px-3 py-2.5"><span class="h-12 w-12 shrink-0 overflow-hidden rounded-xl" style="background:${topBg(p)}">${thumb(p)}</span>
       <span class="min-w-0 flex-1"><b class="block truncate text-sm text-rose-800">${esc(p.name || "Untitled")}</b><span class="block truncate text-xs text-rose-800/70">${esc(p.colors.join(" + "))} · ${esc(p.wrap)} · ${esc(p.dots)} dots</span></span><span class="text-rose-800/70">▾</span></summary>
     <div class="space-y-3 border-t border-rose-100 px-3 py-3">
       <div class="grid grid-cols-3 gap-2"><label class="col-span-2 block">${lab("Name")}<input data-tf="name" data-i="${i}" maxlength="28" value="${esc(p.name)}" class="${fieldCls}"></label><label class="block">${lab("Label (optional)")}<input data-tf="badge" data-i="${i}" maxlength="14" placeholder="e.g. Popular" value="${esc(p.badge)}" class="${fieldCls}"></label></div>
@@ -4582,6 +4436,7 @@ let lastN = -1, topFilter = "All";
         FILLERS.map((f) => f[0]),
         p.dots,
       )}</div></div>
+      <div>${lab("Preferred backdrop (when a customer taps this choice)")}<div class="flex flex-wrap gap-1.5">${seg("data-tbd", BD_NAMES, p.bd || "Auto")}</div></div>
       <div class="grid grid-cols-2 gap-3"><label class="flex items-center gap-2 rounded-xl border border-rose-100 px-3 py-2.5 text-sm"><input type="checkbox" data-tb data-i="${i}" ${p.bf ? "checked" : ""} class="h-4 w-4 accent-rose-500">Butterflies</label>
         <label class="block"><select data-ts data-i="${i}" class="${fieldCls}"><option value="">Keep customer's size</option>${COUNTS.filter(
           (c) => c.price,
@@ -4591,6 +4446,7 @@ let lastN = -1, topFilter = "All";
               `<option value="${c.id}" ${p.size === c.id ? "selected" : ""}>${c.label}</option>`,
           )
           .join("")}</select></label></div>
+      ${popLabel("top", p.id, "rounded-xl border border-rose-100 px-3 py-2.5 text-sm", "Mark as Popular choice")}
       <div class="flex gap-2"><button type="button" data-up data-i="${i}" ${i === 0 ? "disabled" : ""} class="rounded-xl border border-rose-200 px-3 py-1.5 text-sm disabled:opacity-40">↑ Up</button><button type="button" data-down data-i="${i}" ${i === settings.top.length - 1 ? "disabled" : ""} class="rounded-xl border border-rose-200 px-3 py-1.5 text-sm disabled:opacity-40">↓ Down</button>
         <button type="button" data-del data-i="${i}" class="ml-auto rounded-xl border border-red-200 px-3 py-1.5 text-sm text-red-700">Delete</button></div>
     </div></details>`;
@@ -4677,6 +4533,7 @@ let lastN = -1, topFilter = "All";
             p.colors = cols;
           } else if (t.hasAttribute("data-tw")) p.wrap = t.dataset.v;
           else if (t.hasAttribute("data-td")) p.dots = t.dataset.v;
+          else if (t.hasAttribute("data-tbd")) p.bd = t.dataset.v === "Auto" ? "" : t.dataset.v;
           else if (t.hasAttribute("data-up") && i > 0) {
             settings.top.splice(i - 1, 0, settings.top.splice(i, 1)[0]);
             openTop = i - 1;
@@ -4689,10 +4546,86 @@ let lastN = -1, topFilter = "All";
           } else if (t.hasAttribute("data-del")) {
             if (!confirm('Delete "' + (p.name || "this top choice") + '"?'))
               return;
+            settings.popular.top = settings.popular.top.filter((x) => x !== p.id);
             settings.top.splice(i, 1);
             openTop = -1;
           } else return;
           renderTop();
+          panel();
+        });
+      }
+
+      // --- owner: colors and ready-made pairs
+      function popLabel(k, v, cls, text) {
+        const on = settings.popular[k].includes(v);
+        return `<label class="${cls || "mt-1 text-xs text-rose-800/75"} flex cursor-pointer items-center gap-2"><input type="checkbox" data-pop data-pk="${k}" data-pv="${esc(v)}" ${on ? "checked" : ""} class="h-4 w-4 accent-rose-500">${text || "Popular"}</label>`;
+      }
+      let openPair = -1;
+      function pairEditor(p, i) {
+        const hx = (n) => (COLORS.find((c) => c[0] === n) || COLORS[5])[1];
+        const chips = COLORS.map((c) => {
+          const on = p.colors.includes(c[0]);
+          return `<button type="button" data-pc data-v="${esc(c[0])}" data-pi="${i}" class="flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs ${on ? "border-rose-500 bg-rose-100 font-semibold" : "border-rose-200 bg-white"}"><span class="h-4 w-4 rounded-full border border-black/10" style="background:${c[1]}"></span>${esc(c[0])}</button>`;
+        }).join("");
+        const dots = p.colors.map((n, k) => `<span class="h-7 w-7 rounded-full shadow" style="background:${hx(n)};border:2px solid #fff;${k ? "margin-left:-8px" : ""}"></span>`).join("");
+        return `<details data-pd="${i}" class="rounded-2xl border border-rose-100 bg-white" ${openPair === i ? "open" : ""}>
+    <summary class="flex cursor-pointer list-none items-center gap-3 px-3 py-2.5"><span class="flex shrink-0">${dots}</span><span class="min-w-0 flex-1"><b class="block truncate text-sm text-rose-800">${esc(p.name || "Untitled")}</b><span class="block truncate text-xs text-rose-800/70">${esc(p.colors.join(" + "))}</span></span><span class="text-rose-800/70">▾</span></summary>
+    <div class="space-y-3 border-t border-rose-100 px-3 py-3">
+      <label class="block"><span class="mb-1 block text-xs font-semibold text-rose-800">Name</span><input data-pf data-pi="${i}" maxlength="28" value="${esc(p.name)}" class="${fieldCls}"></label>
+      <div><span class="mb-1 block text-xs font-semibold text-rose-800">Two colors (tap a color to swap in)</span><div class="flex flex-wrap gap-1.5">${chips}</div></div>
+      ${popLabel("pairs", p.id, "rounded-xl border border-rose-100 px-3 py-2.5 text-sm", "Mark as Popular")}
+      <div class="flex gap-2"><button type="button" data-pup data-pi="${i}" ${i === 0 ? "disabled" : ""} class="rounded-xl border border-rose-200 px-3 py-1.5 text-sm disabled:opacity-40">↑ Up</button><button type="button" data-pdown data-pi="${i}" ${i === settings.pairs.length - 1 ? "disabled" : ""} class="rounded-xl border border-rose-200 px-3 py-1.5 text-sm disabled:opacity-40">↓ Down</button><button type="button" data-pdel data-pi="${i}" class="ml-auto rounded-xl border border-red-200 px-3 py-1.5 text-sm text-red-700">Delete</button></div>
+    </div></details>`;
+      }
+      function pairsSection() {
+        const full = settings.pairs.length >= 12;
+        return `<section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">Ready-made pairs</h3>
+    <p class="mb-2 text-xs text-rose-800/70">Optional two-color mixes shown under the color list. Customers pick a single color first; pairs are just shortcuts.</p>
+    <div class="grid gap-2">${settings.pairs.map(pairEditor).join("") || '<p class="rounded-xl bg-rose-50 px-3 py-3 text-sm text-rose-800/70">No pairs yet. The box is hidden for customers.</p>'}</div>
+    <button type="button" data-padd ${full ? "disabled" : ""} class="mt-2 w-full rounded-xl border border-dashed border-rose-300 py-2.5 text-sm font-medium text-rose-800 disabled:opacity-40">＋ Add a pair${full ? " (maximum 12)" : ""}</button></section>`;
+      }
+      function bindShop() {
+        const body = adm.querySelector("#admBody");
+        body.querySelectorAll("details[data-pd]").forEach((d) => d.addEventListener("toggle", () => {
+          const i = +d.dataset.pd;
+          if (d.open) openPair = i; else if (openPair === i) openPair = -1;
+        }));
+        body.querySelectorAll("input[data-pop]").forEach((inp) => (inp.onchange = () => {
+          const l = settings.popular[inp.dataset.pk], v = inp.dataset.pv, at = l.indexOf(v);
+          if (inp.checked && at < 0) l.push(v);
+          if (!inp.checked && at >= 0) l.splice(at, 1);
+          applyAll();
+          refreshDirty();
+        }));
+        body.querySelectorAll("input[data-pf]").forEach((inp) => (inp.oninput = () => {
+          settings.pairs[+inp.dataset.pi].name = inp.value;
+          inp.closest("details").querySelector("summary b").textContent = inp.value || "Untitled";
+          renderPals();
+          refreshDirty();
+        }));
+        body.addEventListener("click", (e) => {
+          const t = e.target.closest("button");
+          if (!t) return;
+          if (t.hasAttribute("data-padd")) {
+            settings.pairs.push({ id: newId(), name: "New pair", colors: ["Light Pink", "Cream / Milky White"] });
+            openPair = settings.pairs.length - 1;
+            renderPals();
+            return panel();
+          }
+          if (t.dataset.pi === undefined) return;
+          const i = +t.dataset.pi, p = settings.pairs[i];
+          if (!p) return;
+          if (t.hasAttribute("data-pc")) { if (p.colors.includes(t.dataset.v)) return; p.colors = [p.colors[p.colors.length - 1], t.dataset.v]; }
+          else if (t.hasAttribute("data-pup") && i > 0) { settings.pairs.splice(i - 1, 0, settings.pairs.splice(i, 1)[0]); openPair = i - 1; }
+          else if (t.hasAttribute("data-pdown") && i < settings.pairs.length - 1) { settings.pairs.splice(i + 1, 0, settings.pairs.splice(i, 1)[0]); openPair = i + 1; }
+          else if (t.hasAttribute("data-pdel")) {
+            if (!confirm('Delete "' + (p.name || "this pair") + '"?')) return;
+            settings.popular.pairs = settings.popular.pairs.filter((x) => x !== p.id);
+            settings.pairs.splice(i, 1);
+            openPair = -1;
+          }
+          else return;
+          renderPals();
           panel();
         });
       }
@@ -4865,15 +4798,12 @@ let lastN = -1, topFilter = "All";
             soon = settings.soon[kind].includes(name);
           return `<div class="crow" data-kind="${kind}" data-name="${esc(name)}"><label class="flex cursor-pointer items-center gap-3 rounded-xl border ${out ? "border-rose-200 bg-rose-50" : "border-rose-100 bg-white"} px-3 py-2.5">${sw(hex)}<span class="flex-1 text-sm font-medium ${out ? "text-rose-800/60 line-through" : ""}">${name}</span>
       <span class="text-xs font-semibold ${out ? "text-rose-700" : "text-emerald-700"}">${out ? "Out of stock" : "In stock"}</span>
-      <input type="checkbox" class="sr-only" data-k="${kind}" data-n="${name}" ${out ? "" : "checked"}><span class="relative h-6 w-11 shrink-0 rounded-full transition ${out ? "bg-rose-300" : "bg-emerald-500"}"><span class="absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${out ? "left-0.5" : "left-[22px]"}"></span></span></label>${out ? `<label class="ml-2 mt-1 flex items-center gap-2 text-xs text-rose-800/75"><input type="checkbox" data-soon data-sk="${kind}" data-sn="${esc(name)}" ${soon ? "checked" : ""} class="h-3.5 w-3.5 accent-rose-500">Show &quot;Back soon&quot; to customers</label>` : ""}</div>`;
+      <input type="checkbox" class="sr-only" data-k="${kind}" data-n="${name}" ${out ? "" : "checked"}><span class="relative h-6 w-11 shrink-0 rounded-full transition ${out ? "bg-rose-300" : "bg-emerald-500"}"><span class="absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${out ? "left-0.5" : "left-[22px]"}"></span></span></label>${popLabel(kind, name, "ml-2 mt-1 text-xs text-rose-800/75")}${out ? `<label class="ml-2 mt-1 flex items-center gap-2 text-xs text-rose-800/75"><input type="checkbox" data-soon data-sk="${kind}" data-sn="${esc(name)}" ${soon ? "checked" : ""} class="h-3.5 w-3.5 accent-rose-500">Show &quot;Back soon&quot; to customers</label>` : ""}</div>`;
         };
         const sec = (t, sub, inner) =>
           `<section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">${t}</h3><p class="mb-2 text-xs text-rose-800/70">${sub}</p><div class="grid gap-2">${inner}</div></section>`;
         const priceIn = COUNTS.filter((c) => c.price)
-          .map(
-            (c) =>
-              `<label class="block"><span class="text-xs font-semibold text-rose-800">${c.label}</span><div class="relative mt-1"><span class="absolute left-3 top-2.5 text-sm text-rose-800/70">₱</span><input data-p="${c.id}" type="number" min="1" inputmode="numeric" value="${c.price}" class="${fieldCls} pl-7"></div></label>`,
-          )
+          .map((c) => `<div><label class="text-xs font-semibold text-rose-800" for="pr_${c.id}">${c.label}</label><div class="relative mt-1"><span class="absolute left-3 top-2.5 text-sm text-rose-800/70">₱</span><input id="pr_${c.id}" data-p="${c.id}" type="number" min="1" inputmode="numeric" value="${c.price}" class="${fieldCls} pl-7"></div>${popLabel("counts", c.id)}</div>`)
           .join("");
         shell(
           (n
@@ -4882,11 +4812,12 @@ let lastN = -1, topFilter = "All";
             (settings.updated
               ? " · Published " + fmtWhen(settings.updated)
               : ""),
-          `<div class="mb-4"><button id="a_allin" type="button" class="rounded-full border border-rose-200 bg-white px-4 py-2 text-sm font-medium disabled:opacity-40" ${n ? "" : "disabled"}>Mark everything in stock</button></div><section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">Prices</h3><p class="mb-2 text-xs text-rose-800/70">Sizes stay available. Only the price changes. "Other" is always quoted.</p><div class="grid grid-cols-2 gap-3">${priceIn}</div></section>` +
+          `<div class="mb-4"><button id="a_allin" type="button" class="rounded-full border border-rose-200 bg-white px-4 py-2 text-sm font-medium disabled:opacity-40" ${n ? "" : "disabled"}>Mark everything in stock</button></div><section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">Prices</h3><p class="mb-2 text-xs text-rose-800/70">Sizes stay available. Only the price changes. "Other" is always quoted. Tick Popular to show a badge on a size.</p><div class="grid grid-cols-2 gap-3">${priceIn}</div></section>` +
             topSection() +
+            pairsSection() +
             sec(
               "Colors",
-              "Switch a color off when it runs out. Customers will see an Out of stock label.",
+              "Switch a color off when it runs out, or tick Popular to show a badge on it.",
               '<input id="admSearch" type="search" value="' +
                 esc(admQ) +
                 '" placeholder="Search colors…" class="' +
@@ -4903,6 +4834,11 @@ let lastN = -1, topFilter = "All";
               "Snow dots",
               "Black or white.",
               FILLERS.map((f) => row("dots", f[0], f[1])).join(""),
+            ) +
+            sec(
+              "Extras",
+              "Butterflies are free. Tick Popular to show a badge on them.",
+              popLabel("extras", "butterfly", "rounded-xl border border-rose-100 px-3 py-2.5 text-sm", "Butterflies: mark as Popular"),
             ),
           `<p id="admMsg" class="mb-2 text-sm ${msg && msg.err ? "text-red-700" : "text-emerald-700"} ${msg ? "" : "hidden"}" role="status">${msg ? msg.t : ""}</p>
      <div class="flex items-center gap-2"><span id="admDirty" class="flex-1 text-xs ${dirty() ? "font-semibold text-amber-700" : "text-rose-800/75"}">${dirty() ? "● Unpublished changes" : "All changes published"}</span>
@@ -4939,6 +4875,7 @@ let lastN = -1, topFilter = "All";
             }),
         );
         bindTop();
+        bindShop();
         const sr = $("admSearch");
         if (sr)
           sr.oninput = () => {
@@ -5111,10 +5048,10 @@ let lastN = -1, topFilter = "All";
           tc = tintColor(),
           pc = $("prevCard");
         pc.style.setProperty("--g1", t[0]);
-        pc.classList.toggle("night", st.bd === 4);
+        pc.classList.toggle("night", isDarkBg(t));
         pc.style.setProperty("--g2", t[1]);
         pc.style.setProperty("--tint", tc);
-        const pg = (st.bd === 0 && autoBg()) ? autoBg().pg : "#fff4f7";
+        const ab = st.bd === 0 ? autoBg() : null, pg = ab ? ab.pg : BDP[st.bd] || "#fff4f7";
         document.documentElement.style.setProperty("--pg", pg);
         const mt = document.querySelector('meta[name="theme-color"]');
         if (mt) mt.setAttribute("content", pg);
@@ -5236,23 +5173,7 @@ let lastN = -1, topFilter = "All";
         };
         document.body.appendChild(b);
       }
-      function newOrderNo() {
-        const d = new Date(),
-          pad = (n) => String(n).padStart(2, "0"),
-          A = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-        let r = "";
-        for (let i = 0; i < 4; i++)
-          r += A[Math.floor(Math.random() * A.length)];
-        return (
-          "AHF-" +
-          String(d.getFullYear()).slice(2) +
-          pad(d.getMonth() + 1) +
-          pad(d.getDate()) +
-          "-" +
-          r
-        );
-      }
-      let orderNo = "";
+      
       async function buildImage() {
         try {
           await document.fonts.ready;
@@ -5508,46 +5429,18 @@ let lastN = -1, topFilter = "All";
       (function () {
         const ua = navigator.userAgent;
         if (!/FBAN|FBAV|FB_IAB|FBIOS|Messenger|Instagram/i.test(ua)) return;
-        const g = $("gate");
-        g.classList.remove("hidden");
+        const android = /Android/i.test(ua), ios = /iPhone|iPad|iPod/i.test(ua);
+        $("gate").classList.remove("hidden");
         document.body.style.overflow = "hidden";
         document.querySelector("main").setAttribute("inert", "");
-        const half =
-          '<g class="wg"><path class="bw1" d="M0 0C-8-22-30-28-28-8C-27 2-10 4 0 0Z"/><path class="bw2" d="M0 2C-6 8-22 12-16 24C-10 30-2 14 0 2Z"/><circle cx="-17" cy="-11" r="2.6" fill="#fff" opacity=".85"/><circle cx="-12" cy="15" r="1.8" fill="#fff" opacity=".7"/><path d="M0 0L-21-15" stroke="#fff" stroke-opacity=".45" fill="none"/></g>';
-        const bfly =
-          half +
-          '<g transform="scale(-1 1)">' +
-          half +
-          '</g><rect x="-1.2" y="-8" width="2.4" height="18" rx="1.2" fill="#3a1424"/><path d="M0-8Q-5-16-9-17M0-8Q5-16 9-17" stroke="#3a1424" fill="none" stroke-width=".9"/>';
-        const cols = [
-          "#d6457b",
-          "#b79be0",
-          "#f4b400",
-          "#7d1230",
-          "#f08cb4",
-          "#7f9cf5",
-        ];
-        $("petals").innerHTML = [...Array(9)]
-          .map(
-            (_, i) =>
-              `<div class="fly f${i % 3}" style="animation-duration:${17 + ((i * 5) % 11)}s;animation-delay:${-(i * 3.1) % 20}s;--b:${cols[i % cols.length]}"><svg class="bob" width="${36 + ((i * 11) % 30)}" height="${36 + ((i * 11) % 30)}" viewBox="-30 -30 60 60" style="--fs:${0.34 + (i % 3) * 0.08}s;animation-delay:${-i * 0.5}s">${bfly}</svg></div>`,
-          )
-          .join("");
-        if (/Android/i.test(ua)) {
+        const cols = ["#ffb9a3", "#ffc9d9", "#f9a8c0", "#ffd3b5", "#f7b5c8", "#ffbfae"];
+        $("petals").innerHTML = [...Array(18)].map((_, i) => `<span class="gp" style="--x:${(i * 7 + 3) % 96}%;--y:${10 + ((i * 13) % 75)};--sz:${16 + ((i * 5) % 18)}px;--dur:${10 + ((i * 3) % 8)}s;--dl:${-((i * 2.7) % 14).toFixed(1)}s;--sw:${(i % 2 ? 1 : -1) * (24 + ((i * 9) % 40))}px;--sp:${(1.6 + (i % 4) * 0.5).toFixed(1)}s;--pc:${cols[i % cols.length]}"><svg viewBox="0 0 20 20"><path d="M10 1C15 4 18 9 10 19 2 9 5 4 10 1Z"/></svg></span>`).join("");
+        $("gStep2").innerHTML = ios ? "Choose <b>Open in Safari</b>." : "Choose <b>Open in browser</b>, or <b>Open in Chrome</b>.";
+        if (android) {
           const u = new URL(location.href);
-          $("gateOpen").href =
-            "intent://" +
-            u.host +
-            u.pathname +
-            u.search +
-            "#Intent;scheme=https;S.browser_fallback_url=" +
-            encodeURIComponent(location.href) +
-            ";end";
+          $("gateOpen").href = "intent://" + u.host + u.pathname + u.search + "#Intent;scheme=https;S.browser_fallback_url=" + encodeURIComponent(location.href) + ";end";
           $("gateOpen").classList.remove("hidden");
-          $("gateOpen").classList.add("block");
-        } else
-          $("gateCopy").className =
-            "mt-5 w-full rounded-full bg-rose-800 py-3.5 font-semibold text-white";
+        } else $("gateCopy").className = "gbtn";
         $("gateCopy").onclick = async (e) => {
           await copyText(location.href);
           e.target.textContent = "Link copied. Paste it in Chrome or Safari.";
@@ -5555,7 +5448,7 @@ let lastN = -1, topFilter = "All";
       })();
 
       setInterval(() => {
-        if (document.hidden || RM() || !roses.length || document.documentElement.classList.contains("scrolling")) return;
+        if (LITE || document.hidden || RM() || !roses.length || document.documentElement.classList.contains("scrolling")) return;
         const el = roses[Math.floor(Math.random() * roses.length)];
         const m = el && el.style.transform.match(/translate\(([-\d.]+)px,\s*([-\d.]+)px\)/);
         if (!m) return;
@@ -5682,13 +5575,14 @@ let lastN = -1, topFilter = "All";
         bt.onclick = openSheet;
       }
       // 4. backdrop picker
-      const BD = [null, ["#e8f4e5", "#c3ddbf"], ["#fffaf0", "#f3e3c3"], ["#f1eaff", "#d6c6f5"], ["#4a3566", "#241838"]], BDN = ["Auto (matches your flowers)", "Sage", "Cream", "Lilac", "Night"];
+      const BD = [null, ["#e8f4e5", "#c3ddbf"], ["#fffaf0", "#f3e3c3"], ["#f1eaff", "#d6c6f5"], ["#4a3566", "#241838"]], BDN = ["Auto (matches your flowers)", "Sage", "Cream", "Lilac", "Night"], BDP = [null, "#f4faf2", "#fffaf0", "#f7f2ff", "#f4eefa"];
       st.bd = 0;
       $("bdDots").innerHTML = BDN.map((n, i) => `<button type="button" data-bd="${i}" aria-label="${n} backdrop" title="${n}" class="bdd${i ? "" : " on"}" style="background:${BD[i] ? `linear-gradient(135deg,${BD[i][0]},${BD[i][1]})` : "conic-gradient(#ffc9d9,#f3e8ff,#fff0e0,#ffc9d9)"}"></button>`).join("");
       $("bdDots").onclick = (e) => {
         const b = e.target.closest("[data-bd]");
         if (!b) return;
-        st.bd = +b.dataset.bd;
+        const bi = +b.dataset.bd;
+        st.bd = bi;
         [...$("bdDots").children].forEach((x, i) => x.classList.toggle("on", i === st.bd));
         render();
         buzz(8);
@@ -5765,20 +5659,64 @@ let lastN = -1, topFilter = "All";
         const a = s * Math.min(l, 1 - l), f = (n) => { const k = (n + h / 30) % 12; return Math.round(255 * (l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))).toString(16).padStart(2, "0"); };
         return "#" + f(0) + f(8) + f(4);
       }
-      // light/bright flowers get a soft complementary backdrop so they stand out;
-      // deep flowers get an airy tint of their own hue
-      function autoBg() {
-        if (!st.colors.length) return null;
-        const [h, , l] = hexHsl(tintColor());
-        const comp = l >= 0.55, bh = comp ? h + 180 : h + 8;
-        return {
-          g: comp ? [hslHex(bh, 42, 91), hslHex(bh + 12, 42, 82)] : [hslHex(bh, 75, 94), hslHex(bh + 12, 70, 86)],
-          pg: hslHex(bh, comp ? 40 : 70, 97),
-        };
+      // ---- backdrop engine: every backdrop is checked against the selected flowers
+      const lin = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+      const hexRgb = (h) => { const n = parseInt(h.slice(1), 16); return [n >> 16, (n >> 8) & 255, n & 255]; };
+      const relLum = (h) => { const [r, g, b] = hexRgb(h).map(lin); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+      function hexLab(h) {
+        const [r, g, b] = hexRgb(h).map(lin), f = (t) => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116);
+        const fx = f((r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047), fy = f(r * 0.2126 + g * 0.7152 + b * 0.0722), fz = f((r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883);
+        return [116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)];
       }
+      const bgAvg = (g) => { const p = hexRgb(g[0]), q = hexRgb(g[1]); return "#" + p.map((v, i) => Math.round((v + q[i]) / 2).toString(16).padStart(2, "0")).join(""); };
+      const isDarkBg = (g) => relLum(bgAvg(g)) < 0.2;
+      // >= 1 means the flower stands out from the backdrop. Dark backdrops use brightness contrast; light ones use color difference.
+      function sep(flower, g) {
+        const bg = bgAvg(g);
+        if (isDarkBg(g)) { const x = relLum(flower), y = relLum(bg); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05) / 1.6; }
+        const A = hexLab(flower), B = hexLab(bg);
+        return Math.hypot(A[0] - B[0], A[1] - B[1], A[2] - B[2]) / 30;
+      }
+      const NIGHT = ["#4a3566", "#241838"];
+      // Auto backdrop = the overall look of the bouquet: flowers 55%, wrapping 25%, snow dots 20% (only parts already chosen).
+      // dark look -> Night | in-between -> Dusk (deep tint) | light look -> a lighter tint (pale, or a mid tone if pale flowers would vanish)
+      const autoCache = {};
+      function autoFor(idx, wrapName, dotName) {
+        if (!idx.length) return null;
+        const key = idx.join(",") + "|" + (wrapName || "") + "|" + (dotName || "");
+        if (autoCache[key]) return autoCache[key];
+        const cs = idx.map((i) => COLORS[i]), fl = cs.map((c) => c[1]), main = (cs.find((c) => !c[0].startsWith("Cream")) || cs[0])[1], [h, , l] = hexHsl(main);
+        const parts = [[fl.reduce((t, x) => t + hexLab(x)[0] / 100, 0) / fl.length, 0.55]];
+        const w = WRAPS.find((x) => x[0] === wrapName), d = FILLERS.find((x) => x[0] === dotName);
+        if (w) parts.push([hexLab(w[1])[0] / 100, 0.25]);
+        if (d) parts.push([hexLab(d[1])[0] / 100, 0.2]);
+        const tone = parts.reduce((t, p) => t + p[0] * p[1], 0) / parts.reduce((t, p) => t + p[1], 0);
+        const P = (hh, s1, l1, s2, l2) => [hslHex(hh, s1, l1), hslHex(hh + 12, s2, l2)];
+        const pale = P(h + 8, 75, 94, 70, 86), comp = P(h + 180, 42, 91, 42, 82), split = P(h + 150, 40, 91, 40, 83), mid = P(h + 180, 28, 66, 30, 56), deep = P(h + 180, 30, 30, 34, 17), dusk = P(h + 180, 26, 38, 30, 25);
+        const score = (g) => Math.min(...fl.map((f) => sep(f, g)));
+        const list = tone < 0.4 ? [NIGHT] : tone < 0.68 ? [dusk, NIGHT] : l >= 0.55 ? [comp, split, mid, deep, NIGHT, pale] : [pale, comp, split, mid, deep, NIGHT];
+        const best = list.find((g) => score(g) >= 1) || list.reduce((x, y) => (score(y) > score(x) ? y : x));
+        const kind = best === NIGHT ? "night" : isDarkBg(best) ? "dusk" : "light";
+        return (autoCache[key] = { g: best, kind, night: kind === "night", pg: hslHex(hexHsl(kind === "night" ? main : best[0])[0], kind === "night" ? 45 : 55, 97) });
+      }
+      const autoBg = () => autoFor(st.colors, st.tw ? WRAPS[st.wrap][0] : null, st.td ? FILLERS[st.filler][0] : null);
       function themeNow() {
         const a = st.bd === 0 ? autoBg() : null;
         return BD[st.bd] || (a && a.g) || THEMES[$("occasion").value] || THEMES.Other;
+      }
+      function syncBackdrops() {
+        const ab = autoBg(), kids = [...$("bdDots").children], a = kids[0];
+        kids.forEach((x, i) => { x.classList.toggle("on", i === st.bd); x.setAttribute("aria-pressed", i === st.bd); });
+        a.textContent = "A";
+        a.style.background = ab ? `linear-gradient(135deg,${ab.g[0]},${ab.g[1]})` : "conic-gradient(#ffc9d9,#f3e8ff,#fff0e0,#ffc9d9)";
+        a.classList.toggle("dk", !!ab && isDarkBg(ab.g));
+        a.title = ab ? "Auto: " + { night: "Night (dark look)", dusk: "Dusk (in-between look)", light: "a lighter tint (light look)" }[ab.kind] : BDN[0];
+      }
+      // top choice thumbnails follow their preferred backdrop (or Auto)
+      function topBg(p) {
+        const i = BD_NAMES.indexOf(p.bd), au = i > 0 ? null : autoFor(p.colors.map((n) => COLORS.findIndex((c) => c[0] === n)).filter((k) => k >= 0), p.wrap, p.dots),
+          g = i > 0 ? BD[i] : au ? au.g : ["#ffe4ec", "#ffc9d9"];
+        return `linear-gradient(${g[0]},${g[1]})`;
       }
       // ---- accent follows the bouquet
       function accentOf(hex) {
@@ -5832,21 +5770,27 @@ let lastN = -1, topFilter = "All";
         buzz(12);
       }
       // ---- ready-made color pairs
-      const PALS = [["Blush + Cream", ["Light Pink", "Cream / Milky White"]], ["Wine + Champagne", ["Wine Red", "Champagne"]], ["Royal + Youlan", ["Royal Blue", "Youlan Blue"]], ["Lavender + Violet", ["Lavender Purple", "Deep Violet"]], ["Matcha + Cream", ["Matcha Green", "Cream / Milky White"]], ["Sunny + Sunflower", ["Sunny Yellow", "Sunflower Yellow"]]];
-      $("pals").innerHTML = PALS.map(([n, cs], i) => {
-        const hx = cs.map((c) => COLORS.find((x) => x[0] === c)[1]);
-        return `<button type="button" data-pal="${i}" class="palc snap-start" aria-label="${n}"><span class="palp">${hx.map((h) => `<svg viewBox="-56 -56 112 112" aria-hidden="true" style="--c:${h}"><use href="#rose"/></svg>`).join("")}</span><span class="paln">${n}</span><span class="palx">Out of stock</span><span class="palk">✓</span></button>`;
-      }).join("");
+      const pairList = () => settings.pairs.filter((p) => p.colors.every((n) => COLORS.some((c) => c[0] === n)));
+      function renderPals() {
+        const list = pairList();
+        $("palBox").classList.toggle("hidden", !list.length);
+        $("pals").innerHTML = list.map((p) => {
+          const hx = p.colors.map((n) => COLORS.find((c) => c[0] === n)[1]);
+          return `<button type="button" data-pal="${esc(p.id)}" class="palc snap-start" aria-label="${esc(p.name)}"><span class="palp">${hx.map((h) => `<svg viewBox="-56 -56 112 112" aria-hidden="true" style="--c:${h}"><use href="#rose"/></svg>`).join("")}</span><span class="paln">${esc(p.name)}</span><span class="palx">Out of stock</span><span class="palk">✓</span>${isPop("pairs", p.id) ? '<span class="popb">Popular</span>' : ""}</button>`;
+        }).join("");
+        updPals();
+        requestAnimationFrame(() => dotsUpd($("pals"), $("palDots")));
+      }
       $("pals").onclick = (e) => {
         const b = e.target.closest("[data-pal]");
         if (!b || b.disabled) return;
-        setColors(PALS[+b.dataset.pal][1].map((n) => COLORS.findIndex((c) => c[0] === n)));
+        const p = settings.pairs.find((x) => x.id === b.dataset.pal);
+        if (p) setColors(p.colors.map((n) => COLORS.findIndex((c) => c[0] === n)));
       };
       function updPals() {
-        if (!$("pals").children.length) return;
-        const cur = st.colors.map((i) => COLORS[i][0]);
+        const cur = st.colors.map((i) => COLORS[i][0]), list = pairList();
         [...$("pals").children].forEach((b, i) => {
-          const cs = PALS[i][1];
+          const cs = list[i].colors;
           b.disabled = cs.some((n) => OOS.colors.has(n));
           b.classList.toggle("on", cur.length === 2 && cs.every((n, k) => cur[k] === n));
         });
@@ -5930,7 +5874,7 @@ let lastN = -1, topFilter = "All";
         try { await document.fonts.ready; } catch (_) {}
         const W = 1080, H = 1920, cv = document.createElement("canvas");
         cv.width = W; cv.height = H;
-        const x = cv.getContext("2d"), th = themeNow(), tc = tintColor();
+        const x = cv.getContext("2d"), th = themeNow(), tc = tintColor(), dk = isDarkBg(th);
         const g = x.createLinearGradient(0, 0, 0, H);
         g.addColorStop(0, th[0]); g.addColorStop(1, th[1]);
         x.fillStyle = g; x.fillRect(0, 0, W, H);
@@ -5938,10 +5882,10 @@ let lastN = -1, topFilter = "All";
         au.addColorStop(0, hexA(tc, 0.28)); au.addColorStop(1, hexA(tc, 0));
         x.fillStyle = au; x.fillRect(0, 0, W, H);
         x.textAlign = "center";
-        x.fillStyle = "#5e1631";
+        x.fillStyle = dk ? "#fff5f8" : "#5e1631";
         x.font = "700 76px Fraunces, Georgia, serif";
         x.fillText(fit(x, SHOP_NAME, 980), W / 2, 210);
-        x.fillStyle = "#b92f64";
+        x.fillStyle = dk ? "#ffc9d9" : "#b92f64";
         x.font = '700 30px "DM Sans", system-ui, sans-serif';
         try { x.letterSpacing = "8px"; } catch (_) {}
         x.fillText("MY CUSTOM BOUQUET", W / 2, 282);
@@ -5949,10 +5893,10 @@ let lastN = -1, topFilter = "All";
         try { x.drawImage(await sceneImage(true), 60, 380, 960, 960); } catch (e) { console.error(e); }
         const d = data(),
           lines = [d.count, d.colors, d.wrap !== "Not selected" ? d.wrap + " wrap" : null, d.filler !== "Not selected" ? d.filler + " snow dots" : null].filter((l) => l && l !== "Not selected");
-        x.fillStyle = "#3a1424";
+        x.fillStyle = dk ? "#ffffff" : "#3a1424";
         x.font = '700 46px "DM Sans", system-ui, sans-serif';
         lines.forEach((l, i) => x.fillText(fit(x, l, 940), W / 2, 1470 + i * 66));
-        x.fillStyle = "#5e1631";
+        x.fillStyle = dk ? "#d6457b" : "#5e1631";
         rrect(x, 190, 1730, 700, 110, 55);
         x.fill();
         x.fillStyle = "#fff";
