@@ -3,7 +3,8 @@
     "3": 249,
     "6": 449,
     "7": 549,
-    "20": 1199
+    "12": 749,
+    "19": 1299
   },
   "out": {
     "colors": [],
@@ -15,7 +16,70 @@
     "wraps": [],
     "dots": []
   },
-  "updated": "2026-10-12T09:20:37.860Z",
+  "updated": "2026-10-16T23:59:52.307Z",
+  "pairs": [
+    {
+      "id": "q1",
+      "name": "Blush + Cream",
+      "colors": [
+        "Light Pink",
+        "Cream / Milky White"
+      ]
+    },
+    {
+      "id": "q2",
+      "name": "Wine + Champagne",
+      "colors": [
+        "Wine Red",
+        "Champagne"
+      ]
+    },
+    {
+      "id": "q3",
+      "name": "Royal + Youlan",
+      "colors": [
+        "Royal Blue",
+        "Youlan Blue"
+      ]
+    },
+    {
+      "id": "q4",
+      "name": "Lavender + Violet",
+      "colors": [
+        "Lavender Purple",
+        "Deep Violet"
+      ]
+    },
+    {
+      "id": "q5",
+      "name": "Matcha + Cream",
+      "colors": [
+        "Matcha Green",
+        "Cream / Milky White"
+      ]
+    },
+    {
+      "id": "q6",
+      "name": "Sunny + Sunflower",
+      "colors": [
+        "Sunny Yellow",
+        "Sunflower Yellow"
+      ]
+    }
+  ],
+  "popular": {
+    "counts": [
+      "7"
+    ],
+    "colors": [],
+    "pairs": [],
+    "wraps": [],
+    "dots": [],
+    "extras": [],
+    "top": [
+      "d3"
+    ]
+  },
   "top": [
     {
       "id": "d2",
@@ -28,7 +92,8 @@
       "wrap": "White",
       "dots": "White",
       "bf": true,
-      "size": ""
+      "size": "",
+      "bd": ""
     },
     {
       "id": "d1",
@@ -40,7 +105,8 @@
       "wrap": "White",
       "dots": "White",
       "bf": true,
-      "size": ""
+      "size": "",
+      "bd": ""
     },
     {
       "id": "d3",
@@ -52,7 +118,8 @@
       "wrap": "Black sparkle",
       "dots": "White",
       "bf": true,
-      "size": "7"
+      "size": "7",
+      "bd": ""
     },
     {
       "id": "d4",
@@ -65,7 +132,8 @@
       "wrap": "White",
       "dots": "White",
       "bf": false,
-      "size": ""
+      "size": "",
+      "bd": ""
     }
   ]
 }
