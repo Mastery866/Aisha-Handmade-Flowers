@@ -2289,6 +2289,34 @@ html.scrolling #sway,html.scrolling #roses,html.scrolling .tail,html.scrolling .
 .gbtn2{padding:.75rem;font-size:.9rem;color:#5e1631;background:rgba(255,255,255,.7);border:1px solid rgba(201,58,111,.25)}
 .gbtn.hidden,.gbtn2.hidden{display:none}
 @media (prefers-reduced-motion:reduce){.gp{animation:none;top:calc(var(--y)*1%);opacity:.75}.gp svg{animation:none}}
+/* "ready to send" sheet */
+.dsheet{background:#fff}
+.dhead{position:relative;padding:1.4rem 1.25rem 1.1rem;text-align:center;background:linear-gradient(135deg,#ffe9dc,#ffe4ec 55%,#ffd6e3)}
+.dhead h2{margin-top:.7rem;font-size:1.6rem;font-weight:700;line-height:1.15;color:#5e1631}
+.dhead p{margin:.35rem auto 0;max-width:20rem;font-size:.85rem;color:rgba(94,22,49,.75)}
+.dbadge{position:relative;display:grid;place-items:center;width:64px;height:64px;margin:0 auto;border-radius:50%;background:#fff;box-shadow:0 6px 16px rgba(201,58,111,.25)}
+.dok{position:absolute;right:-4px;bottom:-2px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#10b981;color:#fff;font:700 13px/1 "DM Sans",sans-serif;border:2px solid #fff;animation:pop .5s cubic-bezier(.34,1.6,.5,1) both}
+.dx{position:absolute;right:.7rem;top:.7rem;width:2rem;height:2rem;border-radius:50%;background:rgba(255,255,255,.75);color:#5e1631;font-size:.9rem}
+.dbody{display:grid;gap:.7rem;padding:1rem 1.25rem 1.25rem}
+.dprev{border-radius:1rem;padding:.7rem;background:linear-gradient(#fff4f7,#ffe6ee);border:1px solid #ffd6e3}
+.dframes{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;align-items:center;gap:.4rem;margin-bottom:.6rem}
+.dframes>span{margin-right:.2rem;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(94,22,49,.7)}
+#doneImg{display:block;margin:0 auto;max-width:100%;max-height:42vh;object-fit:contain;border-radius:.75rem;background:#fff;box-shadow:0 10px 24px rgba(94,22,49,.2)}
+.dstep{display:flex;gap:.75rem;align-items:flex-start;padding:.85rem;border:1px solid #ffe0ea;border-radius:1rem;background:#fff}
+.dstep .stp{margin:.1rem 0 0}
+.dsc{flex:1;min-width:0}
+.dsc h3{font-size:.95rem;font-weight:700;color:#5e1631}
+.dsc p{margin-top:.1rem;font-size:.8rem;color:rgba(94,22,49,.72)}
+.drow{display:flex;gap:.5rem;margin-top:.6rem}
+.dbtn{flex:1;border:1px solid #ffc9d9;border-radius:.75rem;padding:.65rem .5rem;font-size:.875rem;font-weight:600;color:#5e1631;background:#fff;white-space:nowrap}
+.dsc>.dbtn{display:block;width:100%;margin-top:.6rem}
+.dmsg{display:block;margin-top:.6rem;border-radius:.75rem;padding:.8rem;text-align:center;font-weight:700;color:#fff;background:linear-gradient(135deg,#0a7cff,#7b4dff);box-shadow:0 8px 18px rgba(10,124,255,.28)}
+.dstory{display:block;width:100%;text-align:center;white-space:normal}
+.dstory span{display:block;font-size:.7rem;font-weight:500;color:rgba(94,22,49,.65)}
+.dtxt summary{cursor:pointer;font-size:.85rem;color:#b92f64}
+.dtxt pre{margin-top:.5rem;max-height:8rem;overflow:auto;white-space:pre-wrap;border-radius:.75rem;background:#fff4f7;padding:.75rem;font:.75rem "DM Sans",sans-serif}
+.dclose{width:100%;border:1px solid #ffc9d9;border-radius:9999px;padding:.65rem;font-size:.875rem;font-weight:600;color:#5e1631}
+.dbtn.hidden,.dstory.hidden,.dstep.hidden,#doneImg.hidden{display:none!important}
 /* lite mode: few cores, low RAM, Save-Data, or ?lite=1 (force) / ?lite=0 (off) */
 html.lite #drift,html.lite #occ,html.lite #bokeh,html.lite .glow,html.lite .blob,html.lite .gp:nth-child(n+8){display:none}
 html.lite #sway,html.lite #roses,html.lite .tail,html.lite .bow,html.lite .bfl,html.lite .bob,html.lite .wing,html.lite .spk,html.lite .logo,html.lite .gate-bg,html.lite #startHere,html.lite #steps .cur,html.lite #send.ready,html.lite #bar2btn.ready,html.lite #counts.hint label,html.lite .rv-in .opt,html.lite .rv-in .topc{animation:none}
@@ -2796,95 +2824,27 @@ html.lite .backdrop-blur,html.lite .backdrop-blur-xl,html.lite #pload,html.lite 
       </div>
       <div id="petals" class="absolute inset-0 z-20 pointer-events-none overflow-hidden" aria-hidden="true"></div>
     </div>
-    <div
-      id="done"
-      class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 p-3"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="doneTitle"
-    >
-      <div
-        class="w-full max-w-md max-h-[94vh] overflow-auto rounded-3xl bg-white text-[#3a1424] p-5 shadow-xl"
-      >
-        <h2
-          id="doneTitle"
-          class="font-display text-2xl font-bold text-rose-800"
-        >
-          Your bouquet is ready to send
-        </h2>
-        <p class="mt-1 text-sm text-rose-800/70">
-          Three quick steps and your order is with us.
-        </p>
-        <p
-          id="inAppNote"
-          class="hidden mt-3 rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-900"
-        >
-          You opened this inside Messenger, which blocks saving and sharing
-          files. <b>Press and hold the image below and choose Save image</b>, or
-          take a screenshot of it.
-        </p>
-        <div id="frames" class="mt-3 flex flex-wrap items-center gap-2"><span class="text-xs font-semibold text-rose-800">Frame:</span></div>
-        <img
-          id="doneImg"
-          alt="Your order"
-          class="hidden mt-3 w-full max-h-[46vh] object-contain rounded-xl bg-rose-50"
-          style="
-            -webkit-touch-callout: default;
-            -webkit-user-select: auto;
-            user-select: auto;
-          "
-        />
-        <ol class="mt-4 space-y-3">
-          <li id="stepSave" class="flex items-center gap-3">
-            <span class="stp">1</span>
-            <div class="flex flex-1 gap-2">
-              <button
-                id="saveImg"
-                class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
-              >
-                Save image
-              </button>
-              <button
-                id="shareImg"
-                class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
-              >
-                Share
-              </button>
-            </div>
-          </li>
-          <li class="flex items-center gap-3">
-            <span class="stp">2</span
-            ><a
-              id="openM"
-              target="_blank"
-              rel="noopener"
-              class="block flex-1 whitespace-nowrap rounded-xl bg-[#0a7cff] hover:bg-[#0868d6] py-3.5 text-center font-bold text-white"
-              >Open Messenger</a
-            >
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="stp">3</span>
-            <p class="pt-0.5 text-sm">
-              Send the image, then paste your order text. It is already copied.
-            </p>
-          </li>
-        </ol>
-        <button id="storyImg" type="button" class="mt-3 w-full rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium">Save story image (for Facebook / Instagram)</button>
-        <details class="mt-3">
-          <summary class="cursor-pointer text-sm text-rose-600">
-            Show order text
-          </summary>
-          <pre
-            id="doneText"
-            class="mt-2 max-h-32 overflow-auto whitespace-pre-wrap rounded-xl bg-rose-50 p-3 text-xs font-sans"
-          ></pre>
-        </details>
-        <button
-          id="closeDone"
-          class="mt-4 w-full rounded-full border border-rose-200 py-2.5 text-sm font-medium"
-        >
-          Close
-        </button>
+    <div id="done" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 p-3" role="dialog" aria-modal="true" aria-labelledby="doneTitle">
+      <div class="dsheet w-full max-w-md max-h-[94vh] overflow-auto rounded-3xl text-[#3a1424] shadow-xl">
+        <div class="dhead">
+          <button id="closeX" type="button" class="dx" aria-label="Close">✕</button>
+          <div class="dbadge"><svg width="40" height="40" viewBox="-56 -56 112 112" aria-hidden="true" style="--c:#e8627f"><use href="#rose"/></svg><span class="dok">✓</span></div>
+          <h2 id="doneTitle" class="font-display">Your bouquet is ready!</h2>
+          <p>Save the image, send it to us on Messenger, and we will start making it.</p>
+        </div>
+        <div class="dbody">
+          <p id="inAppNote" class="hidden rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-900">You opened this inside Messenger, which blocks saving and sharing files. <b>Press and hold the image below and choose Save image</b>, or take a screenshot of it.</p>
+          <div class="dprev">
+            <div id="frames" class="dframes"><span>Style</span></div>
+            <img id="doneImg" alt="Your order slip" class="hidden" style="-webkit-touch-callout:default;-webkit-user-select:auto;user-select:auto">
+          </div>
+          <div id="stepSave" class="dstep"><span class="stp">1</span><div class="dsc"><h3>Save your order image</h3><p>Keep it on your phone so you can send it.</p><div class="drow"><button id="saveImg" type="button" class="dbtn">Save image</button><button id="shareImg" type="button" class="dbtn">Share</button></div></div></div>
+          <div class="dstep"><span class="stp">2</span><div class="dsc"><h3>Open Messenger</h3><p>Our chat opens, ready for your order.</p><a id="openM" target="_blank" rel="noopener" class="dmsg">Open Messenger</a></div></div>
+          <div class="dstep"><span class="stp">3</span><div class="dsc"><h3>Send the image and your order text</h3><p>The text is already copied. Just paste it in the chat.</p><button id="copyTxt" type="button" class="dbtn">Copy order text again</button></div></div>
+          <button id="storyImg" type="button" class="dbtn dstory">Save story image<span>for Facebook / Instagram</span></button>
+          <details class="dtxt"><summary>Show order text</summary><pre id="doneText"></pre></details>
+          <button id="closeDone" type="button" class="dclose">Close</button>
+        </div>
       </div>
     </div>
 
@@ -2892,6 +2852,7 @@ html.lite .backdrop-blur,html.lite .backdrop-blur-xl,html.lite #pload,html.lite 
       // ====== SETTINGS: change these ======
       const FB_PAGE = "aisha.balani.2025"; // your Facebook username (facebook.com/<this>)
       const SHOP_NAME = "Aisha Handmade Flowers";
+      const SHOP_URL = "https://aisha-handmade-flowers.vercel.app"; // shown on the saved images
       const GH_REPO = "Aisha-Handmade-Flowers"; // GitHub repository (not secret)
       const SHOP_REVIEWS = []; // optional: add real customer quotes, e.g. ["So pretty! - Mia"]
       // ====================================
@@ -5181,7 +5142,7 @@ let lastN = -1, topFilter = "All";
         const rows = orderRows(),
           d = data(),
           W = 900,
-          cardY = 960,
+          cardY = 1125,
           cardH = rows.length * 50 + 170,
           H = cardY + cardH + 290;
         const cv = document.createElement("canvas");
@@ -5252,42 +5213,42 @@ let lastN = -1, topFilter = "All";
         x.fillStyle = "#8a4a62";
         x.font = '400 22px "DM Sans", system-ui, sans-serif';
         
-        const th = themeNow(),
-          tc = tintColor();
+        const th = themeNow(), tc = tintColor(), PX = 50, PY = 305, PW = 800, PH = 800, cx = PX + PW / 2, cy = PY + PH * 0.44;
         x.save();
-        rrect(x, 70, 305, 760, 640, 48);
+        rrect(x, PX, PY, PW, PH, 52);
         x.clip();
-        const bg = x.createLinearGradient(0, 305, 0, 945);
+        const bg = x.createLinearGradient(0, PY, 0, PY + PH);
         bg.addColorStop(0, th[0]);
         bg.addColorStop(1, th[1]);
         x.fillStyle = bg;
-        x.fillRect(70, 305, 760, 640);
-        const au = x.createRadialGradient(450, 590, 10, 450, 590, 380);
-        au.addColorStop(0, hexA(tc, 0.24));
-        au.addColorStop(0.6, hexA(tc, 0.08));
+        x.fillRect(PX, PY, PW, PH);
+        const au = x.createRadialGradient(cx, cy, 10, cx, cy, PW * 0.55);
+        au.addColorStop(0, hexA(tc, isDarkBg(th) ? 0.4 : 0.26));
+        au.addColorStop(0.6, hexA(tc, 0.09));
         au.addColorStop(1, hexA(tc, 0));
         x.fillStyle = au;
-        x.fillRect(70, 305, 760, 640);
-        const gl = x.createLinearGradient(70, 305, 360, 590);
-        gl.addColorStop(0, "rgba(255,255,255,.7)");
+        x.fillRect(PX, PY, PW, PH);
+        const gl = x.createLinearGradient(PX, PY, PX + 300, PY + 300);
+        gl.addColorStop(0, "rgba(255,255,255,.4)");
         gl.addColorStop(1, "rgba(255,255,255,0)");
         x.fillStyle = gl;
-        x.fillRect(70, 305, 760, 640);
+        x.fillRect(PX, PY, PW, PH);
+        const flr = PY + PH * 0.92;
         x.fillStyle = "rgba(94,22,49,.08)";
-        x.fillRect(70, 892, 760, 60);
+        x.fillRect(PX, flr, PW, PH * 0.08);
         x.strokeStyle = "rgba(255,255,255,.8)";
         x.lineWidth = 2;
         x.beginPath();
-        x.moveTo(70, 892);
-        x.lineTo(830, 892);
+        x.moveTo(PX, flr);
+        x.lineTo(PX + PW, flr);
         x.stroke();
         x.restore();
         try {
-          x.drawImage(await sceneImage(), 100, 315, 700, 620);
+          x.drawImage(await sceneImage(), PX, PY, PW, PW);
         } catch (e) {
           console.error("preview image failed", e);
         }
-                x.fillStyle = "#fff";
+        x.fillStyle = "#fff";
         rrect(x, 50, cardY, 800, cardH, 36);
         x.fill();
         let y = cardY + 62;
@@ -5345,6 +5306,9 @@ let lastN = -1, topFilter = "All";
             fy + 118,
           );
         }
+        x.fillStyle = "#b92f64";
+        x.font = '700 23px "DM Sans", system-ui, sans-serif';
+        x.fillText(SHOP_URL.replace(/^https?:\/\//, ""), W / 2, fy + (remindDate() ? 166 : 124));
         const blob = await new Promise((r) => cv.toBlob(r, "image/png"));
         orderFile = new File([blob], "aisha-bouquet.png", {
           type: "image/png",
@@ -5421,7 +5385,14 @@ let lastN = -1, topFilter = "All";
       };
       $("saveImg").onclick = downloadImage;
       $("shareImg").onclick = shareImage;
-      $("closeDone").onclick = () => $("done").classList.add("hidden");
+      $("closeDone").onclick = $("closeX").onclick = () => $("done").classList.add("hidden");
+      $("copyTxt").onclick = async () => {
+        const b = $("copyTxt");
+        await copyText($("doneText").textContent);
+        b.textContent = "Copied ✓";
+        buzz(8);
+        setTimeout(() => (b.textContent = "Copy order text again"), 1800);
+      };
       $("done").onclick = (e) => {
         if (e.target === $("done")) $("done").classList.add("hidden");
       };
@@ -5902,6 +5873,11 @@ let lastN = -1, topFilter = "All";
         x.fillStyle = "#fff";
         x.font = '700 40px "DM Sans", system-ui, sans-serif';
         x.fillText("Order yours on Messenger", W / 2, 1798);
+        x.fillStyle = dk ? "#ffd9e6" : "#5e1631";
+        x.font = '700 32px "DM Sans", system-ui, sans-serif';
+        try { x.letterSpacing = "1px"; } catch (_) {}
+        x.fillText(SHOP_URL.replace(/^https?:\/\//, ""), W / 2, 1892);
+        try { x.letterSpacing = "0px"; } catch (_) {}
         const blob = await new Promise((r) => cv.toBlob(r, "image/png"));
         return new File([blob], "aisha-bouquet-story.png", { type: "image/png" });
       }
