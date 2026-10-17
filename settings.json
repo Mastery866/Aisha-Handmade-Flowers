@@ -16,7 +16,7 @@
     "wraps": [],
     "dots": []
   },
-  "updated": "2026-10-17T00:03:22.385Z",
+  "updated": "2026-10-17T00:04:22.914Z",
   "pairs": [
     {
       "id": "q1",
@@ -98,7 +98,7 @@
       "wrap": "White",
       "dots": "White",
       "bf": true,
-      "size": "",
+      "size": "3",
       "bd": "Lilac"
     },
     {
@@ -132,13 +132,12 @@
       "name": "Royal Blue Classic",
       "badge": "",
       "colors": [
-        "Royal Blue",
-        "Youlan Blue"
+        "Royal Blue"
       ],
       "wrap": "Black sparkle",
       "dots": "White",
       "bf": true,
-      "size": "",
+      "size": "3",
       "bd": "Night"
     }
   ]
