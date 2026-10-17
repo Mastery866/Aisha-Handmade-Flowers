@@ -16,7 +16,7 @@
     "wraps": [],
     "dots": []
   },
-  "updated": "2026-10-17T00:04:22.914Z",
+  "updated": "2026-10-17T07:19:44.946Z",
   "pairs": [
     {
       "id": "q1",
@@ -76,14 +76,16 @@
     "colors": [
       "Wine Red",
       "Light Pink",
-      "Royal Blue"
+      "Youlan Blue"
     ],
     "pairs": [],
     "wraps": [],
     "dots": [],
     "extras": [],
     "top": [
-      "d3"
+      "d3",
+      "d2",
+      "d1"
     ]
   },
   "top": [
