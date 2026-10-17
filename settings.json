@@ -16,7 +16,7 @@
     "wraps": [],
     "dots": []
   },
-  "updated": "2026-10-16T23:59:52.307Z",
+  "updated": "2026-10-17T00:02:00.099Z",
   "pairs": [
     {
       "id": "q1",
@@ -71,7 +71,11 @@
     "counts": [
       "7"
     ],
-    "colors": [],
+    "colors": [
+      "Wine Red",
+      "Light Pink",
+      "Royal Blue"
+    ],
     "pairs": [],
     "wraps": [],
     "dots": [],
@@ -93,7 +97,7 @@
       "dots": "White",
       "bf": true,
       "size": "",
-      "bd": ""
+      "bd": "Lilac"
     },
     {
       "id": "d1",
@@ -105,8 +109,8 @@
       "wrap": "White",
       "dots": "White",
       "bf": true,
-      "size": "",
-      "bd": ""
+      "size": "7",
+      "bd": "Lilac"
     },
     {
       "id": "d3",
@@ -129,11 +133,11 @@
         "Royal Blue",
         "Youlan Blue"
       ],
-      "wrap": "White",
+      "wrap": "Black sparkle",
       "dots": "White",
-      "bf": false,
+      "bf": true,
       "size": "",
-      "bd": ""
+      "bd": "Night"
     }
   ]
 }
