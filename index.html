@@ -2432,6 +2432,7 @@ html.lite .backdrop-blur,html.lite .backdrop-blur-xl,html.lite #pload,html.lite 
             249
           </div>
           <div id="bdDots" class="absolute left-4 z-10 flex flex-col gap-1.5" style="top:48px"></div>
+          <div id="bdCap" aria-live="polite" style="position:absolute;left:12px;top:168px;z-index:10;opacity:0;transition:opacity .25s;font:700 10px/1 'DM Sans',sans-serif;color:#5e1631;background:rgba(255,255,255,.85);padding:3px 7px;border-radius:999px;box-shadow:0 1px 3px rgba(94,22,49,.2);pointer-events:none;white-space:nowrap"></div>
           <button id="mute" type="button" aria-pressed="false" aria-label="Sound and vibration" class="absolute right-3 top-4 z-10 rounded-full bg-white/90 px-2.5 py-0.5 text-xs sm:text-sm font-semibold text-rose-800 shadow">On</button>
           <div class="absolute right-3 z-10 flex flex-col items-end gap-1.5" style="top:46px">
             <button id="undoBtn" type="button" disabled class="rounded-full bg-white/90 px-2.5 py-0.5 text-xs font-semibold text-rose-800 shadow disabled:opacity-40">↶ Undo</button>
@@ -2930,6 +2931,13 @@ let lastN = -1, topFilter = "All";
       const st = { count: COUNTS[0], colors: [], wrap: 0 };
       const $ = (id) => document.getElementById(id);
       const peso = (n) => "₱" + n.toLocaleString("en-PH");
+      // "14:30" -> "2:30 PM"
+      const to12h = (t) => {
+        const m = /^(\d{1,2}):(\d{2})/.exec(t || "");
+        if (!m) return t || "";
+        const h = +m[1];
+        return ((h % 12) || 12) + ":" + m[2] + " " + (h < 12 ? "AM" : "PM");
+      };
 
       // ---------- build option UI ----------
       COUNTS.forEach((c, i) => {
@@ -3374,7 +3382,7 @@ let lastN = -1, topFilter = "All";
           phone: $("phone").value.trim(),
           name: $("name").value.trim(),
           date: $("date").value,
-          time: $("time").value,
+          time: to12h($("time").value),
           loc: $("loc").value.trim(),
           msg: $("msg").value.trim(),
         };
@@ -5546,7 +5554,14 @@ let lastN = -1, topFilter = "All";
         bt.onclick = openSheet;
       }
       // 4. backdrop picker
-      const BD = [null, ["#e8f4e5", "#c3ddbf"], ["#fffaf0", "#f3e3c3"], ["#f1eaff", "#d6c6f5"], ["#4a3566", "#241838"]], BDN = ["Auto (matches your flowers)", "Sage", "Cream", "Lilac", "Night"], BDP = [null, "#f4faf2", "#fffaf0", "#f7f2ff", "#f4eefa"];
+      const BD = [null, ["#e8f4e5", "#c3ddbf"], ["#fffaf0", "#f3e3c3"], ["#f1eaff", "#d6c6f5"], ["#4a3566", "#241838"]], BDN = ["Auto (matches your colors)", "Sage", "Cream", "Lilac", "Night"], BDP = [null, "#f4faf2", "#fffaf0", "#f7f2ff", "#f4eefa"];
+      // Each flower color has its own designated backdrop (index into BD: 1 Sage, 2 Cream, 3 Lilac, 4 Night).
+      const COLOR_BD = {
+        "Youlan Blue": 4, "Royal Blue": 4, "Deep Violet": 4, "Wine Red": 4,          // Night
+        "Light Pink": 3, "Cream / Milky White": 3, "Lavender Purple": 3,             // Lilac
+        "Champagne": 2, "Sunflower Yellow": 2, "Sunny Yellow": 2,                    // Cream
+        "Moss Green": 1, "Matcha Green": 1,                                          // Sage
+      };
       st.bd = 0;
       $("bdDots").innerHTML = BDN.map((n, i) => `<button type="button" data-bd="${i}" aria-label="${n} backdrop" title="${n}" class="bdd${i ? "" : " on"}" style="background:${BD[i] ? `linear-gradient(135deg,${BD[i][0]},${BD[i][1]})` : "conic-gradient(#ffc9d9,#f3e8ff,#fff0e0,#ffc9d9)"}"></button>`).join("");
       $("bdDots").onclick = (e) => {
@@ -5652,10 +5667,26 @@ let lastN = -1, topFilter = "All";
       // Auto backdrop = the overall look of the bouquet: flowers 55%, wrapping 25%, snow dots 20% (only parts already chosen).
       // dark look -> Night | in-between -> Dusk (deep tint) | light look -> a lighter tint (pale, or a mid tone if pale flowers would vanish)
       const autoCache = {};
+      // Color-matched backdrop. Cream / Milky White is a neutral partner, so the other color decides.
+      // Two colors that want different backdrops: the one that keeps BOTH flowers visible wins; a near tie goes to the first color picked.
+      function bdForColors(idx) {
+        const cs = idx.map((i) => COLORS[i]), core = cs.filter((c) => !c[0].startsWith("Cream")), use = core.length ? core : cs, opts = [];
+        use.forEach((c) => { const b = COLOR_BD[c[0]]; if (b && !opts.includes(b)) opts.push(b); });
+        if (!opts.length) return null;
+        let pick = opts[0];
+        if (opts.length > 1) {
+          const sc = (b) => Math.min(...use.map((c) => sep(c[1], BD[b])));
+          if (sc(opts[1]) - sc(opts[0]) > 0.15) pick = opts[1];
+        }
+        const g = BD[pick], dark = isDarkBg(g);
+        return { g, kind: dark ? "night" : "light", night: dark, pg: BDP[pick], name: BD_NAMES[pick], why: use.map((c) => c[0]).join(" + ") };
+      }
       function autoFor(idx, wrapName, dotName) {
         if (!idx.length) return null;
         const key = idx.join(",") + "|" + (wrapName || "") + "|" + (dotName || "");
         if (autoCache[key]) return autoCache[key];
+        const mapped = bdForColors(idx);
+        if (mapped) return (autoCache[key] = mapped);
         const cs = idx.map((i) => COLORS[i]), fl = cs.map((c) => c[1]), main = (cs.find((c) => !c[0].startsWith("Cream")) || cs[0])[1], [h, , l] = hexHsl(main);
         const parts = [[fl.reduce((t, x) => t + hexLab(x)[0] / 100, 0) / fl.length, 0.55]];
         const w = WRAPS.find((x) => x[0] === wrapName), d = FILLERS.find((x) => x[0] === dotName);
@@ -5681,7 +5712,13 @@ let lastN = -1, topFilter = "All";
         a.textContent = "A";
         a.style.background = ab ? `linear-gradient(135deg,${ab.g[0]},${ab.g[1]})` : "conic-gradient(#ffc9d9,#f3e8ff,#fff0e0,#ffc9d9)";
         a.classList.toggle("dk", !!ab && isDarkBg(ab.g));
-        a.title = ab ? "Auto: " + { night: "Night (dark look)", dusk: "Dusk (in-between look)", light: "a lighter tint (light look)" }[ab.kind] : BDN[0];
+        a.title = ab ? "Auto: " + (ab.name ? ab.name + " backdrop, matched to " + ab.why : { night: "Night (dark look)", dusk: "Dusk (in-between look)", light: "a lighter tint (light look)" }[ab.kind]) : BDN[0];
+        const cap = $("bdCap");
+        if (cap) {
+          const nm = st.bd > 0 ? BD_NAMES[st.bd] : ab && ab.name ? ab.name : "";
+          cap.textContent = nm ? nm + (st.bd > 0 ? "" : " · auto") : "";
+          cap.style.opacity = nm ? 1 : 0;
+        }
       }
       // top choice thumbnails follow their preferred backdrop (or Auto)
       function topBg(p) {
