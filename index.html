@@ -75,9 +75,7 @@ if(window.LITE)document.documentElement.classList.add("lite");})();
           opacity 0.4s;
       }
       .rz {
-        transition:
-          transform 0.75s cubic-bezier(0.34, 1.45, 0.5, 1),
-          --c 0.5s;
+        transition: transform 0.75s cubic-bezier(0.34, 1.45, 0.5, 1);
       }
       .ln {
         fill: none;
@@ -492,10 +490,7 @@ if(window.LITE)document.documentElement.classList.add("lite");})();
         initial-value: #f9bcd2;
       }
       #prevCard {
-        transition:
-          --g1 0.6s,
-          --g2 0.6s,
-          --tint 0.6s;
+        /* backdrop changes cross-fade through an overlay (see fadeBg), not by animating inherited variables */
       }
       .bgfx {
         position: absolute;
@@ -2220,7 +2215,8 @@ section.space-y-5>div.hidden+div::before{display:none}
 @keyframes plspin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){#send.ready,#bar2btn.ready,.pl{animation:none}.odi{transition:none}}
 @property --acc{syntax:"<color>";inherits:true;initial-value:#d6457b}
-:root{--acc:#d6457b;--accs:color-mix(in srgb,var(--acc) 12%,white);--accr:color-mix(in srgb,var(--acc) 24%,transparent);transition:--acc .5s ease}
+:root{--acc:#d6457b;--accs:color-mix(in srgb,var(--acc) 12%,white);--accr:color-mix(in srgb,var(--acc) 24%,transparent);}
+#send,#bar2btn,#shs{transition:background-color .3s ease}
 .opt:has(input:checked){border-color:var(--acc);background:var(--accs);box-shadow:0 0 0 2px var(--accr)}
 .opt:has(input:checked) .sw{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--acc)}
 .fld:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--accr)}
@@ -2246,7 +2242,6 @@ body{background:var(--pg,#fff4f7);transition:background-color .6s ease}
 @keyframes hbob{to{transform:translateY(-2px)}}
 @media (prefers-reduced-motion:reduce){#counts.hint label,#startHere{animation:none}}
 @property --fbc{syntax:"<color>";inherits:true;initial-value:#ffffff}
-#scene{transition:--w1 .5s,--w2 .5s,--rb .5s,--wo .5s,--fl .5s,--fbc .5s}
 html.scrolling #sway,html.scrolling #roses,html.scrolling .tail,html.scrolling .bow,html.scrolling .bfl,html.scrolling .bob,html.scrolling .wing,html.scrolling .spk,html.scrolling #bokeh i,html.scrolling .glow,html.scrolling .pt,html.scrolling .dp{animation-play-state:paused}
 .palc{position:relative;flex:none;width:7.2rem;display:flex;flex-direction:column;align-items:center;gap:.25rem;border:1px solid #ffc9d9;border-radius:1rem;background:#fff;padding:.55rem .4rem .5rem;text-align:center;transition:border-color .15s,box-shadow .15s,background .15s}
 .palp{display:flex;align-items:center;justify-content:center;height:46px}
@@ -2884,7 +2879,7 @@ html.lite .backdrop-blur,html.lite .backdrop-blur-xl,html.lite #pload,html.lite 
         ["White", "#f4f4f6", "#ffffff", 0.4],
         ["Black sparkle", "#26222b", "#9a94a6", 0.94],
       ];
-      let muted = false, acted = false, bloomNext = false, AC = null, intro = false;
+      let muted = false, acted = false, bloomNext = false, washNext = false, AC = null, intro = false;
       try { muted = localStorage.getItem("ahf_mute") === "1"; } catch (_) {}
       addEventListener("pointerdown", () => (acted = true), { once: true, capture: true });
       function pop(f) {
@@ -2906,22 +2901,38 @@ html.lite .backdrop-blur,html.lite .backdrop-blur-xl,html.lite #pload,html.lite 
       }
       const popBurst = (k) => { for (let j = 0; j < k; j++) setTimeout(() => pop(470 + j * 85), j * 75); };
       const bloom = () => { if (!matchMedia("(prefers-reduced-motion: reduce)").matches) bloomNext = true; };
-let lastN = -1, topFilter = "All";
+      const washFx = () => { if (!matchMedia("(prefers-reduced-motion: reduce)").matches) washNext = true; };
+let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1, lastRb = "";
       const RM = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+      // ribbon re-tie without forcing a reflow (Web Animations instead of toggling a class)
+      function retie() {
+        const t = $("tie");
+        if (!t || RM()) return;
+        if (t._wa) t._wa.cancel();
+        const e = "cubic-bezier(.3,1.4,.5,1)";
+        t._wa = t.animate(
+          [
+            { transform: "scale(.2,.05) rotate(-14deg)", opacity: 0, easing: e },
+            { transform: "scale(1.18,.7) rotate(5deg)", opacity: 1, offset: 0.4, easing: e },
+            { transform: "scale(.94,1.08) rotate(-2deg)", offset: 0.65, easing: e },
+            { transform: "scale(1) rotate(0deg)", opacity: 1 },
+          ],
+          { duration: 1000, fill: "backwards" },
+        );
+      }
       function refold() {
         if (RM()) return;
         document.querySelectorAll(".lf").forEach((l, i) => {
-          l.style.transition = "none";
-          l.style.transform = `rotate(${+l.dataset.r + 50}deg) scale(.15)`;
-          l.style.opacity = 0;
-          l.getBoundingClientRect();
-          l.style.transition = "";
-          l.style.transitionDelay = i * 55 + "ms";
-          l.style.transform = `rotate(${l.dataset.r}deg) scale(1)`;
+          const end = `rotate(${l.dataset.r}deg) scale(1)`;
+          l.style.transform = end;
           l.style.opacity = 1;
+          if (l._wa) l._wa.cancel();
+          l._wa = l.animate(
+            [{ transform: `rotate(${+l.dataset.r + 50}deg) scale(.15)`, opacity: 0 }, { transform: end, opacity: 1 }],
+            { duration: 900, delay: i * 55, easing: "cubic-bezier(.34,1.4,.5,1)", fill: "backwards" },
+          );
         });
-        const t = $("tie");
-        if (t) { t.classList.remove("go"); t.getBoundingClientRect(); t.classList.add("go"); }
+        retie();
       }
       function updMute() {
         $("mute").innerHTML = (muted ? ICON.mute : ICON.sound) + (muted ? " Off" : " On");
@@ -3190,6 +3201,51 @@ let lastN = -1, topFilter = "All";
             ? COLORS[st.colors[0]][1]
             : "#efe6ea";
       }
+      // ---------- change transitions ----------
+      const fxOK = () => !RM();
+      // soft expanding halo from the bouquet head, in the new color
+      function ringFx(e, col) {
+        if (!fxOK()) return;
+        let rip = $("rip");
+        if (!rip) {
+          rip = document.createElementNS(NS, "circle");
+          rip.id = "rip";
+          rip.setAttribute("r", "60");
+          rip.setAttribute("stroke-width", "5");
+          rip.setAttribute("fill-opacity", ".14");
+          rip.setAttribute("stroke-opacity", ".6");
+          rip.style.cssText = "pointer-events:none;opacity:0";
+          $("roses").parentNode.insertBefore(rip, $("roses"));
+        }
+        rip.style.fill = col;
+        rip.style.stroke = `color-mix(in srgb, ${col} 75%, #5e1631)`;
+        if (rip._wa) rip._wa.cancel();
+        const T = (k) => `translate(${CX}px,${CY}px) scale(${k})`;
+        rip._wa = rip.animate(
+          [{ transform: T(0.25), opacity: 0.9 }, { transform: T((e + 36) / 60), opacity: 0 }],
+          { duration: 780, easing: "cubic-bezier(.2,.7,.3,1)" },
+        );
+      }
+      // color change: every rose pulses once, starting at the center and moving outward
+      function waveFx(pts, r, n, e, col) {
+        if (!fxOK()) return;
+        const ext = Math.max(1, ...pts.map((p) => Math.hypot(p[0], p[1])));
+        roses.forEach((el, i) => {
+          if (!el || !pts[i]) return;
+          const x = CX + pts[i][0] * r, y = CY + pts[i][1] * r, a = (i * 47) % 360,
+            sc = (r * (n >= 8 ? 1.12 : 1)) / 53,
+            T = (k, da) => `translate(${x}px,${y}px) rotate(${a + da}deg) scale(${sc * k})`;
+          if (el._wa) el._wa.cancel();
+          el._wa = el.animate(
+            [{ transform: T(1, 0) }, { transform: T(1.2, -8), offset: 0.4 }, { transform: T(0.96, 3), offset: 0.7 }, { transform: T(1, 0) }],
+            { duration: 620, delay: wDelay(pts[i], ext), easing: "cubic-bezier(.3,.7,.4,1)" },
+          );
+        });
+        ringFx(e, col);
+        popBurst(2);
+      }
+      const wDelay = (p, ext) => Math.round(30 + (Math.hypot(p[0], p[1]) / ext) * 300);
+
       function drawBouquet() {
         const n = qty(),
           w = WRAPS[st.wrap],
@@ -3199,7 +3255,24 @@ let lastN = -1, topFilter = "All";
           ? st.colors.map((i) => COLORS[i][1])
           : ["#ffffff"];
         const { pts, r, e, sc, Rf } = sceneGeom(n);
-        if (n !== lastN) { if (lastN > 0) refold(); lastN = n; }
+        const nChanged = lastN > 0 && n !== lastN;
+        let folded = false;
+        if (n !== lastN) { if (lastN > 0) { refold(); folded = true; } lastN = n; }
+        // new wrapping: the sheets re-unfold and the ribbon re-ties
+        if (st.wrap !== lastWrap) { if (lastWrap >= 0 && !folded && !intro) refold(); lastWrap = st.wrap; }
+        // new filler: puffs out from the center
+        if (st.wrap !== lastWrapF) {
+          if (lastWrapF >= 0 && !intro && fxOK() && st.filler === lastFill) $("fillG").animate([{ opacity: 0 }, { opacity: 1 }], { duration: 520, easing: "ease-out" });
+          lastWrapF = st.wrap;
+        }
+        if (st.filler !== lastFill) {
+          if (lastFill >= 0 && !intro && fxOK()) {
+            const T = (k) => `translate(${CX}px,${CY}px) scale(${(Rf / 100) * k})`;
+            $("fillG").animate([{ opacity: 0, transform: T(0.7) }, { opacity: 1, transform: T(1.06), offset: 0.7 }, { opacity: 1, transform: T(1) }], { duration: 650, easing: "cubic-bezier(.2,.8,.3,1)" });
+            popBurst(1);
+          }
+          lastFill = st.filler;
+        }
         sty.setProperty("--w1", w[1]);
         sty.setProperty("--w2", w[2]);
         sty.setProperty("--wo", w[3]);
@@ -3215,10 +3288,12 @@ let lastN = -1, topFilter = "All";
         const col = roseColor(n, hx),
           host = $("roses");
         let born = 0;
+        const later = [];
         for (let i = 0; i < Math.max(n, roses.length); i++) {
           if (i < n) {
-            let el = roses[i];
+            let el = roses[i], fresh = false;
             if (!el) {
+              fresh = true;
               el = document.createElementNS(NS, "use");
               el.setAttribute("href", "#rose");
               el.setAttribute("class", "rz");
@@ -3226,20 +3301,25 @@ let lastN = -1, topFilter = "All";
               host.insertBefore(el, host.firstChild);
               roses[i] = el;
               born++;
-              el.getBoundingClientRect();
             }
+            const deferred = fresh || bloomNext;
             const [c, ci] = col(i);
             if (bloomNext) {
               el.style.transition = "none";
               el.style.transform = `translate(${CX + pts[i][0] * r}px,${CY + pts[i][1] * r}px) rotate(${((i * 47) % 360) - 90}deg) scale(0.1)`;
-              el.getBoundingClientRect();
-              el.style.transition = "";
             }
-            el.style.transitionDelay = (intro ? 550 + Math.min(i * 60, 700) : bloomNext ? Math.min(i * 45, 600) : Math.min(i * 22, 380)) + "ms";
-            el.style.setProperty("--c", c);
-            if (ci) el.style.setProperty("--ci", ci);
-            else el.style.removeProperty("--ci");
-            el.style.transform = roseT(pts[i], i, r, n);
+            el.style.transitionDelay = (intro ? 550 + Math.min(i * 60, 700) : bloomNext ? Math.min(i * 45, 600) : washNext ? wDelay(pts[i], Math.max(1, ...pts.map((q) => Math.hypot(q[0], q[1])))) : Math.min(i * 22, 380)) + "ms";
+            clearTimeout(el._ct);
+            const setCol = () => {
+              el.style.setProperty("--c", c);
+              if (ci) el.style.setProperty("--ci", ci);
+              else el.style.removeProperty("--ci");
+            };
+            if (washNext && !fresh && !bloomNext && fxOK() && el.style.getPropertyValue("--c") && el.style.getPropertyValue("--c") !== c)
+              el._ct = setTimeout(setCol, wDelay(pts[i], Math.max(1, ...pts.map((q) => Math.hypot(q[0], q[1])))) + 200);
+            else setCol();
+            if (deferred) later.push(() => { el.style.transition = ""; el.style.transform = roseT(pts[i], i, r, n); });
+            else el.style.transform = roseT(pts[i], i, r, n);
           } else if (roses[i]) {
             const el = roses[i];
             roses[i] = null;
@@ -3249,8 +3329,17 @@ let lastN = -1, topFilter = "All";
           }
         }
         roses.length = n;
-        if (bloomNext) { bloomNext = false; popBurst(Math.min(n, 4)); }
-        else if (born) popBurst(Math.min(born, 3));
+        if (later.length) { void host.getBoundingClientRect(); later.forEach((f) => f()); } // a single reflow for all new / re-blooming roses
+        const newest = hx[hx.length - 1];
+        if (bloomNext) { bloomNext = false; washNext = false; popBurst(Math.min(n, 4)); ringFx(e, newest); }
+        else if (washNext) {
+          washNext = false;
+          waveFx(pts, r, n, e, newest);
+        }
+        else if (born) { popBurst(Math.min(born, 3)); if (nChanged) ringFx(e, newest); }
+        const rbNow = ribbonHex();
+        if (rbNow !== lastRb && lastRb && !intro && fxOK() && !folded) retie();
+        lastRb = rbNow;
         // butterflies scale with flower count
         const want = $("butterfly").checked ? bfCount(n) : 0,
           b = bfScale(r);
@@ -3676,7 +3765,7 @@ let lastN = -1, topFilter = "All";
         }
       }
       function setColors(idxs) {
-        bloom();
+        washFx();
         st.colors = idxs.slice(0, 2);
         st.slot = 0;
         document
@@ -3743,7 +3832,7 @@ let lastN = -1, topFilter = "All";
           .forEach((inp) => (inp.checked = st.colors.includes(+inp.value)));
       }
       function pickColor(i, on) {
-        bloom();
+        washFx();
         if (isThree()) {
           // 3 pcs: flower color + optional center color
           const [a, b] = st.colors;
@@ -5012,14 +5101,33 @@ let lastN = -1, topFilter = "All";
         const c = parseInt(hex.slice(1), 16);
         return `rgba(${c >> 16},${(c >> 8) & 255},${c & 255},${a})`;
       };
+      // cross-fade the card background: snapshot the old gradient, switch instantly, fade the snapshot out (opacity only = smooth)
+      function fadeBg(pc, change) {
+        if (RM()) return change();
+        const gv = () => {
+          const a = pc.style.getPropertyValue("--g1"), b = pc.style.getPropertyValue("--g2"), t = pc.style.getPropertyValue("--tint");
+          return a && b && t ? `linear-gradient(to bottom, color-mix(in srgb, ${a} 86%, ${t}), color-mix(in srgb, ${b} 80%, ${t}))` : "";
+        };
+        const old = gv();
+        change();
+        if (!old || old === gv()) return;
+        const o = document.createElement("div");
+        o.setAttribute("aria-hidden", "true");
+        o.style.cssText = "position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;background-image:" + old;
+        pc.insertBefore(o, pc.firstChild);
+        const a = o.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 650, easing: "ease-in-out" });
+        a.onfinish = a.oncancel = () => o.remove();
+      }
       function applyTheme() {
         const t = themeNow(),
           tc = tintColor(),
           pc = $("prevCard");
-        pc.style.setProperty("--g1", t[0]);
-        pc.classList.toggle("night", isDarkBg(t));
-        pc.style.setProperty("--g2", t[1]);
-        pc.style.setProperty("--tint", tc);
+        fadeBg(pc, () => {
+          pc.style.setProperty("--g1", t[0]);
+          pc.classList.toggle("night", isDarkBg(t));
+          pc.style.setProperty("--g2", t[1]);
+          pc.style.setProperty("--tint", tc);
+        });
         const ab = st.bd === 0 ? autoBg() : null, pg = ab ? ab.pg : BDP[st.bd] || "#fff4f7";
         document.documentElement.style.setProperty("--pg", pg);
         const mt = document.querySelector('meta[name="theme-color"]');
