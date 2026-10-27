@@ -2138,7 +2138,6 @@ if(window.LITE)document.documentElement.classList.add("lite");})();
 h1,h2,.font-display{letter-spacing:-.01em}
 @media (max-width:640px){section.space-y-5>div{padding:1.4rem 1.2rem}}
 #roses .rz{filter:drop-shadow(0 3px 2.5px rgba(94,22,49,.3))}
-.crk{pointer-events:none}
 .spk{fill:#fff;animation:twk 2.8s ease-in-out infinite alternate}
 @keyframes twk{from{opacity:.15}to{opacity:1}}
 #counts{scrollbar-width:thin;scroll-snap-type:x proximity;padding-top:14px}
@@ -2296,9 +2295,18 @@ html.scrolling #sway,html.scrolling #roses,html.scrolling .tail,html.scrolling .
 .dprev{border-radius:1rem;padding:.7rem;background:linear-gradient(#fff4f7,#ffe6ee);border:1px solid #ffd6e3}
 .dframes{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;align-items:center;gap:.4rem;margin-bottom:.6rem}
 .dframes>span{margin-right:.2rem;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(94,22,49,.7)}
-#doneImg{display:block;margin:0 auto;max-width:100%;max-height:42vh;object-fit:contain;border-radius:.75rem;background:#fff;box-shadow:0 10px 24px rgba(94,22,49,.2)}
+#doneImg{display:block;margin:0 auto;max-width:100%;width:100%;height:auto;border-radius:.75rem;background:#fff;box-shadow:0 10px 24px rgba(94,22,49,.2)}
 .dstep{display:flex;gap:.75rem;align-items:flex-start;padding:.85rem;border:1px solid #ffe0ea;border-radius:1rem;background:#fff}
 .dstep .stp{margin:.1rem 0 0}
+.dsh{display:flex;gap:.75rem;align-items:flex-start}
+.dnum{display:grid;place-items:center;flex:none;width:2rem;height:2rem;border-radius:50%;background:linear-gradient(135deg,#c93a6f,#e8627f);color:#fff;font:700 .95rem "DM Sans",sans-serif;box-shadow:0 4px 10px rgba(201,58,111,.3)}
+.dstep{display:block;padding:1rem;border-radius:1.25rem;box-shadow:0 6px 18px rgba(94,22,49,.06)}
+.dstep .drow{margin-top:.8rem}
+.dstep .dmsg{margin-top:.8rem}
+.dbtn.dpri{color:#fff;background:#5e1631;border-color:#5e1631}
+.dsh h3{font-size:1.05rem;font-weight:700;line-height:1.25;color:#5e1631}
+.dsh p{margin-top:.15rem;font-size:.82rem;line-height:1.4;color:rgba(94,22,49,.72)}
+.dlink{display:block;width:100%;margin-top:.5rem;padding:.45rem;font-size:.8rem;font-weight:600;color:#b92f64;text-align:center}
 .dsc{flex:1;min-width:0}
 .dsc h3{font-size:.95rem;font-weight:700;color:#5e1631}
 .dsc p{margin-top:.1rem;font-size:.8rem;color:rgba(94,22,49,.72)}
@@ -2319,6 +2327,68 @@ html.lite .spk{opacity:.85}
 html.lite #bouquet svg,html.lite #roses .rz,html.lite .fg,html.lite .palp svg{filter:none}
 html.lite .backdrop-blur,html.lite .backdrop-blur-xl,html.lite #pload,html.lite #thanks{-webkit-backdrop-filter:none;backdrop-filter:none}
 </style>
+
+  <style id="adm2">
+.adm2-wrap{position:fixed;inset:0;z-index:70;display:flex;align-items:flex-end;justify-content:center;background:rgba(48,14,28,.5);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+@media(min-width:640px){.adm2-wrap{align-items:center;padding:16px}}
+.adm2{display:flex;flex-direction:column;width:100%;max-width:640px;max-height:94vh;background:#fff;color:#3a1424;overflow:hidden;border-radius:24px 24px 0 0;box-shadow:0 -8px 40px rgba(94,22,49,.25)}
+@media(min-width:640px){.adm2{border-radius:24px}}
+.adm2.tall{height:min(94vh,800px)}
+.adm2-h{display:flex;align-items:center;gap:12px;padding:16px 16px 12px 20px}
+.adm2-h h2{font-size:20px;line-height:1.2;font-weight:700;color:#9f1d4c}
+.adm2-h p{font-size:12px;color:#8a5b6b;margin-top:2px}
+.adm2-x,.adm2-lo{border-radius:999px;color:#8a3358;font-size:13px;font-weight:600}
+.adm2-x{width:36px;height:36px;display:grid;place-items:center;font-size:18px}
+.adm2-lo{padding:8px 12px}
+.adm2-x:hover,.adm2-lo:hover{background:#fdeaf0}
+.adm2-tabs{display:flex;gap:4px;padding:4px;margin:0 16px 8px;background:#fbeef2;border-radius:14px;overflow-x:auto;scrollbar-width:none}
+.adm2-tab{flex:1;white-space:nowrap;padding:9px 12px;border-radius:10px;font-size:13px;font-weight:600;color:#7a3550;display:flex;gap:6px;align-items:center;justify-content:center}
+.adm2-tab.on{background:#fff;color:#9f1d4c;box-shadow:0 1px 3px rgba(94,22,49,.18)}
+.adm2-n{min-width:18px;height:18px;border-radius:9px;background:#e9cdd6;color:#7a3550;font-size:11px;padding:0 5px;display:grid;place-items:center}
+.adm2-n.warn{background:#d6457b;color:#fff}
+.adm2-b{flex:1;overflow:auto;padding:8px 20px 24px}
+.adm2-f{border-top:1px solid #fbe3ea;background:#fff;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+.adm2-fr{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.adm2-st{flex:1 1 140px;font-size:12px;color:#8a5b6b;display:flex;align-items:center;gap:7px}
+.adm2-st::before{content:"";width:8px;height:8px;border-radius:50%;background:#2fa36b;flex:none}
+.adm2-st.dirty{color:#b45309;font-weight:600}
+.adm2-st.dirty::before{background:#f59e0b}
+.adm2-btn{border:1px solid #f1c4d2;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:600;color:#7a2447;background:#fff}
+.adm2-btn:disabled{opacity:.4}
+.adm2-pri{border-radius:999px;padding:10px 22px;font-size:14px;font-weight:700;color:#fff;background:#9f1d4c}
+.adm2-pri:disabled{opacity:.35}
+.adm2-msg{font-size:13px;margin-bottom:8px;padding:8px 12px;border-radius:12px;background:#e9f8f0;color:#146c43}
+.adm2-msg.err{background:#fdecec;color:#b42318}
+.adm2-msg.hidden{display:none}
+.adm2-sec{margin-top:20px}
+.adm2-sec:first-child{margin-top:8px}
+.adm2-sec h3{font-size:17px;font-weight:700;color:#9f1d4c}
+.adm2-sec>p{font-size:12.5px;color:#8a5b6b;margin:2px 0 10px;max-width:60ch}
+.adm2-tools{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;padding:10px 12px;border-radius:14px;background:#fff7f9;border:1px solid #fbe3ea;font-size:13px;color:#7a3550}
+.adm2-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.adm2-tile{border:1px solid #fbe3ea;border-radius:14px;background:#fff;padding:10px 12px}
+.adm2-tile.out{background:#fff5f7;border-color:#f3bccb}
+.adm2-trow{display:flex;align-items:center;gap:10px;cursor:pointer}
+.adm2-dot{width:26px;height:26px;border-radius:50%;border:1px solid rgba(0,0,0,.12);flex:none}
+.adm2-nm{flex:1;min-width:0;display:flex;flex-direction:column}
+.adm2-nm b{font-size:14px;font-weight:600;line-height:1.25}
+.adm2-nm small{font-size:11.5px;color:#146c43;font-weight:600}
+.adm2-tile.out .adm2-nm b{text-decoration:line-through;color:#8a5b6b}
+.adm2-tile.out .adm2-nm small{color:#b42318}
+.adm2-sw{position:relative;width:42px;height:24px;border-radius:12px;background:#e7b3c3;flex:none;transition:background .15s}
+.adm2-sw::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .15s}
+input:checked+.adm2-sw{background:#2fa36b}
+input:checked+.adm2-sw::after{transform:translateX(18px)}
+input:focus-visible+.adm2-sw{outline:2px solid #d6457b;outline-offset:2px}
+.adm2-opts{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:8px;padding-top:8px;border-top:1px dashed #f6d6e0}
+.adm2-opt{font-size:12.5px;color:#7a3550}
+.adm2-card{border:1px solid #fbe3ea;border-radius:14px;padding:12px;background:#fff}
+.adm2-card>label{font-size:13px;font-weight:700;color:#9f1d4c}
+.adm2-search{margin-bottom:8px}
+.adm2 summary::-webkit-details-marker{display:none}
+.adm2 details[open]{box-shadow:0 4px 18px rgba(94,22,49,.1)}
+@media (prefers-reduced-motion:reduce){.adm2-sw,.adm2-sw::after{transition:none}}
+  </style>
 </head>
   <body class="font-sans min-h-screen">
     <header class="px-5 pt-4 sm:pt-8 pb-2 sm:pb-3 text-center">
@@ -2826,17 +2896,16 @@ html.lite .backdrop-blur,html.lite .backdrop-blur-xl,html.lite #pload,html.lite 
           <button id="closeX" type="button" class="dx" aria-label="Close">✕</button>
           <div class="dbadge"><svg width="40" height="40" viewBox="-56 -56 112 112" aria-hidden="true" style="--c:#e8627f"><use href="#rose"/></svg><span class="dok">✓</span></div>
           <h2 id="doneTitle" class="font-display">Your bouquet is ready!</h2>
-          <p>Save the image, send it to us on Messenger, and we will start making it.</p>
+          <p>Two quick steps, then we will start making it.</p>
         </div>
         <div class="dbody">
           <p id="inAppNote" class="hidden rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-900">You opened this inside Messenger, which blocks saving and sharing files. <b>Press and hold the image below and choose Save image</b>, or take a screenshot of it.</p>
+          <div id="stepSave" class="dstep"><div class="dsh"><span class="dnum">1</span><div><h3>Save your order slip</h3><p>Keep it on your phone so you can attach it in the chat.</p></div></div><div class="drow"><button id="saveImg" type="button" class="dbtn dpri">Save image</button><button id="shareImg" type="button" class="dbtn">Share</button></div></div>
           <div class="dprev">
             <div id="frames" class="dframes"><span>Style</span></div>
             <img id="doneImg" alt="Your order slip" class="hidden" style="-webkit-touch-callout:default;-webkit-user-select:auto;user-select:auto">
           </div>
-          <div id="stepSave" class="dstep"><span class="stp">1</span><div class="dsc"><h3>Save your order image</h3><p>Keep it on your phone so you can send it.</p><div class="drow"><button id="saveImg" type="button" class="dbtn">Save image</button><button id="shareImg" type="button" class="dbtn">Share</button></div></div></div>
-          <div class="dstep"><span class="stp">2</span><div class="dsc"><h3>Open Messenger</h3><p>Our chat opens, ready for your order.</p><a id="openM" target="_blank" rel="noopener" class="dmsg">Open Messenger</a></div></div>
-          <div class="dstep"><span class="stp">3</span><div class="dsc"><h3>Send the image and your order text</h3><p>The text is already copied. Just paste it in the chat.</p><button id="copyTxt" type="button" class="dbtn">Copy order text again</button></div></div>
+          <div class="dstep"><div class="dsh"><span class="dnum">2</span><div><h3>Send it on Messenger</h3><p>Our chat opens. Paste your order text (already copied), then attach the slip.</p></div></div><a id="openM" target="_blank" rel="noopener" class="dmsg">Open Messenger</a><button id="copyTxt" type="button" class="dlink">Copy order text again</button></div>
           <button id="storyImg" type="button" class="dbtn dstory">Save story image<span>for Facebook / Instagram</span></button>
           <details class="dtxt"><summary>Show order text</summary><pre id="doneText"></pre></details>
           <button id="closeDone" type="button" class="dclose">Close</button>
@@ -3079,10 +3148,6 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
       }
       const DOTS_FULL = mkDots(620, 500, 16, 1);
       const DOTS = LITE ? mkDots(240, 190, 5, 1.35) : DOTS_FULL;
-      const CRK = [...Array(10)].map((_, i) => {
-        const a = (i / 10) * 6.2832 + 0.3, d = 112 + (i % 3) * 8;
-        return `<path d="M0 0L${(Math.cos(a) * d).toFixed(1)} ${(Math.sin(a) * d).toFixed(1)}" stroke="${i % 2 ? "#fff" : "#5e1631"}" stroke-opacity="${i % 2 ? 0.28 : 0.07}" stroke-width="${i % 2 ? 1.2 : 2.4}" fill="none"/>`;
-      }).join("");
       const sheet = (side, rot, cls) =>
         `<rect class="lf ${cls}" x="${-side / 2}" y="${-side / 2}" width="${side}" height="${side}" rx="10" data-r="${rot}"/>`;
       const bowHalf = `<path class="rb" d="M0 114C-46 78-70 112-34 130C-14 138-2 124 0 114Z"/><path class="rl" d="M0 114C-30 94-46 112-30 124C-16 130-4 122 0 114Z"/>`;
@@ -3090,10 +3155,10 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
         `<svg id="scene" viewBox="0 0 400 400" role="img" aria-label="Live bouquet preview" class="w-full h-full">
 <defs><radialGradient id="sheen" cx=".32" cy=".28" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".4"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></radialGradient>
 <g id="rose">${ROSE}</g><g id="dotsG">${DOTS}</g><radialGradient id="csh"><stop offset="0" stop-color="#5e1631" stop-opacity=".34"/><stop offset="1" stop-color="#5e1631" stop-opacity="0"/></radialGradient><radialGradient id="fbg"><stop offset="0" style="stop-color:var(--fbc,#ffffff)" stop-opacity=".5"/><stop offset=".65" style="stop-color:var(--fbc,#ffffff)" stop-opacity=".32"/><stop offset="1" style="stop-color:var(--fbc,#ffffff)" stop-opacity="0"/></radialGradient></defs>
-<ellipse id="shadow" cx="200" cy="388" rx="90" ry="9" fill="url(#csh)" opacity=".8"/><ellipse id="shadow2" cx="200" cy="388" rx="40" ry="4" fill="url(#csh)"/><g id="refl" opacity=".2" style="pointer-events:none;transform:translate(200px,392px)"><ellipse class="rb" cx="-22" cy="0" rx="10" ry="2.6"/><ellipse class="rb" cx="22" cy="0" rx="10" ry="2.6"/><ellipse class="rb" cx="0" cy="1.5" rx="7" ry="2.2"/></g>
+<ellipse id="shadow" cx="200" cy="388" rx="90" ry="9" fill="url(#csh)" opacity=".8"/><ellipse id="shadow2" cx="200" cy="388" rx="40" ry="4" fill="url(#csh)"/>
 <g id="sway"><g id="wrapG">
   <path class="ws" d="M-38 95L0 198 38 95z"/>
-  ${[0, 30, 60].map((r, i) => sheet(228, r, i % 2 ? "wb" : "wa")).join("")}${[15, 45, 75].map((r) => sheet(196, r, "wb")).join("")}${[0, 45].map((r) => sheet(160, r, "wc")).join("")}<g class="crk" aria-hidden="true">${CRK}</g>
+  ${[0, 30, 60].map((r, i) => sheet(228, r, i % 2 ? "wb" : "wa")).join("")}${[15, 45, 75].map((r) => sheet(196, r, "wb")).join("")}${[0, 45].map((r) => sheet(160, r, "wc")).join("")}
   <g class="tie go" id="tie"><g class="tail t1"><path class="rb" d="M0 116C-26 152-34 186-30 212l13-8 8 16C-6 184-4 152 0 116Z"/></g>
   <g class="tail t2"><path class="rb" d="M0 116C26 152 34 186 30 212l-13-8-8 16C6 184 4 152 0 116Z"/></g>
   <g transform="translate(0 115) scale(1.2) translate(0 -115)"><g class="bow"><g>${bowHalf}</g><g transform="scale(-1 1)">${bowHalf}</g><circle class="rl" cy="115" r="8"/></g></g></g>
@@ -3169,7 +3234,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
         n === 3
           ? () => [hx[0], hx[1] || null]
           : n === 6
-            ? (i) => [i === 0 ? hx[0] : hx[1] || hx[0], null] // 6 pcs: center = 1st color, ring = 2nd color
+            ? (i) => [i === 0 || i === 2 || i === 5 ? hx[0] : hx[1] || hx[0], null] // 6 pcs: 3 + 3, mirror-symmetric (center + upper sides = 1st, top + lower sides = 2nd)
             : n === 12
               ? (i) => [i < 3 || (i - 3) % 3 === 2 ? hx[0] : hx[1] || hx[0], null] // 6 + 6, 3-fold symmetric
               : n === 19
@@ -3284,7 +3349,6 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
           `translate(${CX}px,${CY}px) scale(${Rf / 100})`;
         $("shadow").setAttribute("rx", 40 + sc * 90);
         $("shadow2").setAttribute("rx", 22 + sc * 42);
-        $("refl").style.transform = `translate(200px,392px) scale(${sc})`;
         const col = roseColor(n, hx),
           host = $("roses");
         let born = 0;
@@ -3457,6 +3521,11 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
           ? `${nm[0]} flowers + ${nm[1]} centers (combined color)`
           : nm.join(" + ");
       }
+      const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+      function prettyDate(v) {
+        const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || "");
+        return m && MONTHS[+m[2] - 1] ? MONTHS[+m[2] - 1] + " " + +m[3] + ", " + m[1] : v || "";
+      }
       function data() {
         return {
           count: !st.t1 ? "Not selected" : st.count.id === "x" ? qty() + " pcs (custom)" : st.count.label,
@@ -3514,7 +3583,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
           ["Snow dots", d.filler],
           ["Butterflies", d.bf || "None"],
           ["Occasion", d.occasion],
-          ["When", [d.date, d.time].filter(Boolean).join(" · ") || "—"],
+          ["When", [prettyDate(d.date), d.time].filter(Boolean).join(" · ") || "—"],
           [d.ful, locText(d)],
         ];
         const dots = st.colors
@@ -3611,7 +3680,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
           `Ribbon: ${d.ribbon}`,
           `Snow dots: ${d.filler}`,
           `Butterflies: ${d.bf || "None"}`,
-          `${d.ful}: ${d.date}${d.time ? " " + d.time : ""}`,
+          `${d.ful}: ${prettyDate(d.date)}${d.time ? " " + d.time : ""}`,
           d.ful !== "Pick-up" ? `${FUL[d.ful].place}: ${d.loc}` : null,
           remindDate() ? `Chat reminder date: ${remindDate()}` : null,
           `Price: ${d.price}`,
@@ -3648,7 +3717,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
           ["Ribbon", d.ribbon],
           ["Snow dots", d.filler],
           ["Butterflies", d.bf || "None"],
-          ["When", [d.date, d.time].filter(Boolean).join(" at ") || "—"],
+          ["When", [prettyDate(d.date), d.time].filter(Boolean).join(" at ") || "—"],
           [
             d.ful,
             d.ful === "Pick-up" ? "Confirmed on Messenger" : d.loc || "—",
@@ -4456,12 +4525,8 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
           sd = $("admDirty");
         if (b) b.disabled = !dirty();
         if (sd) {
-          sd.textContent = dirty()
-            ? "● Unpublished changes"
-            : "All changes published";
-          sd.className =
-            "flex-1 text-xs " +
-            (dirty() ? "font-semibold text-amber-700" : "text-rose-800/75");
+          sd.textContent = dirty() ? "Unpublished changes" : "All changes published";
+          sd.className = "adm2-st" + (dirty() ? " dirty" : "");
         }
       }
       function topEditor(p, i) {
@@ -4689,26 +4754,28 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
       }
 
       // --- panel interface
+      let admTab = "stock",
+        admTabPrev = null;
       let adm = null,
         cfgMem = null,
         idleT = 0;
       const dirty = () => JSON.stringify(settings) !== JSON.stringify(saved);
       const fieldCls =
         "w-full rounded-xl border border-rose-200 bg-rose-50/40 px-3 py-2.5 text-sm focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-200";
-      function shell(sub, body, foot) {
-        adm.innerHTML = `<div class="flex max-h-[92vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl bg-white text-[#3a1424] shadow-xl">
-    <div class="flex items-center gap-3 border-b border-rose-100 bg-gradient-to-r from-rose-50 to-amber-50 px-5 py-4">
-      <svg width="38" height="38" viewBox="-56 -56 112 112" aria-hidden="true" style="--c:#d6457b"><use href="#rose"/></svg>
-      <div class="flex-1"><h2 class="font-display text-xl font-bold text-rose-800">Shop settings</h2><p class="text-xs text-rose-800/70">${sub}</p></div>
-      <button id="admX" class="grid h-9 w-9 place-items-center rounded-full text-lg text-rose-800 hover:bg-rose-100" aria-label="Close">✕</button></div>
-    <div id="admBody" class="flex-1 overflow-auto px-5 py-4">${body}</div>${foot ? `<div class="border-t border-rose-100 bg-white px-5 py-3">${foot}</div>` : ""}</div>`;
+      function shell(sub, body, foot, tabs, hx) {
+        adm.innerHTML = `<div class="adm2${tabs ? " tall" : ""}">
+    <div class="adm2-h">
+      <svg width="36" height="36" viewBox="-56 -56 112 112" aria-hidden="true" style="--c:#d6457b;flex:none"><use href="#rose"/></svg>
+      <div style="flex:1;min-width:0"><h2 class="font-display">Shop settings</h2><p>${sub}</p></div>${hx || ""}
+      <button id="admX" class="adm2-x" aria-label="Close">✕</button></div>${tabs || ""}
+    <div id="admBody" class="adm2-b">${body}</div>${foot ? `<div class="adm2-f">${foot}</div>` : ""}</div>`;
         $("admX").onclick = () => closeAdmin();
       }
       function openAdmin() {
         if (!adm) {
           adm = document.createElement("div");
           adm.className =
-            "fixed inset-0 z-[70] flex items-end justify-center bg-black/50 p-3 sm:items-center";
+            "adm2-wrap";
           adm.setAttribute("role", "dialog");
           adm.setAttribute("aria-modal", "true");
           ["click", "input", "keydown"].forEach((ev) =>
@@ -4761,7 +4828,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
           `<p class="mb-3 text-sm text-rose-800/80">Enter your GitHub details once. The token is locked with your secret code and kept only on this phone.</p>
     <div class="grid gap-3">${f("s_owner", "GitHub username", "")}${f("s_repo", "Repository name", GH_REPO, "text", "e.g. flower-shop")}
     <details class="rounded-xl bg-rose-50 px-3 py-2"><summary class="cursor-pointer text-xs font-semibold text-rose-800">Advanced (usually leave as is)</summary><div class="mt-2 grid grid-cols-2 gap-3">${f("s_branch", "Branch", "main")}${f("s_path", "Settings file", "settings.json")}</div></details>
-    ${f("s_token", "GitHub token", "", "password", "github_pat_…")}${f("s_code", "Choose a secret code (6+ characters)", "", "password")}${f("s_code2", "Repeat the secret code", "", "password")}</div>
+    ${f("s_token", "GitHub token", "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", "password", "github_pat_…")}${f("s_code", "Choose a secret code (6+ characters)", "", "password")}${f("s_code2", "Repeat the secret code", "", "password")}</div>
     <details class="mt-3 rounded-xl bg-rose-50 px-3 py-2 text-xs text-rose-800/80"><summary class="cursor-pointer font-semibold">How do I get a token?</summary><ol class="mt-2 list-decimal space-y-1 pl-4"><li>GitHub → your profile → Settings → Developer settings → Personal access tokens → Fine-grained tokens.</li><li>Generate a new token. Under Repository access, choose Only select repositories and pick this one.</li><li>Under Permissions, set Contents to Read and write.</li><li>Copy the token and paste it above.</li></ol></details>
     <p id="admErr" class="mt-3 hidden rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></p>`,
           '<button id="s_go" class="w-full rounded-full bg-rose-800 py-3 font-semibold text-white">Save setup</button>',
@@ -4842,68 +4909,52 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
         };
       }
       function panel(msg) {
-        const keep = adm.querySelector("#admBody")
-            ? adm.querySelector("#admBody").scrollTop
-            : 0,
+        const same = admTabPrev === admTab,
+          keep = same && adm.querySelector("#admBody") ? adm.querySelector("#admBody").scrollTop : 0,
           n =
             settings.out.colors.length +
             settings.out.wraps.length +
             settings.out.dots.length;
-        const sw = (hex) =>
-          `<span class="inline-block h-5 w-5 shrink-0 rounded-full border border-black/10" style="background:${hex}"></span>`;
+        admTabPrev = admTab;
         const row = (kind, name, hex) => {
           const out = settings.out[kind].includes(name),
             soon = settings.soon[kind].includes(name);
-          return `<div class="crow" data-kind="${kind}" data-name="${esc(name)}"><label class="flex cursor-pointer items-center gap-3 rounded-xl border ${out ? "border-rose-200 bg-rose-50" : "border-rose-100 bg-white"} px-3 py-2.5">${sw(hex)}<span class="flex-1 text-sm font-medium ${out ? "text-rose-800/60 line-through" : ""}">${name}</span>
-      <span class="text-xs font-semibold ${out ? "text-rose-700" : "text-emerald-700"}">${out ? "Out of stock" : "In stock"}</span>
-      <input type="checkbox" class="sr-only" data-k="${kind}" data-n="${name}" ${out ? "" : "checked"}><span class="relative h-6 w-11 shrink-0 rounded-full transition ${out ? "bg-rose-300" : "bg-emerald-500"}"><span class="absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${out ? "left-0.5" : "left-[22px]"}"></span></span></label>${popLabel(kind, name, "ml-2 mt-1 text-xs text-rose-800/75")}${out ? `<label class="ml-2 mt-1 flex items-center gap-2 text-xs text-rose-800/75"><input type="checkbox" data-soon data-sk="${kind}" data-sn="${esc(name)}" ${soon ? "checked" : ""} class="h-3.5 w-3.5 accent-rose-500">Show &quot;Back soon&quot; to customers</label>` : ""}</div>`;
+          return `<div class="crow adm2-tile${out ? " out" : ""}" data-kind="${kind}" data-name="${esc(name)}">
+      <label class="adm2-trow"><span class="adm2-dot" style="background:${hex}"></span><span class="adm2-nm"><b>${esc(name)}</b><small>${out ? "Out of stock" : "In stock"}</small></span><input type="checkbox" class="sr-only" data-k="${kind}" data-n="${esc(name)}" ${out ? "" : "checked"} aria-label="${esc(name)} in stock"><span class="adm2-sw" aria-hidden="true"></span></label>
+      <div class="adm2-opts">${popLabel(kind, name, "adm2-opt", "Popular")}${out ? `<label class="adm2-opt flex cursor-pointer items-center gap-2"><input type="checkbox" data-soon data-sk="${kind}" data-sn="${esc(name)}" ${soon ? "checked" : ""} class="h-4 w-4 accent-rose-500">Show &quot;Back soon&quot;</label>` : ""}</div></div>`;
         };
-        const sec = (t, sub, inner) =>
-          `<section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">${t}</h3><p class="mb-2 text-xs text-rose-800/70">${sub}</p><div class="grid gap-2">${inner}</div></section>`;
+        const sec = (t, sub, inner, pre) =>
+          `<section class="adm2-sec"><h3 class="font-display">${t}</h3><p>${sub}</p>${pre || ""}<div class="adm2-grid">${inner}</div></section>`;
         const priceIn = COUNTS.filter((c) => c.price)
-          .map((c) => `<div><label class="text-xs font-semibold text-rose-800" for="pr_${c.id}">${c.label}</label><div class="relative mt-1"><span class="absolute left-3 top-2.5 text-sm text-rose-800/70">₱</span><input id="pr_${c.id}" data-p="${c.id}" type="number" min="1" inputmode="numeric" value="${c.price}" class="${fieldCls} pl-7"></div>${popLabel("counts", c.id)}</div>`)
+          .map((c) => `<div class="adm2-card"><label for="pr_${c.id}">${c.label}</label><div class="relative mt-1"><span class="absolute left-3 top-2.5 text-sm text-rose-800/70">₱</span><input id="pr_${c.id}" data-p="${c.id}" type="number" min="1" inputmode="numeric" value="${c.price}" class="${fieldCls} pl-7"></div>${popLabel("counts", c.id, "adm2-opt mt-2")}</div>`)
           .join("");
+        const panes = {
+          stock:
+            `<div class="adm2-tools"><span>${n ? n + " item" + (n > 1 ? "s" : "") + " switched off" : "Everything is in stock"}</span><button id="a_allin" type="button" class="adm2-btn" style="padding:7px 14px;font-size:13px" ${n ? "" : "disabled"}>Mark everything in stock</button></div>` +
+            sec("Colors", "Switch a color off when it runs out. Tick Popular to show a badge on it.", COLORS.map((c) => row("colors", c[0], c[1])).join(""),
+              '<input id="admSearch" type="search" value="' + esc(admQ) + '" placeholder="Search colors…" class="adm2-search ' + fieldCls + '">') +
+            sec("Wrapping", "Same switch for the wrapping choices.", WRAPS.map((w) => row("wraps", w[0], w[1])).join("")) +
+            sec("Snow dots", "Black or white.", FILLERS.map((f) => row("dots", f[0], f[1])).join("")) +
+            sec("Extras", "Butterflies are free. Tick Popular to show a badge on them.",
+              `<div class="adm2-tile">${popLabel("extras", "butterfly", "adm2-opt", "Butterflies: mark as Popular")}</div>`),
+          prices:
+            `<section class="adm2-sec"><h3 class="font-display">Prices</h3><p>Sizes stay available. Only the price changes. "Other" is always quoted. Tick Popular to show a badge on a size.</p><div class="adm2-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">${priceIn}</div></section>`,
+          top: topSection(),
+          pairs: pairsSection(),
+        };
+        const tabDefs = [["stock", "Stock", n, 1], ["prices", "Prices", 0], ["top", "Top choices", settings.top.length], ["pairs", "Pairs", settings.pairs.length]];
+        const tabsHtml = `<div class="adm2-tabs" role="tablist">${tabDefs.map((t) => `<button type="button" role="tab" aria-selected="${admTab === t[0]}" data-tab="${t[0]}" class="adm2-tab${admTab === t[0] ? " on" : ""}">${t[1]}${t[2] ? `<span class="adm2-n${t[3] ? " warn" : ""}">${t[2]}</span>` : ""}</button>`).join("")}</div>`;
         shell(
-          (n
-            ? n + " item" + (n > 1 ? "s" : "") + " out of stock"
-            : "Everything is in stock") +
-            (settings.updated
-              ? " · Published " + fmtWhen(settings.updated)
-              : ""),
-          `<div class="mb-4"><button id="a_allin" type="button" class="rounded-full border border-rose-200 bg-white px-4 py-2 text-sm font-medium disabled:opacity-40" ${n ? "" : "disabled"}>Mark everything in stock</button></div><section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">Prices</h3><p class="mb-2 text-xs text-rose-800/70">Sizes stay available. Only the price changes. "Other" is always quoted. Tick Popular to show a badge on a size.</p><div class="grid grid-cols-2 gap-3">${priceIn}</div></section>` +
-            topSection() +
-            pairsSection() +
-            sec(
-              "Colors",
-              "Switch a color off when it runs out, or tick Popular to show a badge on it.",
-              '<input id="admSearch" type="search" value="' +
-                esc(admQ) +
-                '" placeholder="Search colors…" class="' +
-                fieldCls +
-                '">' +
-                COLORS.map((c) => row("colors", c[0], c[1])).join(""),
-            ) +
-            sec(
-              "Wrapping",
-              "Same switch for the wrapping choices.",
-              WRAPS.map((w) => row("wraps", w[0], w[1])).join(""),
-            ) +
-            sec(
-              "Snow dots",
-              "Black or white.",
-              FILLERS.map((f) => row("dots", f[0], f[1])).join(""),
-            ) +
-            sec(
-              "Extras",
-              "Butterflies are free. Tick Popular to show a badge on them.",
-              popLabel("extras", "butterfly", "rounded-xl border border-rose-100 px-3 py-2.5 text-sm", "Butterflies: mark as Popular"),
-            ),
-          `<p id="admMsg" class="mb-2 text-sm ${msg && msg.err ? "text-red-700" : "text-emerald-700"} ${msg ? "" : "hidden"}" role="status">${msg ? msg.t : ""}</p>
-     <div class="flex items-center gap-2"><span id="admDirty" class="flex-1 text-xs ${dirty() ? "font-semibold text-amber-700" : "text-rose-800/75"}">${dirty() ? "● Unpublished changes" : "All changes published"}</span>
-     <button id="a_prev" class="rounded-full border border-rose-200 px-4 py-2.5 text-sm font-medium">Preview</button>
-     <button id="a_out" class="rounded-full border border-rose-200 px-4 py-2.5 text-sm font-medium">Log out</button>
-     <button id="a_pub" class="rounded-full bg-rose-800 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-40" ${dirty() ? "" : "disabled"}>Publish</button></div>`,
+          (n ? n + " out of stock" : "Everything in stock") + (settings.updated ? " · Published " + fmtWhen(settings.updated) : ""),
+          panes[admTab] || panes.stock,
+          `<p id="admMsg" class="adm2-msg${msg && msg.err ? " err" : ""}${msg ? "" : " hidden"}" role="status">${msg ? msg.t : ""}</p>
+     <div class="adm2-fr"><span id="admDirty" class="adm2-st${dirty() ? " dirty" : ""}">${dirty() ? "Unpublished changes" : "All changes published"}</span>
+     <button id="a_prev" class="adm2-btn">Preview</button>
+     <button id="a_pub" class="adm2-pri" ${dirty() ? "" : "disabled"}>Publish</button></div>`,
+          tabsHtml,
+          '<button id="a_out" class="adm2-lo">Log out</button>',
         );
+        adm.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { admTab = b.dataset.tab; panel(); }));
         $("admBody").scrollTop = keep;
         adm.querySelectorAll("input[data-k]").forEach(
           (i) =>
@@ -5213,14 +5264,10 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
       }
       const fmtWhen = (iso) => {
         const d = new Date(iso);
-        return isNaN(d)
-          ? ""
-          : d.toLocaleString("en-PH", {
-              month: "short",
-              day: "numeric",
-              hour: "numeric",
-              minute: "2-digit",
-            });
+        if (isNaN(d)) return "";
+        const day = d.toLocaleDateString("en-US", { month: "long", day: "numeric" }),
+          time = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+        return day + " \u00b7 " + time;
       };
       let admQ = "";
       function filterColors() {
@@ -5251,43 +5298,114 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
         document.body.appendChild(b);
       }
       
+      // ---- shared look for the story image and the order slip ----
+      // soft spotlight + ground shadow + lifted bouquet, so the flowers stand out
+      function stageGlow(x, cx, cy, r, dk) {
+        const g = x.createRadialGradient(cx, cy, 10, cx, cy, r);
+        g.addColorStop(0, "rgba(255,255,255," + (dk ? 0.14 : 0.6) + ")");
+        g.addColorStop(0.55, "rgba(255,255,255," + (dk ? 0.05 : 0.22) + ")");
+        g.addColorStop(1, "rgba(255,255,255,0)");
+        x.fillStyle = g; x.fillRect(cx - r, cy - r, r * 2, r * 2);
+      }
+      function stageShadow(x, cx, gy, rx) {
+        x.save(); x.translate(cx, gy); x.scale(1, 0.14);
+        const g = x.createRadialGradient(0, 0, 0, 0, 0, rx);
+        g.addColorStop(0, "rgba(60,10,30,.42)"); g.addColorStop(1, "rgba(60,10,30,0)");
+        x.fillStyle = g; x.beginPath(); x.arc(0, 0, rx, 0, 6.2832); x.fill(); x.restore();
+      }
+      function drawLifted(x, img, px, py, s) {
+        x.save(); x.shadowColor = "rgba(50,8,26,.3)"; x.shadowBlur = 50; x.shadowOffsetY = 30;
+        x.drawImage(img, px, py, s, s); x.restore();
+      }
+      // centered label-over-value grid; long values (colors, date, address) get a full-width row
+      function specLayout(x, cells, o) {
+        const SANS = '"DM Sans", system-ui, sans-serif', r = o.fs * 0.38, sp = o.fs * 0.55;
+        x.font = "700 " + o.fs + "px " + SANS;
+        cells.forEach((c) => {
+          const maxW = c.full ? o.w - 48 : o.w / 2 - 36, sw = c.sw || [], swb = sw.length ? r * 2 + (sw.length - 1) * sp + 14 : 0, t = String(c.t);
+          if (swb && x.measureText(t).width + swb <= maxW) { c.lines = [t]; c.swb = swb; }
+          else {
+            c.swb = 0;
+            const lines = []; let cur = "";
+            t.split(" ").forEach((w) => { const tt = cur ? cur + " " + w : w; if (x.measureText(tt).width > maxW && cur) { lines.push(cur); cur = w; } else cur = tt; });
+            lines.push(cur);
+            c.lines = (lines.length > 3 ? [lines[0], lines[1], lines.slice(2).join(" ")] : lines).map((l) => fit(x, l, maxW));
+          }
+          c.tw = Math.max(...c.lines.map((l) => x.measureText(l).width));
+        });
+        const rows = []; let pend = null;
+        cells.forEach((c) => {
+          if (c.full) { if (pend) { rows.push([pend]); pend = null; } rows.push([c]); }
+          else if (pend) { rows.push([pend, c]); pend = null; }
+          else pend = c;
+        });
+        if (pend) rows.push([pend]);
+        rows.forEach((rw) => { rw.h = o.pad * 2 + o.ls + o.gap + o.fs * 1.2 * Math.max(...rw.map((c) => c.lines.length)); });
+        return { rows, r, sp, h: rows.reduce((s, rw) => s + rw.h, 0) };
+      }
+      function specDraw(x, L, o, y) {
+        const SANS = '"DM Sans", system-ui, sans-serif', C = o.colors;
+        L.rows.forEach((rw) => {
+          x.fillStyle = C.hair; x.fillRect(o.x0, y, o.w, 2);
+          if (rw.length === 2) x.fillRect(o.x0 + o.w / 2 - 1, y + o.pad, 2, rw.h - o.pad * 2);
+          rw.forEach((c, i) => {
+            const cx = rw.length === 2 ? o.x0 + o.w * (i ? 0.75 : 0.25) : o.x0 + o.w / 2, by = y + o.pad + o.ls + o.gap + o.fs * 0.9;
+            x.textAlign = "center"; x.fillStyle = C.mute; x.font = "500 " + o.ls + "px " + SANS;
+            x.fillText(c.k, cx, y + o.pad + o.ls * 0.85);
+            x.font = "700 " + o.fs + "px " + SANS;
+            c.lines.forEach((l, j) => {
+              if (j === 0 && c.swb) {
+                const sx = cx - (c.swb + c.tw) / 2;
+                c.sw.forEach((hx, k) => { x.beginPath(); x.arc(sx + L.r + k * L.sp, by - o.fs * 0.3, L.r, 0, 6.2832); x.fillStyle = hx; x.fill(); x.lineWidth = 2; x.strokeStyle = "rgba(0,0,0,.18)"; x.stroke(); });
+                x.textAlign = "left"; x.fillStyle = C.body; x.fillText(l, sx + c.swb, by); x.textAlign = "center";
+              } else { x.fillStyle = C.body; x.fillText(l, cx, by + j * o.fs * 1.2); }
+            });
+          });
+          y += rw.h;
+        });
+        if (o.endLine) { x.fillStyle = C.hair; x.fillRect(o.x0, y, o.w, 2); }
+        return y;
+      }
+      const bfText = (n) => (typeof n === "number" ? n + (n > 1 ? " butterflies" : " butterfly") : String(n));
       async function buildImage() {
-        try {
-          await document.fonts.ready;
-        } catch (_) {}
-        const rows = orderRows(),
-          d = data(),
-          W = 900,
-          cardY = 1125,
-          cardH = rows.length * 50 + 170,
-          H = cardY + cardH + 290;
+        try { await document.fonts.ready; } catch (_) {}
+        try { await Promise.all(['700 40px Fraunces', '500 28px "DM Sans"', '700 34px "DM Sans"'].map((f) => document.fonts.load(f))); } catch (_) {}
+        const rows = orderRows(), d = data(), W = 900, SANS = '"DM Sans", system-ui, sans-serif', SERIF = "Fraunces, Georgia, serif";
+        const th = themeNow(), tc = tintColor(), dk = isDarkBg(th), rd = remindDate();
+        const ink = dk ? "#fff5f8" : "#5e1631", body = dk ? "#ffffff" : "#3a1424",
+          mute = dk ? "rgba(255,255,255,.62)" : "rgba(94,22,49,.58)", acc = dk ? "#ffc9d9" : "#b92f64",
+          glass = dk ? "rgba(255,255,255,.12)" : "rgba(255,255,255,.72)", edge = dk ? "rgba(255,255,255,.26)" : "rgba(255,255,255,.95)",
+          hair = dk ? "rgba(255,255,255,.14)" : "rgba(94,22,49,.1)";
         const cv = document.createElement("canvas");
-        cv.width = W;
-        cv.height = H;
-        const x = cv.getContext("2d");
-        const sp = (v) => {
-          try {
-            x.letterSpacing = v;
-          } catch (_) {}
-        };
+        cv.width = W; cv.height = 10;
+        let x = cv.getContext("2d");
+        // measure the details first so the slip is exactly as tall as it needs to be
+        const hexOf = { Colors: () => st.colors.map((i) => COLORS[i][1]), Wrapping: () => (st.tw ? [WRAPS[st.wrap][1]] : []), "Snow dots": () => (st.td ? [FILLERS[st.filler][1]] : []) };
+        const cells = rows.map(([k, v]) => ({ k, t: k === "Butterflies" ? bfText(v) : v, sw: hexOf[k] ? hexOf[k]() : [], full: k === "Colors" || k === "When" || k === "Card message" || k === d.ful })),
+          o = { x0: 90, w: 720, fs: 29, ls: 21, pad: 18, gap: 10, endLine: true, colors: { mute, body, hair } },
+          L = specLayout(x, cells, o);
+        const cardY = 1150, cardH = 112 + L.h + 170,
+          fy = cardY + cardH + 74, H = fy + (rd ? 130 : 84) + 58 + 64;
+        cv.width = W; cv.height = H;
+        x = cv.getContext("2d");
         const g = x.createLinearGradient(0, 0, 0, H);
-        g.addColorStop(0, "#ffe4ec");
-        g.addColorStop(1, "#ffc9d9");
-        x.fillStyle = g;
-        x.fillRect(0, 0, W, H);
+        g.addColorStop(0, th[0]); g.addColorStop(1, th[1]);
+        x.fillStyle = g; x.fillRect(0, 0, W, H);
+        [[450, 700, 640, 0.3], [800, H - 320, 520, 0.16], [60, 160, 440, 0.14]].forEach(([cx, cy, r, a]) => {
+          const au = x.createRadialGradient(cx, cy, 20, cx, cy, r);
+          au.addColorStop(0, hexA(tc, a)); au.addColorStop(1, hexA(tc, 0));
+          x.fillStyle = au; x.fillRect(0, 0, W, H);
+        });
         if (!st.frame || st.frame === "lace") {
-        x.fillStyle = "rgba(255,255,255,.7)";
-        for (let p = 20; p < W - 10; p += 26) [14, H - 14].forEach((yy) => { x.beginPath(); x.arc(p, yy, 7, 0, 6.2832); x.fill(); });
-        for (let p = 20; p < H - 10; p += 26) [14, W - 14].forEach((xx) => { x.beginPath(); x.arc(xx, p, 7, 0, 6.2832); x.fill(); });
-        x.strokeStyle = "rgba(214,69,123,.3)";
-        x.lineWidth = 2;
-        x.setLineDash([2, 8]);
-        rrect(x, 34, 34, W - 68, H - 68, 28);
-        x.stroke();
-        x.setLineDash([]);
-        [78, W - 78].forEach((mx) => [[0, 72, 17], [-17, 90, 14], [17, 90, 14]].forEach(([dx, my, rr]) => {
-          [[rr, tintColor()], [rr * 0.62, "rgba(255,255,255,.4)"], [rr * 0.28, "rgba(94,22,49,.25)"]].forEach(([q, c]) => { x.fillStyle = c; x.beginPath(); x.arc(mx + dx, my, q, 0, 6.2832); x.fill(); });
-        }));
+          x.fillStyle = "rgba(255,255,255,.7)";
+          for (let p = 20; p < W - 10; p += 26) [14, H - 14].forEach((yy) => { x.beginPath(); x.arc(p, yy, 7, 0, 6.2832); x.fill(); });
+          for (let p = 20; p < H - 10; p += 26) [14, W - 14].forEach((xx) => { x.beginPath(); x.arc(xx, p, 7, 0, 6.2832); x.fill(); });
+          x.strokeStyle = "rgba(255,255,255,.5)";
+          x.lineWidth = 2;
+          x.setLineDash([2, 8]);
+          rrect(x, 34, 34, W - 68, H - 68, 28);
+          x.stroke();
+          x.setLineDash([]);
         } else if (st.frame === "polaroid") {
           x.fillStyle = "#fff";
           x.fillRect(0, 0, W, 30); x.fillRect(0, H - 30, W, 30); x.fillRect(0, 0, 30, H); x.fillRect(W - 30, 0, 30, H);
@@ -5300,135 +5418,53 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
           for (let p = 30, k = 0; p < W - 20; p += 52, k++) { fr(p, 24, 14, fc[k % 3]); fr(p, H - 24, 14, fc[(k + 1) % 3]); }
           for (let p = 76, k = 0; p < H - 60; p += 52, k++) { fr(24, p, 14, fc[k % 3]); fr(W - 24, p, 14, fc[(k + 1) % 3]); }
         }
-        x.textAlign = "center";
-        x.fillStyle = "#5e1631";
-        x.font = "700 50px Fraunces, Georgia, serif";
-        x.fillText(SHOP_NAME, W / 2, 82);
-        x.fillStyle = "#b92f64";
-        x.font = '700 22px "DM Sans", system-ui, sans-serif';
-        sp("6px");
-        x.fillText("ORDER SLIP", W / 2, 124);
-        sp("0px");
-        x.fillStyle = "#fff";
-        rrect(x, 230, 150, 440, 92, 46);
-        x.fill();
-        x.strokeStyle = "#f3b5c9";
-        x.lineWidth = 3;
-        x.setLineDash([10, 8]);
-        rrect(x, 230, 150, 440, 92, 46);
-        x.stroke();
-        x.setLineDash([]);
-        x.fillStyle = "#8a4a62";
-        x.font = '700 17px "DM Sans", system-ui, sans-serif';
-        sp("3px");
-        x.fillText("ORDER DATE", W / 2, 182);
-        sp("0px");
-        x.fillStyle = "#5e1631";
-        x.font = '700 36px "DM Sans", system-ui, sans-serif';
-        x.fillText(new Date().toLocaleDateString("en-PH", { month: "long", day: "numeric", year: "numeric" }), W / 2, 224);
-        x.fillStyle = "#8a4a62";
-        x.font = '400 22px "DM Sans", system-ui, sans-serif';
-        
-        const th = themeNow(), tc = tintColor(), PX = 50, PY = 305, PW = 800, PH = 800, cx = PX + PW / 2, cy = PY + PH * 0.44;
-        x.save();
-        rrect(x, PX, PY, PW, PH, 52);
-        x.clip();
-        const bg = x.createLinearGradient(0, PY, 0, PY + PH);
-        bg.addColorStop(0, th[0]);
-        bg.addColorStop(1, th[1]);
-        x.fillStyle = bg;
-        x.fillRect(PX, PY, PW, PH);
-        const au = x.createRadialGradient(cx, cy, 10, cx, cy, PW * 0.55);
-        au.addColorStop(0, hexA(tc, isDarkBg(th) ? 0.4 : 0.26));
-        au.addColorStop(0.6, hexA(tc, 0.09));
-        au.addColorStop(1, hexA(tc, 0));
-        x.fillStyle = au;
-        x.fillRect(PX, PY, PW, PH);
-        const gl = x.createLinearGradient(PX, PY, PX + 300, PY + 300);
-        gl.addColorStop(0, "rgba(255,255,255,.4)");
-        gl.addColorStop(1, "rgba(255,255,255,0)");
-        x.fillStyle = gl;
-        x.fillRect(PX, PY, PW, PH);
-        const flr = PY + PH * 0.92;
-        x.fillStyle = "rgba(94,22,49,.08)";
-        x.fillRect(PX, flr, PW, PH * 0.08);
-        x.strokeStyle = "rgba(255,255,255,.8)";
-        x.lineWidth = 2;
-        x.beginPath();
-        x.moveTo(PX, flr);
-        x.lineTo(PX + PW, flr);
-        x.stroke();
-        x.restore();
-        try {
-          x.drawImage(await sceneImage(), PX, PY, PW, PW);
-        } catch (e) {
-          console.error("preview image failed", e);
-        }
-        x.fillStyle = "#fff";
-        rrect(x, 50, cardY, 800, cardH, 36);
-        x.fill();
-        let y = cardY + 62;
-        rows.forEach(([k, v]) => {
-          x.textAlign = "left";
-          x.fillStyle = "#8a4a62";
-          x.font = '400 25px "DM Sans", system-ui, sans-serif';
-          x.fillText(k, 90, y);
-          x.textAlign = "right";
-          x.fillStyle = "#3a1424";
-          x.font = '700 25px "DM Sans", system-ui, sans-serif';
-          x.fillText(fit(x, v, 480), 810, y);
-          x.strokeStyle = "#ffe4ec";
-          x.lineWidth = 2;
+        // quiet sparkles
+        x.fillStyle = "rgba(255,255,255,.75)";
+        [[84, 400, 18], [826, 470, 24], [70, 800, 12], [836, 900, 14]].forEach(([cx, cy, r]) => {
           x.beginPath();
-          x.moveTo(90, y + 18);
-          x.lineTo(810, y + 18);
-          x.stroke();
-          y += 50;
+          for (let i = 0; i < 8; i++) { const a = (i * Math.PI) / 4 - Math.PI / 2, rr = i % 2 ? r * 0.28 : r; x.lineTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr); }
+          x.closePath(); x.fill();
         });
-        x.textAlign = "left";
-        x.fillStyle = "#8a4a62";
-        x.font = '500 28px "DM Sans", system-ui, sans-serif';
-        x.fillText("Total", 90, y + 50);
-        x.textAlign = "right";
-        x.fillStyle = "#b92f64";
-        x.font = "700 58px Fraunces, Georgia, serif";
-        x.fillText(
-          st.count.price ? peso(st.count.price) : "To be quoted",
-          810,
-          y + 56,
-        );
-        const fy = cardY + cardH + 56;
-        x.strokeStyle = "#e8a9bf";
-        x.lineWidth = 2;
-        x.setLineDash([8, 8]);
-        x.beginPath();
-        x.moveTo(90, fy - 18);
-        x.lineTo(810, fy - 18);
-        x.stroke();
-        x.setLineDash([]);
+        // header
         x.textAlign = "center";
-        x.fillStyle = "#5e1631";
-        x.font = "700 29px Fraunces, Georgia, serif";
-        x.fillText("Thank you for choosing " + SHOP_NAME + "!", W / 2, fy + 28);
-        x.fillStyle = "#b92f64";
-        x.font = '700 26px "DM Sans", system-ui, sans-serif';
-        x.fillText(FUL[d.ful].tail, W / 2, fy + 76);
-        if (remindDate()) {
-          x.fillStyle = "#8a4a62";
-          x.font = '400 22px "DM Sans", system-ui, sans-serif';
-          x.fillText(
-            "Please chat us a reminder on " + remindDate() + ".",
-            W / 2,
-            fy + 118,
-          );
-        }
-        x.fillStyle = "#b92f64";
-        x.font = '700 23px "DM Sans", system-ui, sans-serif';
-        x.fillText(SHOP_URL.replace(/^https?:\/\//, ""), W / 2, fy + (remindDate() ? 166 : 124));
+        x.fillStyle = ink; x.font = "700 58px " + SERIF;
+        x.fillText(fit(x, SHOP_NAME, 800), W / 2, 100);
+        x.font = "700 26px " + SANS;
+        const pw = x.measureText("Order slip").width + 64;
+        x.fillStyle = glass; rrect(x, (W - pw) / 2, 134, pw, 54, 27); x.fill();
+        x.lineWidth = 2; x.strokeStyle = edge; x.stroke();
+        x.fillStyle = acc; x.fillText("Order slip", W / 2, 171);
+        x.fillStyle = mute; x.font = "500 26px " + SANS;
+        x.fillText("Placed on " + new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }), W / 2, 238);
+        // spotlight and soft shadow so the bouquet stands out
+        stageGlow(x, 450, 700, 440, dk); stageShadow(x, 450, 1092, 300);
+        try { drawLifted(x, await sceneImage(), 50, 300, 800); } catch (e) { console.error("preview image failed", e); }
+        // details card
+        x.shadowColor = "rgba(94,22,49,.2)"; x.shadowBlur = 60; x.shadowOffsetY = 24;
+        x.fillStyle = glass; rrect(x, 50, cardY, 800, cardH, 48); x.fill();
+        x.shadowColor = "transparent"; x.shadowBlur = 0; x.shadowOffsetY = 0;
+        x.lineWidth = 2; x.strokeStyle = edge; x.stroke();
+        x.textAlign = "center"; x.fillStyle = ink; x.font = "700 44px " + SERIF;
+        x.fillText("Your order", W / 2, cardY + 78);
+        const ey = specDraw(x, L, o, cardY + 112);
+        x.textAlign = "center"; x.fillStyle = mute; x.font = "500 24px " + SANS;
+        x.fillText("Total", W / 2, ey + 52);
+        x.fillStyle = acc; x.font = "700 72px " + SERIF;
+        x.fillText(st.count.price ? peso(st.count.price) : "To be quoted", W / 2, ey + 128);
+        // thank-you
+        x.textAlign = "center"; x.fillStyle = ink; x.font = "700 32px " + SERIF;
+        x.fillText(fit(x, "Thank you for choosing " + SHOP_NAME + "!", 800), W / 2, fy);
+        x.fillStyle = acc; x.font = "700 27px " + SANS;
+        x.fillText(FUL[d.ful].tail, W / 2, fy + 50);
+        if (rd) { x.fillStyle = mute; x.font = "500 23px " + SANS; x.fillText("Please chat us a reminder on " + rd + ".", W / 2, fy + 96); }
+        const url = SHOP_URL.replace(/^https?:\/\//, "");
+        x.font = "700 24px " + SANS;
+        const uw = x.measureText(url).width + 64, uy = fy + (rd ? 130 : 84);
+        x.fillStyle = glass; rrect(x, (W - uw) / 2, uy, uw, 58, 29); x.fill();
+        x.lineWidth = 2; x.strokeStyle = edge; x.stroke();
+        x.fillStyle = acc; x.fillText(url, W / 2, uy + 38);
         const blob = await new Promise((r) => cv.toBlob(r, "image/png"));
-        orderFile = new File([blob], "aisha-bouquet.png", {
-          type: "image/png",
-        });
+        orderFile = new File([blob], "aisha-bouquet.png", { type: "image/png" });
         $("doneImg").src = cv.toDataURL("image/png");
         $("doneImg").classList.remove("hidden");
       }
@@ -5638,7 +5674,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
       function openSheet() {
         if ($("sheet")) return;
         const d = data(),
-          rows = [["Flowers", d.count, 1], ["Colors", d.colors, 2], ["Wrapping", d.wrap, 3], ["Ribbon", d.ribbon, 3], ["Snow dots", d.filler, 3], ["Butterflies", d.bf || "None", 3], ["Occasion", d.occasion, 4], ["When", [d.date, d.time].filter(Boolean).join(" · ") || "—", 4], [d.ful, locText(d), 4]],
+          rows = [["Flowers", d.count, 1], ["Colors", d.colors, 2], ["Wrapping", d.wrap, 3], ["Ribbon", d.ribbon, 3], ["Snow dots", d.filler, 3], ["Butterflies", d.bf || "None", 3], ["Occasion", d.occasion, 4], ["When", [prettyDate(d.date), d.time].filter(Boolean).join(" · ") || "—", 4], [d.ful, locText(d), 4]],
           o = document.createElement("div");
         o.id = "sheet";
         o.innerHTML = `<div class="shb"></div><div class="shc" role="dialog" aria-modal="true" aria-label="Order summary"><div class="shh"><b>Your order</b><button type="button" id="shx" aria-label="Close">✕</button></div>${rows.map(([k, v, n]) => `<div class="shr"><span>${esc(k)}</span><b>${esc(v)}</b><a href="#" data-sh="${n}">Change</a></div>`).join("")}<div class="sht"><span>Total</span><b>${esc(d.price)}</b></div><button type="button" id="shs">Send this design on Messenger</button></div>`;
@@ -5988,41 +6024,74 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
       // ---- story-size image (9:16)
       async function buildStory() {
         try { await document.fonts.ready; } catch (_) {}
+        try { await Promise.all(['700 40px Fraunces', '500 28px "DM Sans"', '700 34px "DM Sans"'].map((f) => document.fonts.load(f))); } catch (_) {}
         const W = 1080, H = 1920, cv = document.createElement("canvas");
         cv.width = W; cv.height = H;
         const x = cv.getContext("2d"), th = themeNow(), tc = tintColor(), dk = isDarkBg(th);
+        const ink = dk ? "#fff5f8" : "#5e1631", body = dk ? "#ffffff" : "#3a1424",
+          mute = dk ? "rgba(255,255,255,.62)" : "rgba(94,22,49,.58)", acc = dk ? "#ffc9d9" : "#b92f64",
+          cta = dk ? "#d6457b" : "#5e1631", glass = dk ? "rgba(255,255,255,.12)" : "rgba(255,255,255,.7)",
+          edge = dk ? "rgba(255,255,255,.26)" : "rgba(255,255,255,.95)", hair = dk ? "rgba(255,255,255,.14)" : "rgba(94,22,49,.1)";
+        const SANS = '"DM Sans", system-ui, sans-serif', SERIF = "Fraunces, Georgia, serif";
         const g = x.createLinearGradient(0, 0, 0, H);
         g.addColorStop(0, th[0]); g.addColorStop(1, th[1]);
         x.fillStyle = g; x.fillRect(0, 0, W, H);
-        const au = x.createRadialGradient(540, 860, 40, 540, 860, 760);
-        au.addColorStop(0, hexA(tc, 0.28)); au.addColorStop(1, hexA(tc, 0));
-        x.fillStyle = au; x.fillRect(0, 0, W, H);
+        [[540, 720, 720, 0.3], [930, 1560, 620, 0.16], [100, 200, 520, 0.14]].forEach(([cx, cy, r, a]) => {
+          const au = x.createRadialGradient(cx, cy, 20, cx, cy, r);
+          au.addColorStop(0, hexA(tc, a)); au.addColorStop(1, hexA(tc, 0));
+          x.fillStyle = au; x.fillRect(0, 0, W, H);
+        });
+        // a few quiet sparkles
+        x.fillStyle = "rgba(255,255,255,.75)";
+        [[110, 470, 20], [980, 560, 28], [84, 900, 14], [1000, 980, 16], [150, 1090, 12]].forEach(([cx, cy, r]) => {
+          x.beginPath();
+          for (let i = 0; i < 8; i++) { const a = (i * Math.PI) / 4 - Math.PI / 2, rr = i % 2 ? r * 0.28 : r; x.lineTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr); }
+          x.closePath(); x.fill();
+        });
+        // header
         x.textAlign = "center";
-        x.fillStyle = dk ? "#fff5f8" : "#5e1631";
-        x.font = "700 76px Fraunces, Georgia, serif";
-        x.fillText(fit(x, SHOP_NAME, 980), W / 2, 210);
-        x.fillStyle = dk ? "#ffc9d9" : "#b92f64";
-        x.font = '700 30px "DM Sans", system-ui, sans-serif';
-        try { x.letterSpacing = "8px"; } catch (_) {}
-        x.fillText("MY CUSTOM BOUQUET", W / 2, 282);
-        try { x.letterSpacing = "0px"; } catch (_) {}
-        try { x.drawImage(await sceneImage(true), 60, 380, 960, 960); } catch (e) { console.error(e); }
-        const d = data(),
-          lines = [d.count, d.colors, d.wrap !== "Not selected" ? d.wrap + " wrap" : null, d.filler !== "Not selected" ? d.filler + " snow dots" : null].filter((l) => l && l !== "Not selected");
-        x.fillStyle = dk ? "#ffffff" : "#3a1424";
-        x.font = '700 46px "DM Sans", system-ui, sans-serif';
-        lines.forEach((l, i) => x.fillText(fit(x, l, 940), W / 2, 1470 + i * 66));
-        x.fillStyle = dk ? "#d6457b" : "#5e1631";
-        rrect(x, 190, 1730, 700, 110, 55);
-        x.fill();
+        x.fillStyle = ink;
+        x.font = "700 74px " + SERIF;
+        x.fillText(fit(x, SHOP_NAME, 940), W / 2, 205);
+        x.font = "700 28px " + SANS;
+        const ptxt = "Handmade custom bouquet", pw = x.measureText(ptxt).width + 68;
+        x.fillStyle = glass; rrect(x, (W - pw) / 2, 242, pw, 62, 31); x.fill();
+        x.lineWidth = 2; x.strokeStyle = edge; x.stroke();
+        x.fillStyle = acc; x.fillText(ptxt, W / 2, 282);
+        // spotlight and soft shadow so the bouquet stands out
+        stageGlow(x, 540, 730, 470, dk); stageShadow(x, 540, 1130, 330);
+        try { drawLifted(x, await sceneImage(true), 120, 320, 840); } catch (e) { console.error(e); }
+        // details card
+        const d = data(), names = st.colors.map((i) => COLORS[i]), cells = [];
+        if (names.length) cells.push({ k: "Colors", t: names.map((c) => c[0]).join(" + "), sw: names.map((c) => c[1]), full: true });
+        cells.push({ k: "Flowers", t: d.count });
+        if (st.tw) cells.push({ k: "Wrapping", t: WRAPS[st.wrap][0], sw: [WRAPS[st.wrap][1]] });
+        if (st.td) cells.push({ k: "Snow dots", t: FILLERS[st.filler][0], sw: [FILLERS[st.filler][1]] });
+        if (d.bf) cells.push({ k: "Butterflies", t: bfText(d.bf) });
+        const o = { x0: 120, w: 840, fs: 34, ls: 24, pad: 22, gap: 14, colors: { mute, body, hair } }, L = specLayout(x, cells, o);
+        const ch = 120 + L.h + 28, cy0 = Math.max(1150, 1650 - ch);
+        x.shadowColor = "rgba(94,22,49,.2)"; x.shadowBlur = 60; x.shadowOffsetY = 24;
+        x.fillStyle = glass; rrect(x, 70, cy0, 940, ch, 56); x.fill();
+        x.shadowColor = "transparent"; x.shadowBlur = 0; x.shadowOffsetY = 0;
+        x.lineWidth = 2; x.strokeStyle = edge; x.stroke();
+        x.textAlign = "center"; x.fillStyle = ink; x.font = "700 48px " + SERIF;
+        x.fillText("My bouquet", W / 2, cy0 + 82);
+        specDraw(x, L, o, cy0 + 120);
+        // call to action
+        x.shadowColor = "rgba(94,22,49,.3)"; x.shadowBlur = 36; x.shadowOffsetY = 14;
+        x.fillStyle = cta; rrect(x, 140, 1710, 800, 104, 52); x.fill();
+        x.shadowColor = "transparent"; x.shadowBlur = 0; x.shadowOffsetY = 0;
+        x.font = "700 40px " + SANS;
+        const ctxt = "Order on Messenger", tw = x.measureText(ctxt).width, sx = W / 2 - (68 + tw) / 2, my = 1762;
         x.fillStyle = "#fff";
-        x.font = '700 40px "DM Sans", system-ui, sans-serif';
-        x.fillText("Order yours on Messenger", W / 2, 1798);
-        x.fillStyle = dk ? "#ffd9e6" : "#5e1631";
-        x.font = '700 32px "DM Sans", system-ui, sans-serif';
-        try { x.letterSpacing = "1px"; } catch (_) {}
-        x.fillText(SHOP_URL.replace(/^https?:\/\//, ""), W / 2, 1892);
-        try { x.letterSpacing = "0px"; } catch (_) {}
+        x.beginPath(); x.arc(sx + 24, my, 24, 0, Math.PI * 2); x.fill();
+        x.beginPath(); x.moveTo(sx + 8, my + 18); x.lineTo(sx - 2, my + 34); x.lineTo(sx + 22, my + 25); x.closePath(); x.fill();
+        x.fillStyle = cta;
+        x.beginPath(); [[-4, -13], [-14, 3], [-3, 3], [-6, 14], [14, -3], [3, -3], [7, -13]].forEach(([a, b], i) => (i ? x.lineTo(sx + 24 + a, my + b) : x.moveTo(sx + 24 + a, my + b))); x.closePath(); x.fill();
+        x.textAlign = "left"; x.fillStyle = "#fff"; x.fillText(ctxt, sx + 68, my + 14);
+        x.textAlign = "center"; x.fillStyle = dk ? "rgba(255,255,255,.8)" : "rgba(94,22,49,.75)";
+        x.font = "500 30px " + SANS;
+        x.fillText(SHOP_URL.replace(/^https?:\/\//, ""), W / 2, 1874);
         const blob = await new Promise((r) => cv.toBlob(r, "image/png"));
         return new File([blob], "aisha-bouquet-story.png", { type: "image/png" });
       }
