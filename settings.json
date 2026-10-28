@@ -83,40 +83,14 @@
     "dots": [],
     "extras": [],
     "top": [
-      "d2",
       "d3",
+      "d2",
       "d1"
     ]
   },
   "top": [
-      {
+    {
       "id": "d2",
-      "name": "Wine Red Romance",
-      "badge": "",
-      "colors": [
-        "Wine Red"
-      ],
-      "wrap": "Black sparkle",
-      "dots": "White",
-      "bf": true,
-      "size": "7",
-      "bd": ""
-    },
-    {
-      "id": "d4",
-      "name": "Royal Blue Classic",
-      "badge": "",
-      "colors": [
-        "Royal Blue"
-      ],
-      "wrap": "Black sparkle",
-      "dots": "White",
-      "bf": true,
-      "size": "3",
-      "bd": "Night"
-    }
-    {
-      "id": "d3",
       "name": "Lavender Dream",
       "badge": "",
       "colors": [
@@ -142,5 +116,31 @@
       "size": "7",
       "bd": "Lilac"
     },
+    {
+      "id": "d3",
+      "name": "Wine Red Romance",
+      "badge": "",
+      "colors": [
+        "Wine Red"
+      ],
+      "wrap": "Black sparkle",
+      "dots": "White",
+      "bf": true,
+      "size": "7",
+      "bd": ""
+    },
+    {
+      "id": "d4",
+      "name": "Royal Blue Classic",
+      "badge": "",
+      "colors": [
+        "Royal Blue"
+      ],
+      "wrap": "Black sparkle",
+      "dots": "White",
+      "bf": true,
+      "size": "3",
+      "bd": "Night"
+    }
   ]
 }
