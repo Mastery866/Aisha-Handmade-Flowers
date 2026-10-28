@@ -83,14 +83,14 @@
     "dots": [],
     "extras": [],
     "top": [
-      "d3",
       "d2",
+      "d3",
       "d1"
     ]
   },
   "top": [
     {
-      "id": "d2",
+      "id": "d3",
       "name": "Lavender Dream",
       "badge": "",
       "colors": [
@@ -117,7 +117,7 @@
       "bd": "Lilac"
     },
     {
-      "id": "d3",
+      "id": "d2",
       "name": "Wine Red Romance",
       "badge": "",
       "colors": [
