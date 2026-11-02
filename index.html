@@ -2817,7 +2817,7 @@ input:focus-visible+.adm2-sw{outline:2px solid #d6457b;outline-offset:2px}
             >
               We will confirm the pick-up spot with you on Messenger.
             </p>
-            <div class="sm:col-span-2">
+            <div id="msgBox" class="sm:col-span-2">
               <div class="flex justify-between">
                 <label class="text-sm font-medium" for="msg"
                   >Card message
@@ -3009,6 +3009,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
       }
       const st = { count: COUNTS[0], colors: [], wrap: 0 };
       const $ = (id) => document.getElementById(id);
+      let CARD_MSG = true; // owner switch: Shop settings > Order form > Card message
       const peso = (n) => "₱" + n.toLocaleString("en-PH");
       // "14:30" -> "2:30 PM"
       const to12h = (t) => {
@@ -3541,7 +3542,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
           date: $("date").value,
           time: to12h($("time").value),
           loc: $("loc").value.trim(),
-          msg: $("msg").value.trim(),
+          msg: CARD_MSG ? $("msg").value.trim() : "",
         };
       }
       function problems() {
@@ -3600,7 +3601,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
       }
       // light update for typing: no redraw of the bouquet
       function updTag() {
-        const m = $("msg").value.trim(), g = $("tagG"), t = $("tagT");
+        const m = CARD_MSG ? $("msg").value.trim() : "", g = $("tagG"), t = $("tagT");
         if (!g) return;
         g.style.opacity = m ? 1 : 0;
         if (!m) return;
@@ -4134,10 +4135,21 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
           top: Array.isArray(j.top)
             ? cleanTop(j.top)
             : cleanTop(clone(DEFAULT_TOP)),
+          cardMsg: j.cardMsg !== false,
         };
       }
       let settings = normalize(),
         saved = clone(settings);
+      // show or hide the Card message box (and keep it out of the order and the bouquet tag)
+      function applyCardMsg() {
+        CARD_MSG = settings.cardMsg !== false;
+        $("msgBox").classList.toggle("hidden", !CARD_MSG);
+      }
+      // remember the last known switch on this phone, so a returning customer never sees a flash
+      try {
+        if (localStorage.getItem("ahf_cardmsg") === "0") settings.cardMsg = saved.cardMsg = false;
+      } catch (_) {}
+      applyCardMsg();
       function fixRadio(sel, key, list, set) {
         if (set.has(list[st[key]][0])) {
           const ok = list.findIndex((x) => !set.has(x[0]));
@@ -4148,6 +4160,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
         }
       }
       function applyAll() {
+        applyCardMsg();
         COUNTS.forEach((c) => {
           if (c.price && settings.prices[c.id]) c.price = settings.prices[c.id];
         });
@@ -4219,6 +4232,9 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
           if (r.ok) {
             settings = normalize(await r.json());
             saved = clone(settings);
+            try {
+              localStorage.setItem("ahf_cardmsg", settings.cardMsg ? "1" : "0");
+            } catch (_) {}
           }
         } catch (_) {
           /* no file yet or offline: everything stays in stock at normal prices */
@@ -4706,6 +4722,15 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
     <div class="grid gap-2">${settings.pairs.map(pairEditor).join("") || '<p class="rounded-xl bg-rose-50 px-3 py-3 text-sm text-rose-800/70">No pairs yet. The box is hidden for customers.</p>'}</div>
     <button type="button" data-padd ${full ? "disabled" : ""} class="mt-2 w-full rounded-xl border border-dashed border-rose-300 py-2.5 text-sm font-medium text-rose-800 disabled:opacity-40">＋ Add a pair${full ? " (maximum 12)" : ""}</button></section>`;
       }
+      function formSection() {
+        const on = settings.cardMsg !== false;
+        return `<section class="adm2-sec"><h3 class="font-display">Order form</h3>
+    <p>Switch parts of the order form on or off. Press Publish to apply the change for customers.</p>
+    <div class="adm2-grid"><div class="adm2-tile${on ? "" : " out"}">
+      <label class="adm2-trow"><span class="adm2-nm"><b>Card message</b><small>${on ? "On · customers can write a card message" : "Off · hidden from customers"}</small></span><input type="checkbox" class="sr-only" id="a_cardmsg" ${on ? "checked" : ""} aria-label="Card message on"><span class="adm2-sw" aria-hidden="true"></span></label>
+    </div></div>
+    <p style="margin-top:10px">When it is off, the Card message box is hidden, nothing is added to the Messenger order or the order slip, and the card tag does not appear on the bouquet. Switch it back on anytime and publish again.</p></section>`;
+      }
       function bindShop() {
         const body = adm.querySelector("#admBody");
         body.querySelectorAll("details[data-pd]").forEach((d) => d.addEventListener("toggle", () => {
@@ -4940,11 +4965,12 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
             `<section class="adm2-sec"><h3 class="font-display">Prices</h3><p>Sizes stay available. Only the price changes. "Other" is always quoted. Tick Popular to show a badge on a size.</p><div class="adm2-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">${priceIn}</div></section>`,
           top: topSection(),
           pairs: pairsSection(),
+          form: formSection(),
         };
-        const tabDefs = [["stock", "Stock", n, 1], ["prices", "Prices", 0], ["top", "Top choices", settings.top.length], ["pairs", "Pairs", settings.pairs.length]];
+        const tabDefs = [["stock", "Stock", n, 1], ["prices", "Prices", 0], ["top", "Top choices", settings.top.length], ["pairs", "Pairs", settings.pairs.length], ["form", "Order form", settings.cardMsg === false ? "Off" : 0, 1]];
         const tabsHtml = `<div class="adm2-tabs" role="tablist">${tabDefs.map((t) => `<button type="button" role="tab" aria-selected="${admTab === t[0]}" data-tab="${t[0]}" class="adm2-tab${admTab === t[0] ? " on" : ""}">${t[1]}${t[2] ? `<span class="adm2-n${t[3] ? " warn" : ""}">${t[2]}</span>` : ""}</button>`).join("")}</div>`;
         shell(
-          (n ? n + " out of stock" : "Everything in stock") + (settings.updated ? " · Published " + fmtWhen(settings.updated) : ""),
+          (n ? n + " out of stock" : "Everything in stock") + (settings.cardMsg === false ? " · Card message off" : "") + (settings.updated ? " · Published " + fmtWhen(settings.updated) : ""),
           panes[admTab] || panes.stock,
           `<p id="admMsg" class="adm2-msg${msg && msg.err ? " err" : ""}${msg ? "" : " hidden"}" role="status">${msg ? msg.t : ""}</p>
      <div class="adm2-fr"><span id="admDirty" class="adm2-st${dirty() ? " dirty" : ""}">${dirty() ? "Unpublished changes" : "All changes published"}</span>
@@ -4984,6 +5010,13 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
         );
         bindTop();
         bindShop();
+        const cmSw = $("a_cardmsg");
+        if (cmSw)
+          cmSw.onchange = () => {
+            settings.cardMsg = cmSw.checked;
+            applyAll();
+            panel();
+          };
         const sr = $("admSearch");
         if (sr)
           sr.oninput = () => {
