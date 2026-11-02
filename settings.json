@@ -142,5 +142,6 @@
       "size": "3",
       "bd": "Night"
     }
-  ]
+  ],
+  "cardMsg": true
 }
