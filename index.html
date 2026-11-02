@@ -13,6 +13,10 @@
 window.LITE=q?q[1]==="1":((navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=3||c.saveData===true);
 if(window.LITE)document.documentElement.classList.add("lite");})();
 </script>
+<script>
+/* GSAP: smoother rose pop-in. Skipped on lite phones and for reduced motion; if it fails to load, the page keeps its built-in animation. */
+(function(){try{if(window.LITE||matchMedia("(prefers-reduced-motion: reduce)").matches)return;var g=document.createElement("script");g.src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js";g.async=true;document.head.appendChild(g);}catch(e){}})();
+</script>
 <title>Aisha Handmade Flowers — Design Your Own Bouquet</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -125,6 +129,7 @@ if(window.LITE)document.documentElement.classList.add("lite");})();
         }
         .rz,
         #wrapG,
+        .dome,
         .bf {
           transition: none;
         }
@@ -635,6 +640,12 @@ if(window.LITE)document.documentElement.classList.add("lite");})();
         .logo {
           animation: none;
         }
+      }
+      .shn {
+        transform: rotate(calc(var(--ra, 0deg) * -1));
+      }
+      .dome {
+        transition: transform 0.6s cubic-bezier(0.34, 1.3, 0.5, 1);
       }
       /* rose layers: --ci is the optional center color (combined color on 3 pcs); without it the whole rose uses --c */
       .pa {
@@ -3081,25 +3092,55 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
         ["White", "#ffffff"],
         ["Black", "#26222b"],
       ];
-      function petals(cnt, off, rx, ry, rot, cls) {
+      const FANCY = !window.LITE; // petal shading only on phones that can afford it
+      function petals(cnt, off, rx, ry, rot, cls, o) {
+        o = o || {};
         let s = "";
         for (let i = 0; i < cnt; i++) {
           s +=
             `<g transform="rotate(${rot + (i * 360) / cnt})"><ellipse cy="${-off}" rx="${rx}" ry="${ry}" class="${cls}"/>` +
+            // soft shading: darker at the base of the petal, lighter at its edge
+            (o.shade && FANCY ? `<ellipse cy="${-off}" rx="${rx}" ry="${ry}" fill="url(#rsPt)"/>` : "") +
             `<path class="ln" d="M${-rx * 0.75} ${-off - ry * 0.45}Q0 ${-off - ry * 1.05} ${rx * 0.75} ${-off - ry * 0.45}"/>` +
             `<ellipse cx="${-rx * 0.25}" cy="${-off - ry * 0.4}" rx="${rx * 0.4}" ry="${ry * 0.22}" fill="#fff" opacity=".3"/>` +
-            `<path d="M${-rx * 0.5} ${-off - ry * 0.55}Q${-rx * 0.1} ${-off - ry * 0.8} ${rx * 0.4} ${-off - ry * 0.62}" stroke="#fff" stroke-opacity=".38" stroke-width="1.3" fill="none" stroke-linecap="round"/></g>`;
+            // the small curl line is skipped on small roses (it is too fine to see there)
+            (o.plain ? "" : `<path d="M${-rx * 0.5} ${-off - ry * 0.55}Q${-rx * 0.1} ${-off - ry * 0.8} ${rx * 0.4} ${-off - ry * 0.62}" stroke="#fff" stroke-opacity=".38" stroke-width="1.3" fill="none" stroke-linecap="round"/>`) +
+            `</g>`;
         }
         return s;
       }
+      // the light always comes from the top left: the sheen is turned back by the rose's own turn (--ra)
+      const ROSE_TAIL =
+        `<g class="shn"><circle r="53" fill="url(#sheen)"/></g>` +
+        `<circle r="53" fill="none" stroke="#000" stroke-opacity=".1"/>`;
+      const HEART = FANCY ? `<circle r="15" fill="url(#rsHrt)"/>` : "";
+      const SWIRL = `<path class="ln" style="stroke-width:1.4" d="M0 0m-1.5 0a1.5 1.5 0 1 1 3 0a3.5 3.5 0 1 1-7 0a5.5 5.5 0 1 1 11 0"/>`;
+      const CORE = `<path class="pd" d="M-7 3C-9-7 0-11 7-8C13-4 11 6 3 8C-4 9-9 4-7-1"/>`;
+      const SH = { shade: true }, SM = { shade: true, plain: true };
+      // normal rose (8 to 11 pcs)
       const ROSE =
-        petals(7, 29, 21, 26, 0, "pa") +
-        petals(6, 19, 16, 20, 22, "pb") +
-        petals(5, 11, 11.5, 14, 40, "pc") +
-        petals(3, 4, 7, 8, 10, "pd") +
-        `<path class="pd" d="M-7 3C-9-7 0-11 7-8C13-4 11 6 3 8C-4 9-9 4-7-1"/>` +
-        `<path class="ln" style="stroke-width:1.4" d="M0 0m-1.5 0a1.5 1.5 0 1 1 3 0a3.5 3.5 0 1 1-7 0a5.5 5.5 0 1 1 11 0"/>` +
-        `<circle r="53" fill="url(#sheen)"/><circle r="53" fill="none" stroke="#000" stroke-opacity=".1"/>`;
+        petals(7, 29, 21, 26, 0, "pa", SH) + petals(6, 19, 16, 20, 22, "pb", SH) + petals(5, 11, 11.5, 14, 40, "pc", SH) +
+        HEART + petals(3, 4, 7, 8, 10, "pd", SH) + CORE + SWIRL + ROSE_TAIL;
+      // big rose (3 to 7 pcs): one more ring of petals and a second swirl
+      const ROSE_L =
+        petals(7, 29, 21, 26, 0, "pa", SH) + petals(6, 19, 16, 20, 22, "pb", SH) + petals(5, 11, 11.5, 14, 40, "pc", SH) +
+        petals(4, 7.5, 9, 11, 58, "pc", SH) + HEART + petals(3, 4, 7, 8, 10, "pd", SH) + CORE + SWIRL +
+        `<path class="ln" style="stroke-width:1" d="M0 0m-1 0a1 1 0 1 1 2 0a2.4 2.4 0 1 1-4.8 0a3.8 3.8 0 1 1 7.6 0a5.2 5.2 0 1 1-10.4 0"/>` + ROSE_TAIL;
+      // small rose (12 pcs and more): simpler, so a full bouquet stays quick
+      const ROSE_S =
+        petals(7, 29, 21, 26, 0, "pa", SM) + petals(6, 19, 16, 20, 22, "pb", SM) +
+        petals(5, 11, 11.5, 14, 40, "pc", SM) + `<circle r="6" class="pd"/>` + ROSE_TAIL;
+      const roseHref = (n) => (n >= 12 ? "#roseS" : n >= 8 || !FANCY ? "#rose" : "#roseL");
+      // shared gradients for the shading (the same on every rose, so the light stays consistent)
+      const SHADE_DEFS =
+        `<radialGradient id="wpPuff" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="150"><stop offset=".4" stop-color="#3a0f25" stop-opacity="0"/><stop offset="1" stop-color="#3a0f25" stop-opacity=".13"/></radialGradient>` +
+        `<linearGradient id="rsPt" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#2a0a1a" stop-opacity=".18"/><stop offset=".6" stop-color="#2a0a1a" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".09"/></linearGradient>` +
+        `<radialGradient id="rsHrt"><stop offset="0" stop-color="#2a0a1a" stop-opacity=".3"/><stop offset="1" stop-color="#2a0a1a" stop-opacity="0"/></radialGradient>` +
+        `<radialGradient id="rsDome" cx=".4" cy=".34" r=".75"><stop offset="0" stop-color="#fff" stop-opacity=".06"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset=".66" stop-color="#3a0f25" stop-opacity="0"/><stop offset="1" stop-color="#3a0f25" stop-opacity=".12"/></radialGradient>` +
+        `<linearGradient id="rbSat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset=".62" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient>` +
+        `<linearGradient id="rbTail" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient>` +
+        `<radialGradient id="rbKnot" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".22"/></radialGradient>` +
+        [0, 15, 30, 45, 60, 75].map((r) => `<linearGradient id="wpSh${r}" gradientUnits="userSpaceOnUse" x1="-100" y1="-100" x2="100" y2="100" gradientTransform="rotate(${-r})"><stop offset="0" stop-color="#fff" stop-opacity=".26"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#3a0f25" stop-opacity=".14"/></linearGradient>`).join("");
       // lace-paper butterfly
       const BFW =
         `<path d="M0 0C-8-22-34-24-30-4-28 8-12 8 0 0zM0 0C8-22 34-24 30-4 28 8 12 8 0 0zM0 0C-6 10-22 18-16 28-10 34-2 14 0 0zM0 0C6 10 22 18 16 28 10 34 2 14 0 0z" stroke-width="1"/>` +
@@ -3149,20 +3190,22 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
       const DOTS_FULL = mkDots(620, 500, 16, 1);
       const DOTS = LITE ? mkDots(240, 190, 5, 1.35) : DOTS_FULL;
       const sheet = (side, rot, cls) =>
-        `<rect class="lf ${cls}" x="${-side / 2}" y="${-side / 2}" width="${side}" height="${side}" rx="10" data-r="${rot}"/>`;
-      const bowHalf = `<path class="rb" d="M0 114C-46 78-70 112-34 130C-14 138-2 124 0 114Z"/><path class="rl" d="M0 114C-30 94-46 112-30 124C-16 130-4 122 0 114Z"/>`;
+        `<g class="lf ${cls}" data-r="${rot}"><rect x="${-side / 2}" y="${-side / 2}" width="${side}" height="${side}" rx="10"/>` +
+        `<rect x="${-side / 2}" y="${-side / 2}" width="${side}" height="${side}" rx="10" fill="url(#wpSh${rot})" fill-opacity="1" stroke="none"/>` +
+        (FANCY ? `<rect x="${-side / 2}" y="${-side / 2}" width="${side}" height="${side}" rx="10" fill="url(#wpPuff)" fill-opacity="1" stroke="none"/>` : "") + `</g>`;
+      const bowHalf = `<path class="rb" d="M0 114C-46 78-70 112-34 130C-14 138-2 124 0 114Z"/><path class="rl" d="M0 114C-30 94-46 112-30 124C-16 130-4 122 0 114Z"/><path d="M0 114C-46 78-70 112-34 130C-14 138-2 124 0 114Z" fill="url(#rbSat)"/><path d="M0 114C-30 94-46 112-30 124C-16 130-4 122 0 114Z" fill="url(#rbSat)"/>`;
       $("bouquet").innerHTML =
         `<svg id="scene" viewBox="0 0 400 400" role="img" aria-label="Live bouquet preview" class="w-full h-full">
 <defs><radialGradient id="sheen" cx=".32" cy=".28" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".4"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></radialGradient>
-<g id="rose">${ROSE}</g><g id="dotsG">${DOTS}</g><radialGradient id="csh"><stop offset="0" stop-color="#5e1631" stop-opacity=".34"/><stop offset="1" stop-color="#5e1631" stop-opacity="0"/></radialGradient><radialGradient id="fbg"><stop offset="0" style="stop-color:var(--fbc,#ffffff)" stop-opacity=".5"/><stop offset=".65" style="stop-color:var(--fbc,#ffffff)" stop-opacity=".32"/><stop offset="1" style="stop-color:var(--fbc,#ffffff)" stop-opacity="0"/></radialGradient></defs>
+<g id="rose">${ROSE}</g><g id="roseL">${ROSE_L}</g><g id="roseS">${ROSE_S}</g><g id="dotsG">${DOTS}</g>${SHADE_DEFS}<radialGradient id="csh"><stop offset="0" stop-color="#5e1631" stop-opacity=".34"/><stop offset="1" stop-color="#5e1631" stop-opacity="0"/></radialGradient><radialGradient id="fbg"><stop offset="0" style="stop-color:var(--fbc,#ffffff)" stop-opacity=".5"/><stop offset=".65" style="stop-color:var(--fbc,#ffffff)" stop-opacity=".32"/><stop offset="1" style="stop-color:var(--fbc,#ffffff)" stop-opacity="0"/></radialGradient></defs>
 <ellipse id="shadow" cx="200" cy="388" rx="90" ry="9" fill="url(#csh)" opacity=".8"/><ellipse id="shadow2" cx="200" cy="388" rx="40" ry="4" fill="url(#csh)"/>
 <g id="sway"><g id="wrapG">
   <path class="ws" d="M-38 95L0 198 38 95z"/>
   ${[0, 30, 60].map((r, i) => sheet(228, r, i % 2 ? "wb" : "wa")).join("")}${[15, 45, 75].map((r) => sheet(196, r, "wb")).join("")}${[0, 45].map((r) => sheet(160, r, "wc")).join("")}
-  <g class="tie go" id="tie"><g class="tail t1"><path class="rb" d="M0 116C-26 152-34 186-30 212l13-8 8 16C-6 184-4 152 0 116Z"/></g>
-  <g class="tail t2"><path class="rb" d="M0 116C26 152 34 186 30 212l-13-8-8 16C6 184 4 152 0 116Z"/></g>
-  <g transform="translate(0 115) scale(1.2) translate(0 -115)"><g class="bow"><g>${bowHalf}</g><g transform="scale(-1 1)">${bowHalf}</g><circle class="rl" cy="115" r="8"/></g></g></g>
-</g><g id="fillG" class="fg"><circle r="104" fill="url(#fbg)"/><use href="#dotsG"/></g><g id="roses"></g><g id="bfs"></g><g id="tagG" style="opacity:0;transition:opacity .4s;transform:translate(318px,286px) rotate(7deg)"><path d="M-6 -34Q-12 -50 -2 -56" stroke="#b92f64" stroke-width="1.5" fill="none"/><rect x="-50" y="-34" width="100" height="68" rx="8" fill="#fffdf8" stroke="#e8a9bf" stroke-width="1.5"/><text y="-22" text-anchor="middle" font-size="9" fill="#d6457b">♥</text><text id="tagT" y="-6" text-anchor="middle" font-size="10.5" fill="#5e1631" font-family="'DM Sans',sans-serif"></text></g></g></svg>`;
+  <ellipse cx="0" cy="125" rx="34" ry="12" fill="url(#csh)" opacity=".9"/><g class="tie go" id="tie"><g class="tail t1"><path class="rb" d="M0 116C-26 152-34 186-30 212l13-8 8 16C-6 184-4 152 0 116Z"/><path d="M0 116C-26 152-34 186-30 212l13-8 8 16C-6 184-4 152 0 116Z" fill="url(#rbTail)"/></g>
+  <g class="tail t2"><path class="rb" d="M0 116C26 152 34 186 30 212l-13-8-8 16C6 184 4 152 0 116Z"/><path d="M0 116C26 152 34 186 30 212l-13-8-8 16C6 184 4 152 0 116Z" fill="url(#rbTail)" transform="translate(0 0)"/></g>
+  <g transform="translate(0 115) scale(1.2) translate(0 -115)"><g class="bow"><g>${bowHalf}</g><g transform="scale(-1 1)">${bowHalf}</g><circle class="rl" cy="115" r="8"/><circle cy="115" r="8" fill="url(#rbKnot)"/></g></g></g>
+</g><g id="fillG" class="fg"><circle r="104" fill="url(#fbg)"/><use href="#dotsG"/></g><g id="roses"></g><circle id="dome" class="dome" r="100" fill="url(#rsDome)" style="transform:translate(200px,165px) scale(.6);pointer-events:none"/><g id="bfs"></g><g id="tagG" style="opacity:0;transition:opacity .4s;transform:translate(318px,286px) rotate(7deg)"><path d="M-6 -34Q-12 -50 -2 -56" stroke="#b92f64" stroke-width="1.5" fill="none"/><rect x="-50" y="-34" width="100" height="68" rx="8" fill="#fffdf8" stroke="#e8a9bf" stroke-width="1.5"/><text y="-22" text-anchor="middle" font-size="9" fill="#d6457b">♥</text><text id="tagT" y="-6" text-anchor="middle" font-size="10.5" fill="#5e1631" font-family="'DM Sans',sans-serif"></text></g></g></svg>`;
 
       // wrapping unfolds once on load
       document.querySelectorAll(".lf").forEach((l) => {
@@ -3240,8 +3283,55 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
               : n === 19
                 ? (i) => [i === 0 || (i <= 6 ? i % 2 === 0 : (i - 7) % 2 === 0) ? hx[0] : hx[1] || hx[0], null] // alternating wedges around a center
                 : (i) => [hx[i % hx.length], null]; // 3 pcs = combined color (flower + center)
-      const roseT = (p, i, r, n) =>
-        `translate(${CX + p[0] * r}px,${CY + p[1] * r}px) rotate(${(i * 47) % 360}deg) scale(${(r * (n >= 8 ? 1.12 : 1)) / 53})`;
+      // fixed, repeatable "randomness" per rose (the same on every redraw and on the order slip)
+      const hv = (i, k) => { const x = Math.sin((i + 1) * 127.1 + k * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; };
+      // every rose is a little different: size, turn, position
+      const roseNum = (p, i, r, n) => ({
+        x: CX + p[0] * r + hv(i, 1) * r * 0.06,
+        y: CY + p[1] * r + hv(i, 2) * r * 0.06,
+        a: ((i * 47) % 360) + hv(i, 3) * 6,
+        s: ((r * (n >= 8 ? 1.12 : 1)) / 53) * (1 + hv(i, 5) * 0.045),
+      });
+      // a slightly lighter (t > 0) or darker (t < 0) shade of a color
+      function tone(hex, t) {
+        const m = /^#([0-9a-f]{6})$/i.exec(hex || "");
+        if (!m) return hex;
+        const v = parseInt(m[1], 16), k = Math.min(1, Math.abs(t)), to = t > 0 ? 255 : 0;
+        const ch = (x) => Math.round(x + (to - x) * k);
+        return "#" + ((1 << 24) | (ch(v >> 16) << 16) | (ch((v >> 8) & 255) << 8) | ch(v & 255)).toString(16).slice(1);
+      }
+      const numT = (o) => `translate(${o.x}px,${o.y}px) rotate(${o.a}deg) scale(${o.s})`;
+      const roseT = (p, i, r, n) => numT(roseNum(p, i, r, n));
+      // GSAP is used only when it has loaded, the phone is not in lite mode, motion is allowed and the first intro is over
+      const gsOK = () => !!(window.gsap && !LITE && !intro && fxOK());
+      // rose pop-in with GSAP: position and turn glide in, size springs past 1 and settles
+      function gsPop(el, from, to, delayMs) {
+        const o = { ...from }, put = () => (el.style.transform = numT(o));
+        el.style.transition = "none";
+        el._fin = numT(to);
+        put();
+        el._gs = gsap
+          .timeline({
+            delay: delayMs / 1000,
+            onUpdate: put,
+            onComplete: () => {
+              el._gs = null;
+              el._fin = null;
+              el.style.transform = numT(to);
+              el.style.transition = "";
+            },
+          })
+          .to(o, { x: to.x, y: to.y, a: to.a, duration: 0.85, ease: "power3.out" }, 0)
+          .to(o, { s: to.s, duration: 1, ease: "back.out(1.8)" }, 0);
+      }
+      function gsStop(el) {
+        if (el._gs) {
+          el._gs.kill();
+          el._gs = null;
+          el._fin = null;
+          el.style.transition = "";
+        }
+      }
       const bfScale = (r) => Math.max(0.7, Math.min(1.3, r / 30));
       const bflyT = (k, e, b) => {
         const a = -2.2 + k * 2.4,
@@ -3297,9 +3387,8 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
         const ext = Math.max(1, ...pts.map((p) => Math.hypot(p[0], p[1])));
         roses.forEach((el, i) => {
           if (!el || !pts[i]) return;
-          const x = CX + pts[i][0] * r, y = CY + pts[i][1] * r, a = (i * 47) % 360,
-            sc = (r * (n >= 8 ? 1.12 : 1)) / 53,
-            T = (k, da) => `translate(${x}px,${y}px) rotate(${a + da}deg) scale(${sc * k})`;
+          const t = roseNum(pts[i], i, r, n),
+            T = (k, da) => `translate(${t.x}px,${t.y}px) rotate(${t.a + da}deg) scale(${t.s * k})`;
           if (el._wa) el._wa.cancel();
           el._wa = el.animate(
             [{ transform: T(1, 0) }, { transform: T(1.2, -8), offset: 0.4 }, { transform: T(0.96, 3), offset: 0.7 }, { transform: T(1, 0) }],
@@ -3350,16 +3439,18 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
         $("shadow").setAttribute("rx", 40 + sc * 90);
         $("shadow2").setAttribute("rx", 22 + sc * 42);
         const col = roseColor(n, hx),
-          host = $("roses");
+          host = $("roses"),
+          ext2 = Math.max(1e-3, ...pts.map((q) => Math.hypot(q[0], q[1])));
+        $("dome").style.transform = `translate(${CX}px,${CY}px) scale(${(e + 4) / 100})`;
         let born = 0;
-        const later = [];
+        const later = [], fromBloom = bloomNext;
         for (let i = 0; i < Math.max(n, roses.length); i++) {
           if (i < n) {
             let el = roses[i], fresh = false;
+            if (el) gsStop(el); // a quick change mid-animation continues smoothly from where the rose is
             if (!el) {
               fresh = true;
               el = document.createElementNS(NS, "use");
-              el.setAttribute("href", "#rose");
               el.setAttribute("class", "rz");
               el.style.transform = `translate(${CX}px,${CY}px) rotate(${((i * 47) % 360) + 140}deg) scale(0)`;
               host.insertBefore(el, host.firstChild);
@@ -3367,12 +3458,20 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
               born++;
             }
             const deferred = fresh || bloomNext;
-            const [c, ci] = col(i);
+            const hr = roseHref(n);
+            if (el.getAttribute("href") !== hr) el.setAttribute("href", hr);
+            el.style.setProperty("--ra", ((i * 47) % 360) + "deg");
+            // centre roses a touch lighter, outer ones a touch darker, plus a small difference per rose
+            const [c0, ci0] = col(i),
+              tn = hv(i, 4) * 0.035 + (0.5 - Math.hypot(pts[i][0], pts[i][1]) / ext2) * 0.07,
+              c = tone(c0, tn),
+              ci = ci0 ? tone(ci0, tn) : ci0;
             if (bloomNext) {
               el.style.transition = "none";
               el.style.transform = `translate(${CX + pts[i][0] * r}px,${CY + pts[i][1] * r}px) rotate(${((i * 47) % 360) - 90}deg) scale(0.1)`;
             }
-            el.style.transitionDelay = (intro ? 550 + Math.min(i * 60, 700) : bloomNext ? Math.min(i * 45, 600) : washNext ? wDelay(pts[i], Math.max(1, ...pts.map((q) => Math.hypot(q[0], q[1])))) : Math.min(i * 22, 380)) + "ms";
+            const dl = intro ? 550 + Math.min(i * 60, 700) : bloomNext ? Math.min(i * 45, 600) : washNext ? wDelay(pts[i], Math.max(1, ...pts.map((q) => Math.hypot(q[0], q[1])))) : Math.min(i * 22, 380);
+            el.style.transitionDelay = dl + "ms";
             clearTimeout(el._ct);
             const setCol = () => {
               el.style.setProperty("--c", c);
@@ -3382,11 +3481,17 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
             if (washNext && !fresh && !bloomNext && fxOK() && el.style.getPropertyValue("--c") && el.style.getPropertyValue("--c") !== c)
               el._ct = setTimeout(setCol, wDelay(pts[i], Math.max(1, ...pts.map((q) => Math.hypot(q[0], q[1])))) + 200);
             else setCol();
-            if (deferred) later.push(() => { el.style.transition = ""; el.style.transform = roseT(pts[i], i, r, n); });
+            if (deferred) later.push(() => {
+              if (gsOK()) {
+                const to = roseNum(pts[i], i, r, n);
+                gsPop(el, fromBloom ? { x: to.x, y: to.y, a: to.a - 90, s: 0.1 } : { x: CX, y: CY, a: to.a + 140, s: 0 }, to, dl);
+              } else { el.style.transition = ""; el.style.transform = roseT(pts[i], i, r, n); }
+            });
             else el.style.transform = roseT(pts[i], i, r, n);
           } else if (roses[i]) {
             const el = roses[i];
             roses[i] = null;
+            gsStop(el);
             el.style.transitionDelay = "0ms";
             el.style.transform = `translate(${CX}px,${CY}px) rotate(200deg) scale(0)`;
             setTimeout(() => el.remove(), 500);
@@ -3732,6 +3837,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
         c.setAttribute("height", 800);
         c.removeAttribute("class");
         c.querySelectorAll(".dp-g").forEach((q) => q.remove());
+        { const od = [...$("roses").children], cd = c.querySelector("#roses") ? [...c.querySelector("#roses").children] : []; od.forEach((o, k) => { if (o._fin && cd[k]) cd[k].style.transform = o._fin; }); }
         if (LITE) { const dg = c.querySelector("#dotsG"); if (dg) dg.innerHTML = DOTS_FULL; }
         if (noTag) { const tg = c.querySelector("#tagG"); if (tg) tg.remove(); }
         const css =
@@ -4404,7 +4510,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
         let roses = "";
         for (let i = n - 1; i >= 0; i--) {
           const [c, ci] = col(i);
-          roses += `<use href="#rose" style="--c:${c};${ci ? `--ci:${ci};` : ""}transform:${roseT(pts[i], i, r, n)}"/>`;
+          roses += `<use href="${roseHref(n)}" style="--c:${c};--ra:${(i * 47) % 360}deg;${ci ? `--ci:${ci};` : ""}transform:${roseT(pts[i], i, r, n)}"/>`;
         }
         let bf = "";
         if (p.bf)
@@ -4423,7 +4529,7 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
     <g transform="translate(${CX} ${CY}) scale(${sc})"><path class="ws" d="M-38 95L0 198 38 95z"/>
       ${[0, 30, 60].map((rt, i) => sh(228, rt, i % 2 ? "wb" : "wa")).join("")}${[15, 45, 75].map((rt) => sh(196, rt, "wb")).join("")}${[0, 45].map((rt) => sh(160, rt, "wc")).join("")}
       <path class="rb" d="M0 116C-26 152-34 186-30 212l13-8 8 16C-6 184-4 152 0 116Z"/><path class="rb" d="M0 116C26 152 34 186 30 212l-13-8-8 16C6 184 4 152 0 116Z"/>
-      <g transform="translate(0 115) scale(1.2) translate(0 -115)"><g>${bowHalf}</g><g transform="scale(-1 1)">${bowHalf}</g><circle class="rl" cy="115" r="8"/></g></g>
+      <g transform="translate(0 115) scale(1.2) translate(0 -115)"><g>${bowHalf}</g><g transform="scale(-1 1)">${bowHalf}</g><circle class="rl" cy="115" r="8"/><circle cy="115" r="8" fill="url(#rbKnot)"/></g></g>
     <g transform="translate(${CX} ${CY}) scale(${Rf / 100})"><circle r="104" fill="url(#${gid})"/><use href="#dotsG"/></g>
     ${roses}${bf}</svg>`;
         if (thumbCache.size > 80) thumbCache.clear();
@@ -6073,11 +6179,13 @@ let lastN = -1, topFilter = "All", lastWrap = -1, lastWrapF = -1, lastFill = -1,
         x.shadowColor = "transparent"; x.shadowBlur = 0; x.shadowOffsetY = 0;
         x.font = "700 40px " + SANS;
         const ctxt = "Order on Messenger", tw = x.measureText(ctxt).width, sx = W / 2 - (68 + tw) / 2, my = 1762;
+        // the Messenger logo: white bubble with the bolt cut out, its round part centred on the text line
+        x.save();
+        x.translate(sx, my - 22.2);
+        x.scale(2, 2);
         x.fillStyle = "#fff";
-        x.beginPath(); x.arc(sx + 24, my, 24, 0, Math.PI * 2); x.fill();
-        x.beginPath(); x.moveTo(sx + 8, my + 18); x.lineTo(sx - 2, my + 34); x.lineTo(sx + 22, my + 25); x.closePath(); x.fill();
-        x.fillStyle = cta;
-        x.beginPath(); [[-4, -13], [-14, 3], [-3, 3], [-6, 14], [14, -3], [3, -3], [7, -13]].forEach(([a, b], i) => (i ? x.lineTo(sx + 24 + a, my + b) : x.moveTo(sx + 24 + a, my + b))); x.closePath(); x.fill();
+        x.fill(new Path2D("M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.652V24l4.088-2.242c1.092.3 2.246.464 3.443.464 6.627 0 12-4.974 12-11.111C24 4.974 18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.732 8l3.131 3.259L19.752 8l-6.561 6.963z"), "evenodd");
+        x.restore();
         x.textAlign = "left"; x.fillStyle = "#fff"; x.fillText(ctxt, sx + 68, my + 14);
         x.textAlign = "center"; x.fillStyle = dk ? "rgba(255,255,255,.8)" : "rgba(94,22,49,.75)";
         x.font = "500 30px " + SANS;
